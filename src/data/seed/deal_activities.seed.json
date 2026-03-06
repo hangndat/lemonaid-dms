@@ -1,0 +1,6 @@
+[
+  { "id": "da-1", "dealId": "deal-1", "type": "note", "content": "Gửi bảng giá và chương trình trả góp.", "createdAt": "2024-02-19T10:30:00.000Z", "createdBy": "profile-sales-1" },
+  { "id": "da-2", "dealId": "deal-1", "type": "stage_change", "content": "Chuyển từ test_drive sang negotiation.", "createdAt": "2024-02-22T14:00:00.000Z", "createdBy": "profile-sales-1" },
+  { "id": "da-3", "dealId": "deal-3", "type": "stage_change", "content": "Chốt đơn, đã nhận cọc.", "createdAt": "2024-02-28T10:00:00.000Z", "createdBy": "profile-sales-2" },
+  { "id": "da-4", "dealId": "deal-4", "type": "note", "content": "Khách báo không mua nữa.", "createdAt": "2024-02-15T11:00:00.000Z", "createdBy": "profile-sales-1" }
+]

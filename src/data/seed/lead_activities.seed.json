@@ -1,0 +1,5 @@
+[
+  { "id": "la-1", "leadId": "lead-1", "type": "note", "content": "Khách gọi hỏi giá CX-5, hẹn gửi bảng giá.", "createdAt": "2024-02-18T09:30:00.000Z", "createdBy": "profile-sales-1" },
+  { "id": "la-2", "leadId": "lead-2", "type": "call", "content": "Đã gọi lại, khách hẹn đến xem xe cuối tuần.", "createdAt": "2024-02-02T14:00:00.000Z", "createdBy": "profile-sales-1" },
+  { "id": "la-3", "leadId": "lead-4", "type": "note", "content": "Đang thương lượng giảm 10tr, chờ khách quyết.", "createdAt": "2024-02-20T16:00:00.000Z", "createdBy": "profile-sales-1" }
+]

@@ -1,0 +1,77 @@
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import type { Profile } from '../types'
+import { storage } from '../data/storage'
+import { AUTH_USER_KEY } from '../data/storage/keys'
+import { profilesRepo } from '../repos'
+
+interface AuthState {
+  user: Profile | null
+  loading: boolean
+}
+
+interface AuthContextValue extends AuthState {
+  login: (profileId: string) => Promise<void>
+  logout: () => void
+  resetDemoData: () => Promise<void>
+}
+
+const AuthContext = createContext<AuthContextValue | null>(null)
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [state, setState] = useState<AuthState>({ user: null, loading: true })
+
+  const loadStoredUser = useCallback(async () => {
+    const storedId = storage.get<string>(AUTH_USER_KEY)
+    if (!storedId) {
+      setState({ user: null, loading: false })
+      return
+    }
+    const profile = await profilesRepo.get(storedId)
+    setState({ user: profile ?? null, loading: false })
+  }, [])
+
+  useEffect(() => {
+    loadStoredUser()
+  }, [loadStoredUser])
+
+  const login = useCallback(
+    async (profileId: string) => {
+      const profile = await profilesRepo.get(profileId)
+      if (!profile) return
+      storage.set(AUTH_USER_KEY, profileId)
+      setState({ user: profile, loading: false })
+    },
+    []
+  )
+
+  const logout = useCallback(() => {
+    storage.remove(AUTH_USER_KEY)
+    setState({ user: null, loading: false })
+  }, [])
+
+  const resetDemoData = useCallback(async () => {
+    const { clearAllDemoData } = await import('../data/storage')
+    const { loadSeedIntoStorage } = await import('../data/seed/loadSeed')
+    clearAllDemoData()
+    loadSeedIntoStorage()
+    window.location.reload()
+  }, [])
+
+  const value = useMemo<AuthContextValue>(
+    () => ({
+      ...state,
+      login,
+      logout,
+      resetDemoData,
+    }),
+    [state, login, logout, resetDemoData]
+  )
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+}
+
+export function useAuth() {
+  const ctx = useContext(AuthContext)
+  if (!ctx) throw new Error('useAuth must be used within AuthProvider')
+  return ctx
+}

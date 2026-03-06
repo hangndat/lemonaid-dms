@@ -1,0 +1,6 @@
+export { vehiclesRepo } from './mock/vehiclesRepo'
+export { customersRepo } from './mock/customersRepo'
+export { leadsRepo } from './mock/leadsRepo'
+export { dealsRepo } from './mock/dealsRepo'
+export { profilesRepo } from './mock/profilesRepo'
+export type { VehiclesRepo, CustomersRepo, LeadsRepo, DealsRepo, ProfilesRepo } from './types'

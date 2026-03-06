@@ -1,0 +1,26 @@
+[
+  {
+    "id": "profile-admin",
+    "fullName": "Nguyễn Văn Admin",
+    "email": "admin@dealer.vn",
+    "role": "admin"
+  },
+  {
+    "id": "profile-manager",
+    "fullName": "Trần Thị Quản Lý",
+    "email": "manager@dealer.vn",
+    "role": "manager"
+  },
+  {
+    "id": "profile-sales-1",
+    "fullName": "Lê Văn Sales",
+    "email": "sales1@dealer.vn",
+    "role": "sales"
+  },
+  {
+    "id": "profile-sales-2",
+    "fullName": "Phạm Thị Bán",
+    "email": "sales2@dealer.vn",
+    "role": "sales"
+  }
+]

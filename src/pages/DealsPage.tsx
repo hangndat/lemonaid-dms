@@ -1,0 +1,171 @@
+import { useEffect, useRef, useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { ProTable } from '@ant-design/pro-components'
+import type { ActionType, ProColumns } from '@ant-design/pro-components'
+import { Button, Tag, Modal } from 'antd'
+import { EyeOutlined, PlusOutlined } from '@ant-design/icons'
+import { dealsRepo, profilesRepo, leadsRepo, customersRepo, vehiclesRepo } from '../repos'
+import { DealForm } from '../components/DealForm'
+import type { Deal, DealStage } from '../types'
+import type { Lead } from '../types'
+import type { Profile } from '../types'
+import type { Customer } from '../types'
+import type { Vehicle } from '../types'
+import { useAuth } from '../context/AuthContext'
+
+const STAGE_OPTIONS: { value: DealStage; label: string }[] = [
+  { value: 'lead', label: 'Lead' },
+  { value: 'test_drive', label: 'Lái thử' },
+  { value: 'negotiation', label: 'Thương lượng' },
+  { value: 'loan_processing', label: 'Duyệt vay' },
+  { value: 'closed_won', label: 'Thắng' },
+  { value: 'closed_lost', label: 'Thua' },
+]
+
+export function DealsPage() {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const { user } = useAuth()
+  const actionRef = useRef<ActionType>(null)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [saving, setSaving] = useState(false)
+  const [prefillLead, setPrefillLead] = useState<Lead | null>(null)
+  const [profiles, setProfiles] = useState<Profile[]>([])
+  const [leads, setLeads] = useState<Lead[]>([])
+  const [customers, setCustomers] = useState<Customer[]>([])
+  const [vehicles, setVehicles] = useState<Vehicle[]>([])
+
+  useEffect(() => {
+    const state = location.state as { prefillLead?: Lead } | null
+    if (state?.prefillLead) {
+      setPrefillLead(state.prefillLead)
+      setModalOpen(true)
+      navigate(location.pathname, { replace: true, state: {} })
+    }
+  }, [location.state, location.pathname, navigate])
+
+  const loadFormData = () => {
+    Promise.all([
+      profilesRepo.list(),
+      leadsRepo.list({ pageSize: 500 }),
+      customersRepo.list({ pageSize: 500 }),
+      vehiclesRepo.list({ pageSize: 500 }),
+    ]).then(([p, lRes, cRes, vRes]) => {
+      setProfiles(p)
+      setLeads(lRes.items)
+      setCustomers(cRes.items)
+      setVehicles(vRes.items)
+    })
+  }
+
+  useEffect(() => {
+    if (modalOpen && profiles.length === 0) loadFormData()
+  }, [modalOpen])
+
+  const handleCreate = async (values: Record<string, unknown>) => {
+    setSaving(true)
+    try {
+      await dealsRepo.create({
+        stage: (values.stage as DealStage) ?? 'lead',
+        assignedTo: values.assignedTo as string,
+        leadId: (values.leadId as string) || undefined,
+        vehicleId: (values.vehicleId as string) || undefined,
+        customerId: (values.customerId as string) || undefined,
+        expectedPrice: values.expectedPrice as number | undefined,
+        finalPrice: values.finalPrice as number | undefined,
+        expectedCloseDate: (values.expectedCloseDate as string) || undefined,
+        lostReason: (values.lostReason as string) || undefined,
+        createdBy: user?.id,
+      })
+      setModalOpen(false)
+      setPrefillLead(null)
+      actionRef.current?.reload()
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const initialDeal = prefillLead
+    ? {
+        leadId: prefillLead.id,
+        assignedTo: prefillLead.assignedTo || undefined,
+        customerId: prefillLead.customerId || undefined,
+        vehicleId: prefillLead.interestedVehicleId || undefined,
+        stage: 'lead' as DealStage,
+      }
+    : null
+
+  const columns: ProColumns<Deal>[] = [
+    { dataIndex: 'stage', title: 'Giai đoạn', width: 120, valueType: 'select', valueEnum: Object.fromEntries(STAGE_OPTIONS.map((o) => [o.value, { text: o.label }])), render: (_, r) => <Tag>{r.stage}</Tag> },
+    { dataIndex: 'id', title: 'ID', width: 100, ellipsis: true, render: (_, r) => r.id.slice(0, 8) },
+    { dataIndex: 'assignedTo', title: 'Người phụ trách', width: 120, ellipsis: true },
+    {
+      dataIndex: 'expectedPrice',
+      title: 'Giá dự kiến (tr)',
+      width: 120,
+      render: (_, r) => (r.expectedPrice != null ? (r.expectedPrice / 1_000_000).toFixed(0) : '—'),
+    },
+    {
+      dataIndex: 'finalPrice',
+      title: 'Giá chốt (tr)',
+      width: 110,
+      render: (_, r) => (r.finalPrice != null ? (r.finalPrice / 1_000_000).toFixed(0) : '—'),
+    },
+    { dataIndex: 'expectedCloseDate', title: 'Ngày dự kiến', width: 120 },
+    {
+      title: 'Thao tác',
+      valueType: 'option',
+      width: 80,
+      render: (_, r) => [
+        <Button type="link" size="small" key="view" icon={<EyeOutlined />} onClick={() => navigate(`/deals/${r.id}`)}>
+          Xem
+        </Button>,
+      ],
+    },
+  ]
+
+  return (
+    <>
+      <ProTable<Deal>
+        actionRef={actionRef}
+        rowKey="id"
+        headerTitle="Deal / Pipeline"
+        request={async (params) => {
+          const res = await dealsRepo.list({
+            filters: params.stage ? { stage: params.stage as DealStage } : undefined,
+            page: params.current ?? 1,
+            pageSize: params.pageSize ?? 20,
+          })
+          return { data: res.items, success: true, total: res.total }
+        }}
+        columns={columns}
+        search={{ labelWidth: 'auto', defaultCollapsed: false }}
+        form={{ initialValues: { stage: undefined } }}
+        toolBarRender={() => [
+          <Button key="add" type="primary" icon={<PlusOutlined />} onClick={() => { setPrefillLead(null); setModalOpen(true); loadFormData(); }}>
+            Thêm deal
+          </Button>,
+        ]}
+      />
+      <Modal
+        title={prefillLead ? 'Tạo deal từ lead' : 'Thêm deal'}
+        open={modalOpen}
+        onCancel={() => { setModalOpen(false); setPrefillLead(null); }}
+        footer={null}
+        width={560}
+        destroyOnClose
+      >
+        <DealForm
+          initial={initialDeal}
+          profiles={profiles}
+          leads={leads}
+          customers={customers}
+          vehicles={vehicles}
+          onFinish={handleCreate}
+          loading={saving}
+          onCancel={() => { setModalOpen(false); setPrefillLead(null); }}
+        />
+      </Modal>
+    </>
+  )
+}
