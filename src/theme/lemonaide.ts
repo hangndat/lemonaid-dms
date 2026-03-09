@@ -18,6 +18,10 @@ export const LEMONAIDE = {
   siderSelectedBg: 'rgba(232, 185, 35, 0.22)',
   /** Chữ item đang chọn */
   siderSelectedText: '#fff',
+  /** Chữ menu khi hover — tông secondary (xanh), sáng hơn để đọc trên nền tối */
+  siderHoverText: '#52b788',
+  /** Nền item khi hover — xanh nhạt */
+  siderHoverBg: 'rgba(45, 106, 79, 0.18)',
   /** Content background */
   contentBg: '#F0F2F5',
   /** Font family — Plus Jakarta Sans (headings/UI), Sarabun (Thai support) */

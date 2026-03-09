@@ -153,7 +153,7 @@ export function DealsPage() {
         }}
         columns={columns}
         scroll={{ x: 920 }}
-        search={{ labelWidth: 'auto', defaultCollapsed: isMobile, collapsed: isMobile }}
+        search={{ labelWidth: 'auto', defaultCollapsed: isMobile }}
         form={{ initialValues: { stage: undefined } }}
         locale={{ emptyText: t('deals:emptyText') }}
         options={{ fullScreen: true, reload: true, density: true }}

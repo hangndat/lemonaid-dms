@@ -1,7 +1,7 @@
 {
   "title": "Giới thiệu",
-  "subTitle": "Về hệ thống Lemonaid DMS",
-  "intro": "Lemonaid DMS (Dealership Management System) là cổng quản trị dành cho đại lý ô tô, giúp quản lý kho xe, lead, deal và khách hàng trong một nền tảng thống nhất.",
+  "subTitle": "Về hệ thống Lemonaide DMS",
+  "intro": "Lemonaide DMS (Dealer Management System) là cổng quản trị dành cho đại lý ô tô, giúp quản lý kho xe, lead, deal và khách hàng trong một nền tảng thống nhất.",
   "featuresTitle": "Tính năng chính",
   "featureInventory": "Kho xe — Quản lý danh sách xe, trạng thái (nháp, sẵn sàng, đã đặt, đã bán), ảnh và thông tin chi tiết.",
   "featureLeads": "Lead — Thu thập và theo dõi lead từ nhiều nguồn, cập nhật trạng thái (mới, đã liên hệ, lái thử, đàm phán, đóng, mất).",
@@ -10,5 +10,5 @@
   "techTitle": "Công nghệ",
   "techDesc": "Ứng dụng web hiện đại, giao diện thân thiện, quản lý dữ liệu tập trung và đồng bộ.",
   "contactTitle": "Liên hệ",
-  "contactDesc": "Để biết thêm chi tiết về sản phẩm và triển khai, vui lòng liên hệ team Lemonaid."
+  "contactDesc": "Để biết thêm chi tiết về sản phẩm và triển khai, truy cập lemonaide.co.th hoặc liên hệ team Lemonaide."
 }

@@ -1,7 +1,7 @@
 {
   "title": "About",
-  "subTitle": "About Lemonaid DMS",
-  "intro": "Lemonaid DMS (Dealership Management System) is an admin portal for car dealerships, helping you manage inventory, leads, deals, and customers in one unified platform.",
+  "subTitle": "About Lemonaide DMS",
+  "intro": "Lemonaide DMS (Dealer Management System) is an admin portal for car dealerships, helping you manage inventory, leads, deals, and customers in one unified platform.",
   "featuresTitle": "Key features",
   "featureInventory": "Inventory — Manage vehicle listings, status (draft, available, reserved, sold), photos and details.",
   "featureLeads": "Leads — Capture and track leads from multiple sources, update status (new, contacted, test drive, negotiation, closed, lost).",
@@ -10,5 +10,5 @@
   "techTitle": "Technology",
   "techDesc": "Modern web application with an intuitive interface and centralized, synced data management.",
   "contactTitle": "Contact",
-  "contactDesc": "For product and deployment details, please contact the Lemonaid team."
+  "contactDesc": "For product and deployment details, visit lemonaide.co.th or contact the Lemonaide team."
 }

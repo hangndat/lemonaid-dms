@@ -90,7 +90,7 @@ export function CustomersPage() {
         }}
         columns={columns}
         scroll={{ x: 750 }}
-        search={{ labelWidth: 'auto', defaultCollapsed: isMobile, collapsed: isMobile }}
+        search={{ labelWidth: 'auto', defaultCollapsed: isMobile }}
         locale={{ emptyText: t('customers:emptyText') }}
         options={{ fullScreen: true, reload: true, density: true }}
         cardProps={{ bordered: true, style: { borderRadius: 8 } }}

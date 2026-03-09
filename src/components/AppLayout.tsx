@@ -109,6 +109,8 @@ export function AppLayout() {
           colorTextMenu: LEMONAIDE.siderText,
           colorTextMenuSelected: LEMONAIDE.siderSelectedText,
           colorBgMenuItemSelected: LEMONAIDE.siderSelectedBg,
+          colorTextMenuItemHover: LEMONAIDE.siderHoverText,
+          colorBgMenuItemHover: LEMONAIDE.siderHoverBg,
           colorTextCollapsedButton: 'rgba(255, 255, 255, 0.7)',
           colorTextMenuTitle: '#fff',
         },
