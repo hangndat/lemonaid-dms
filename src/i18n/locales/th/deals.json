@@ -4,6 +4,7 @@
   "addDeal": "เพิ่มดีล",
   "addDealFromLead": "สร้างดีลจากลีด",
   "emptyText": "ยังไม่มีดีล คลิก \"เพิ่มดีล\" เพื่อสร้าง",
+  "filterByStage": "ทุกระยะ",
   "stage": "ระยะ",
   "expectedPriceTr": "ราคาคาด (ล.)",
   "finalPriceTr": "ราคาชุด (ล.)",

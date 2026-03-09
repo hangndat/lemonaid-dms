@@ -1,7 +1,7 @@
-import type { VehiclePhoto } from '../types.js'
+import type { VehiclePhoto } from '../types'
 import { CONFIG } from '../config.js'
 import { id, int, toISO } from '../utils.js'
-import type { Vehicle } from '../types.js'
+import type { Vehicle } from '../types'
 
 export function generateVehiclePhotos(vehicles: Vehicle[]): VehiclePhoto[] {
   const list: VehiclePhoto[] = []

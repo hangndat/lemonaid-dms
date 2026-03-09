@@ -4,6 +4,7 @@
   "addVehicle": "Thêm xe",
   "emptyText": "Chưa có xe nào. Bấm \"Thêm xe\" để tạo.",
   "searchPlaceholder": "VIN, hãng, dòng...",
+  "filterByStatus": "Tất cả trạng thái",
   "status": "Trạng thái",
   "statusDraft": "Nháp",
   "statusAvailable": "Sẵn sàng",

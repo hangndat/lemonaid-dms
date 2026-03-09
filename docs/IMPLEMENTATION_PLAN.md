@@ -3,7 +3,24 @@
 **Công nghệ:** React + TypeScript + Ant Design (MVP mock bằng JSON/localStorage), Supabase (tích hợp sau)  
 **Mục tiêu:** Cổng admin nội bộ, **làm MVP với mock data trước** để chốt UX/flow nhanh; sau khi ổn mới tích hợp Supabase.
 
-**Trạng thái:** MVP mock đã triển khai xong (Inventory, Lead, Deal, Customer, Dashboard, Auth mock, seed + localStorage). Chi tiết checklist và trạng thái từng phase xem `docs/MOCK_FIRST_PLAN_CHECKLIST.md`.
+**Trạng thái:** MVP mock đã xong. i18n (en/th/vi) đã tích hợp. Crawler Bonbanh có sẵn. Chi tiết checklist từng phase xem `docs/MOCK_FIRST_PLAN_CHECKLIST.md`.
+
+---
+
+## Roadmap & Phần tiếp theo
+
+| Ưu tiên | Hạng mục | Trạng thái | Tài liệu |
+|--------|----------|------------|----------|
+| 1 | **UX — Phản hồi & thông báo** | Chưa làm | `docs/UX_ANALYSIS_AND_IMPROVEMENT_PLAN.md` Phase 1 |
+| 2 | **UX — Hiển thị tên thay vì ID** (Lead/Deal detail) | Chưa làm | Phase 2 |
+| 3 | **i18n Polish** (format ngày/số theo locale, message/placeholder) | Tùy chọn | `docs/I18N_PLAN.md` Phase 9 |
+| 4 | **Supabase Phase A** — Schema + Repos + cờ DATA_PROVIDER | Tiếp theo | `docs/MOCK_FIRST_PLAN_CHECKLIST.md` |
+| 5 | **Supabase Phase B** — Auth + RLS | Sau Phase A | |
+| 6 | **Supabase Phase C** — Storage ảnh xe | Sau Phase B | |
+| 7 | **Crawler** — Cập nhật selectors khi nguồn đổi; (tùy chọn) thêm nguồn Chợ Tốt | Bảo trì | `docs/INVENTORY_CRAWL_PLAN.md` |
+| 8 | **Seed 1 năm** (Singapore → Thái Lan) | Tùy chọn | `docs/SEEDING_PLAN.md` |
+
+**Thứ tự khuyến nghị:** UX Phase 1 & 2 (nhanh, cải thiện trải nghiệm) → Supabase A → B → C (chuyển data thật). i18n polish và seed 1 năm có thể làm song song hoặc sau khi Supabase ổn.
 
 ---
 

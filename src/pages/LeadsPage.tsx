@@ -6,17 +6,21 @@ import { Button, Tag, Modal, message } from 'antd'
 import { EyeOutlined, PlusOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { leadsRepo, profilesRepo, customersRepo, vehiclesRepo } from '../repos'
+import { useIsMobile } from '../hooks/useIsMobile'
 import { LeadForm } from '../components/LeadForm'
 import type { Lead, LeadStatus, LeadSource } from '../types'
 import type { Profile } from '../types'
 import type { Customer } from '../types'
 import type { Vehicle } from '../types'
 import { useAuth } from '../context/AuthContext'
+import { formatDateTime } from '../utils/format'
+import { getLeadStatusTagColor, getLeadSourceTagColor } from '../utils/tagColors'
 
 export function LeadsPage() {
   const navigate = useNavigate()
   const { t } = useTranslation(['leads', 'common'])
   const { user } = useAuth()
+  const isMobile = useIsMobile()
   const [modalOpen, setModalOpen] = useState(false)
   const [saving, setSaving] = useState(false)
   const [profiles, setProfiles] = useState<Profile[]>([])
@@ -80,16 +84,19 @@ export function LeadsPage() {
 
   const columns: ProColumns<Lead>[] = [
     { dataIndex: 'keyword', title: t('common:search'), hideInTable: true, valueType: 'text', fieldProps: { placeholder: t('leads:searchPlaceholder') } },
-    { dataIndex: 'status', title: t('leads:status'), width: 110, valueType: 'select', valueEnum: Object.fromEntries(STATUS_OPTIONS.map((o) => [o.value, { text: o.label }])), render: (_, r) => <Tag>{r.status}</Tag> },
-    { dataIndex: 'source', title: t('leads:source'), width: 100, valueType: 'select', valueEnum: Object.fromEntries(SOURCE_OPTIONS.map((o) => [o.value, { text: o.label }])), render: (_, r) => <Tag>{r.source}</Tag> },
-    { dataIndex: 'name', title: t('leads:name'), width: 140 },
-    { dataIndex: 'phone', title: t('leads:phone'), width: 110 },
-    { dataIndex: 'assignedTo', title: t('leads:assignedTo'), width: 100, ellipsis: true },
-    { dataIndex: 'createdAt', title: t('leads:createdAt'), width: 150, valueType: 'dateTime', render: (_, r) => new Date(r.createdAt!).toLocaleString() },
+    { dataIndex: 'status', title: t('leads:status'), hideInTable: true, valueType: 'select', valueEnum: Object.fromEntries(STATUS_OPTIONS.map((o) => [o.value, { text: o.label }])), fieldProps: { placeholder: t('leads:filterByStatus') } },
+    { dataIndex: 'source', title: t('leads:source'), hideInTable: true, valueType: 'select', valueEnum: Object.fromEntries(SOURCE_OPTIONS.map((o) => [o.value, { text: o.label }])), fieldProps: { placeholder: t('leads:filterBySource') } },
+    { dataIndex: 'status', title: t('leads:status'), hideInSearch: true, width: 118, valueType: 'select', valueEnum: Object.fromEntries(STATUS_OPTIONS.map((o) => [o.value, { text: o.label }])), render: (_, r) => <Tag color={getLeadStatusTagColor(r.status)}>{STATUS_OPTIONS.find((o) => o.value === r.status)?.label ?? r.status}</Tag> },
+    { dataIndex: 'source', title: t('leads:source'), hideInSearch: true, width: 100, valueType: 'select', valueEnum: Object.fromEntries(SOURCE_OPTIONS.map((o) => [o.value, { text: o.label }])), render: (_, r) => <Tag color={getLeadSourceTagColor(r.source)}>{SOURCE_OPTIONS.find((o) => o.value === r.source)?.label ?? r.source}</Tag> },
+    { dataIndex: 'name', title: t('leads:name'), width: 140, ellipsis: true, render: (_, r) => <span style={{ fontWeight: 500 }}>{r.name || '—'}</span> },
+    { dataIndex: 'phone', title: t('leads:phone'), width: 120, render: (_, r) => r.phone ? <a href={`tel:${r.phone}`}>{r.phone}</a> : '—' },
+    { dataIndex: 'assignedTo', title: t('leads:assignedTo'), width: 110, ellipsis: true, render: (_, r) => r.assignedTo ?? '—' },
+    { dataIndex: 'createdAt', title: t('leads:createdAt'), width: 150, valueType: 'dateTime', render: (_, r) => r.createdAt ? formatDateTime(r.createdAt) : '—' },
     {
       title: t('common:actions'),
       valueType: 'option',
-      width: 80,
+      width: 90,
+      fixed: 'right',
       render: (_, r) => [
         <Button type="link" size="small" key="view" icon={<EyeOutlined />} onClick={() => navigate(`/leads/${r.id}`)}>
           {t('common:view')}
@@ -99,7 +106,7 @@ export function LeadsPage() {
   ]
 
   return (
-    <>
+    <div className="leads-page">
       <ProTable<Lead>
         actionRef={actionRef}
         rowKey="id"
@@ -117,9 +124,13 @@ export function LeadsPage() {
           return { data: res.items, success: true, total: res.total }
         }}
         columns={columns}
-        search={{ labelWidth: 'auto', defaultCollapsed: false }}
+        scroll={{ x: 920 }}
+        search={{ labelWidth: 'auto', defaultCollapsed: isMobile }}
         form={{ initialValues: { status: undefined, source: undefined } }}
         locale={{ emptyText: t('leads:emptyText') }}
+        options={{ fullScreen: true, reload: true, density: true }}
+        cardProps={{ bordered: true, style: { borderRadius: 8 } }}
+        tableStyle={{ minWidth: 900 }}
         toolBarRender={() => [
           <Button key="add" type="primary" icon={<PlusOutlined />} onClick={() => { setModalOpen(true); loadFormData(); }}>
             {t('leads:addLead')}
@@ -129,6 +140,6 @@ export function LeadsPage() {
       <Modal title={t('leads:modalTitle')} open={modalOpen} onCancel={() => setModalOpen(false)} footer={null} width={520} destroyOnClose>
         <LeadForm profiles={profiles} customers={customers} vehicles={vehicles} onFinish={handleCreate} loading={saving} onCancel={() => setModalOpen(false)} />
       </Modal>
-    </>
+    </div>
   )
 }

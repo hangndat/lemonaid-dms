@@ -2,7 +2,7 @@
   {
     "id": "profile-admin",
     "fullName": "James Tan",
-    "email": "james.tan@company.sg",
+    "email": "james.tan@gmail.com",
     "role": "admin",
     "createdAt": "2024-03-01T00:00:00.000Z",
     "updatedAt": "2024-03-01T00:00:00.000Z"
@@ -10,7 +10,7 @@
   {
     "id": "profile-manager",
     "fullName": "Sarah Lim",
-    "email": "sarah.lim@company.sg",
+    "email": "sarah.lim@outlook.com",
     "role": "manager",
     "createdAt": "2024-03-02T00:00:00.000Z",
     "updatedAt": "2024-03-02T00:00:00.000Z"
@@ -18,7 +18,7 @@
   {
     "id": "profile-sales-1",
     "fullName": "Wei Ming Chen",
-    "email": "weiming@company.sg",
+    "email": "weiming.chen@gmail.com",
     "role": "sales",
     "createdAt": "2024-03-03T00:00:00.000Z",
     "updatedAt": "2024-03-03T00:00:00.000Z"
@@ -26,7 +26,7 @@
   {
     "id": "profile-sales-2",
     "fullName": "Priya Rajan",
-    "email": "priya@company.sg",
+    "email": "priya.rajan@gmail.com",
     "role": "sales",
     "createdAt": "2024-03-04T00:00:00.000Z",
     "updatedAt": "2024-03-04T00:00:00.000Z"
@@ -34,7 +34,7 @@
   {
     "id": "profile-sales-3",
     "fullName": "David Wong",
-    "email": "david.wong@company.sg",
+    "email": "david.wong@icloud.com",
     "role": "sales",
     "createdAt": "2024-03-05T00:00:00.000Z",
     "updatedAt": "2024-03-05T00:00:00.000Z"

@@ -4,6 +4,8 @@
   "addLead": "เพิ่มลีด",
   "emptyText": "ยังไม่มีลีด คลิก \"เพิ่มลีด\" เพื่อสร้าง",
   "searchPlaceholder": "ชื่อ เบอร์ อีเมล...",
+  "filterByStatus": "ทุกสถานะ",
+  "filterBySource": "ทุกแหล่ง",
   "status": "สถานะ",
   "source": "แหล่งที่มา",
   "name": "ชื่อ",

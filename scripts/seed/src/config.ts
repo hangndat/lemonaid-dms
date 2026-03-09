@@ -9,12 +9,12 @@ export const CONFIG = {
   startDate: new Date('2024-03-01T00:00:00.000Z'),
   endDate: new Date('2025-03-09T23:59:59.999Z'),
 
-  /** Entity counts (moderate size for demo) */
+  /** Entity counts (~10x for larger demo) */
   profiles: 5,
-  customers: 60,
-  vehicles: 100,
-  leads: 150,
-  deals: 90,
+  customers: 600,
+  vehicles: 1000,
+  leads: 1500,
+  deals: 900,
 
   /** Lead source distribution (weights sum to 100) */
   leadSourceWeights: {

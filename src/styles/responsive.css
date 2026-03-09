@@ -1,0 +1,100 @@
+/* Responsive: content padding */
+@media (max-width: 768px) {
+  .app-layout-responsive .ant-pro-layout-content {
+    padding: 12px !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .app-layout-responsive .ant-pro-layout-content {
+    padding: 8px !important;
+  }
+}
+
+/* Modal: full width on small screens */
+@media (max-width: 576px) {
+  .ant-modal {
+    max-width: calc(100vw - 16px) !important;
+    top: 8px !important;
+    margin-bottom: 8px;
+    padding-bottom: 0;
+  }
+  .ant-modal-wrap {
+    padding: 0 8px;
+  }
+  .ant-modal-body {
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+  }
+}
+
+/* ProTable: search form & toolbar stack on mobile */
+@media (max-width: 768px) {
+  .ant-pro-table-list-toolbar {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .ant-pro-table-list-toolbar-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ant-pro-table-search {
+    margin-bottom: 8px;
+  }
+}
+
+/* PageContainer title wrap on small screens */
+@media (max-width: 576px) {
+  .ant-page-header-heading-title {
+    font-size: 18px;
+  }
+}
+
+/* List pages (Leads, Inventory, Deals, Customers): card and table */
+.leads-page .ant-pro-table .ant-card,
+.inventory-page .ant-pro-table .ant-card,
+.deals-page .ant-pro-table .ant-card,
+.customers-page .ant-pro-table .ant-card {
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+.leads-page .ant-table-tbody > tr:hover > td,
+.inventory-page .ant-table-tbody > tr:hover > td,
+.deals-page .ant-table-tbody > tr:hover > td,
+.customers-page .ant-table-tbody > tr:hover > td {
+  background: rgba(232, 185, 35, 0.06);
+}
+.leads-page .ant-table-tbody > tr > td a[href^="tel:"],
+.leads-page .ant-table-tbody > tr > td a[href^="mailto:"],
+.customers-page .ant-table-tbody > tr > td a[href^="tel:"],
+.customers-page .ant-table-tbody > tr > td a[href^="mailto:"] {
+  color: inherit;
+  text-decoration: none;
+}
+.leads-page .ant-table-tbody > tr > td a[href^="tel:"]:hover,
+.leads-page .ant-table-tbody > tr > td a[href^="mailto:"]:hover,
+.customers-page .ant-table-tbody > tr > td a[href^="tel:"]:hover,
+.customers-page .ant-table-tbody > tr > td a[href^="mailto:"]:hover {
+  text-decoration: underline;
+}
+
+/* Dashboard: card consistency */
+.dashboard-page .ant-pro-card {
+  border-radius: 8px;
+}
+
+/* Detail pages: card consistency */
+.lead-detail-page .ant-pro-card,
+.deal-detail-page .ant-pro-card,
+.inventory-detail-page .ant-pro-card,
+.customer-detail-page .ant-pro-card {
+  border-radius: 8px;
+}
+.customer-detail-page .ant-tabs-content {
+  margin-top: 12px;
+}
+
+/* Login page */
+.login-page .login-card.ant-pro-card {
+  border-radius: 12px;
+}

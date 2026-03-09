@@ -2,7 +2,7 @@
 
 ## Trạng thái hiện tại (đã triển khai)
 
-**MVP mock đã xong.** Ứng dụng chạy với seed JSON + localStorage, đủ luồng nghiệp vụ.
+**MVP mock đã xong.** Ứng dụng chạy với seed JSON + localStorage, đủ luồng nghiệp vụ. **i18n (en/th/vi)** đã tích hợp (language switcher, namespace theo trang). **Crawler Bonbanh** có sẵn tại `scripts/crawler` (`npm run crawl`, `npm run crawl:import`).
 
 | Phần | Trạng thái |
 |------|-------------|
@@ -13,6 +13,7 @@
 | **Phase 4 — Deals** | ✅ Thêm deal (modal), tạo từ lead (prefill), Sửa stage/giá/lostReason, timeline + stage_change |
 | **Phase 5 — Dashboard** | ✅ Thống kê xe/lead/deal, conversion rate, doanh số theo nhân viên (hiển thị tên) |
 | **Phase 6 — Polish** | ✅ Confirm xóa xe, format tiền/ngày, loading states cơ bản |
+| **i18n** | ✅ react-i18next, locales en/th/vi (common, nav, auth, dashboard, inventory, leads, deals, customers), ConfigProvider locale, language switcher |
 
 **Chạy:** `npm run dev` → đăng nhập mock (chọn user) → dùng đầy đủ Kho xe, Lead, Deal, Khách hàng, Tổng quan.
 
@@ -337,6 +338,47 @@ MVP có 2 lựa chọn, chọn 1 để nhanh:
 - **Dashboard**
   - [x] Các thống kê hiển thị và tính đúng theo seed
   - [x] Conversion rate định nghĩa rõ; sales theo tên nhân viên
+
+---
+
+## Phần tiếp theo (Roadmap)
+
+Ưu tiên thực hiện:
+
+1. **UX Phase 1 — Phản hồi & thông báo** (cao)  
+   - Success message sau tạo/sửa/xóa; error handling (message.error) khi repo/async lỗi.  
+   - Chi tiết: `docs/UX_ANALYSIS_AND_IMPROVEMENT_PLAN.md` Phase 1.
+
+2. **UX Phase 2 — Hiển thị tên thay vì ID** (cao)  
+   - Lead/Deal detail: hiển thị tên nhân viên, tên khách, xe (brand/model) thay vì raw ID.  
+   - Chi tiết: `docs/UX_ANALYSIS_AND_IMPROVEMENT_PLAN.md` Phase 2.
+
+3. **i18n Polish** (tùy chọn)  
+   - formatDateTime/format number theo locale; message.success/error dùng key; kiểm tra placeholder/empty.  
+   - Chi tiết: `docs/I18N_PLAN.md` Phase 9.
+
+4. **Supabase Phase A — DB**  
+   - Tạo schema tables (theo `docs/IMPLEMENTATION_PLAN.md` §5).  
+   - Viết `SupabaseRepos` song song với MockRepos.  
+   - Cờ `DATA_PROVIDER=mock|supabase` (env) để switch.  
+   - So sánh behavior mock vs supabase trên cùng UI.
+
+5. **Supabase Phase B — Auth + RLS**  
+   - Thay mock auth bằng Supabase Auth.  
+   - Bật RLS “authenticated only” (1 dealer).  
+   - Map `createdBy`/`assignedTo` sang `auth.uid()` / profiles.
+
+6. **Supabase Phase C — Storage ảnh**  
+   - Bucket `vehicle-photos`; upload thật, lưu `file_path`; hiển thị qua signed URL.
+
+7. **Crawler** (bảo trì)  
+   - Cập nhật `scripts/crawler/src/selectors-bonbanh.ts` khi Bonbanh đổi layout.  
+   - (Tùy chọn) Thêm nguồn Chợ Tốt.  
+   - Chi tiết: `docs/INVENTORY_CRAWL_PLAN.md`.
+
+8. **Seed 1 năm** (tùy chọn)  
+   - Singapore Dealers → Thái Lan, 12 tháng giả lập.  
+   - Chi tiết: `docs/SEEDING_PLAN.md`.
 
 ---
 

@@ -11,9 +11,11 @@ import {
   LogoutOutlined,
   GlobalOutlined,
   ReloadOutlined,
+  DollarOutlined,
 } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
+import { useCurrency, type Currency } from '../context/CurrencyContext'
 import { LEMONAIDE } from '../theme/lemonaide'
 import { LANG_STORAGE_KEY } from '../i18n'
 
@@ -23,11 +25,19 @@ const LANG_OPTIONS = [
   { key: 'vi', label: 'VI' },
 ]
 
+const CURRENCY_OPTIONS: { key: Currency; labelKey: string }[] = [
+  { key: 'VND', labelKey: 'nav:currencyVnd' },
+  { key: 'USD', labelKey: 'nav:currencyUsd' },
+  { key: 'SGD', labelKey: 'nav:currencySgd' },
+  { key: 'THB', labelKey: 'nav:currencyThb' },
+]
+
 export function AppLayout() {
   const navigate = useNavigate()
   const location = useLocation()
   const { t, i18n } = useTranslation(['nav', 'common'])
   const { user, logout, refreshUser } = useAuth()
+  const { currency, setCurrency } = useCurrency()
   const [logoError, setLogoError] = useState(false)
 
   const route = {
@@ -49,6 +59,16 @@ export function AppLayout() {
   return (
     <ProLayout
       title={t('common:appName')}
+      breakpoint="lg"
+      layout="side"
+      siderWidth={220}
+      fixSiderbar
+      contentStyle={{
+        padding: 24,
+        margin: 0,
+        minHeight: 'calc(100vh - 48px)',
+        background: LEMONAIDE.contentBg,
+      }}
       logo={
         logoError ? (
           <div
@@ -76,9 +96,6 @@ export function AppLayout() {
           />
         )
       }
-      layout="side"
-      siderWidth={220}
-      fixSiderbar
       token={{
         header: {
           colorBgHeader: '#fff',
@@ -94,9 +111,31 @@ export function AppLayout() {
         },
       }}
       menuHeaderRender={(logo) => (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, minHeight: 48 }}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 8,
+            minHeight: 48,
+            minWidth: 0,
+            overflow: 'hidden',
+            paddingRight: 8,
+          }}
+        >
           {logo}
-          <span style={{ color: '#fff', fontWeight: 600, fontSize: 16 }}>{t('common:appName')}</span>
+          <span
+            style={{
+              color: '#fff',
+              fontWeight: 600,
+              fontSize: 16,
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              minWidth: 0,
+            }}
+          >
+            {t('common:appName')}
+          </span>
         </div>
       )}
       route={route}
@@ -124,6 +163,13 @@ export function AppLayout() {
                   onClick: () => changeLang(o.key),
                 })),
                 { type: 'divider' as const },
+                ...CURRENCY_OPTIONS.map((o) => ({
+                  key: `currency-${o.key}`,
+                  icon: currency === o.key ? <DollarOutlined /> : undefined,
+                  label: t(o.labelKey),
+                  onClick: () => setCurrency(o.key),
+                })),
+                { type: 'divider' as const },
                 {
                   key: 'reloadData',
                   icon: <ReloadOutlined />,
@@ -147,12 +193,7 @@ export function AppLayout() {
           </Dropdown>
         ),
       }}
-      contentStyle={{
-        padding: 24,
-        margin: 0,
-        minHeight: 'calc(100vh - 48px)',
-        background: LEMONAIDE.contentBg,
-      }}
+      className="app-layout-responsive"
     >
       <Outlet />
     </ProLayout>

@@ -1,10 +1,10 @@
-import type { Lead } from '../types.js'
+import type { Lead } from '../types'
 import { CONFIG } from '../config.js'
 import { id, pick, dateBetween, toISO, weightedPick, random } from '../utils.js'
-import type { Customer } from '../types.js'
-import type { Vehicle } from '../types.js'
-import type { Profile } from '../types.js'
-import type { LeadSource, LeadStatus } from '../types.js'
+import type { Customer } from '../types'
+import type { Vehicle } from '../types'
+import type { Profile } from '../types'
+import type { LeadSource, LeadStatus } from '../types'
 
 export function generateLeads(
   customers: Customer[],

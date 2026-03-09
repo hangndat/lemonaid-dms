@@ -4,6 +4,7 @@
   "addDeal": "Thêm deal",
   "addDealFromLead": "Tạo deal từ lead",
   "emptyText": "Chưa có deal nào. Bấm \"Thêm deal\" để tạo.",
+  "filterByStage": "Tất cả giai đoạn",
   "stage": "Giai đoạn",
   "expectedPriceTr": "Giá dự kiến (tr)",
   "finalPriceTr": "Giá chốt (tr)",

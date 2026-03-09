@@ -5,5 +5,10 @@
   "deals": "ดีล / พipeline",
   "customers": "ลูกค้า",
   "reloadData": "โหลดข้อมูลใหม่",
-  "logout": "ออกจากระบบ"
+  "logout": "ออกจากระบบ",
+  "currency": "สกุลเงิน",
+  "currencyVnd": "VND (ล้าน)",
+  "currencyUsd": "USD",
+  "currencySgd": "SGD",
+  "currencyThb": "THB (บาท)"
 }

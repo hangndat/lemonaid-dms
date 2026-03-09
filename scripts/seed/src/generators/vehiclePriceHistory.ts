@@ -1,6 +1,6 @@
-import type { VehiclePriceHistory } from '../types.js'
+import type { VehiclePriceHistory } from '../types'
 import { id, toISO, random } from '../utils.js'
-import type { Vehicle } from '../types.js'
+import type { Vehicle } from '../types'
 
 export function generateVehiclePriceHistory(vehicles: Vehicle[], adminId: string): VehiclePriceHistory[] {
   const list: VehiclePriceHistory[] = []

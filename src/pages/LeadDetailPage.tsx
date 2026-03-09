@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { ProCard, PageContainer } from '@ant-design/pro-components'
-import { Descriptions, Button, Input, List, Space, Spin, message, Empty } from 'antd'
+import { Descriptions, Button, Input, List, Space, Spin, message, Empty, Tag } from 'antd'
 import { ArrowLeftOutlined, EditOutlined, SwapOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { leadsRepo, profilesRepo, customersRepo, vehiclesRepo } from '../repos'
@@ -11,6 +11,8 @@ import type { Profile } from '../types'
 import type { Customer } from '../types'
 import type { Vehicle } from '../types'
 import { useAuth } from '../context/AuthContext'
+import { formatDateTime } from '../utils/format'
+import { getLeadStatusTagColor, getLeadSourceTagColor } from '../utils/tagColors'
 
 const { TextArea } = Input
 
@@ -121,7 +123,7 @@ export function LeadDetailPage() {
   if (editing) {
     return (
       <PageContainer title={t('leads:editLead')} onBack={() => setEditing(false)} backIcon={<ArrowLeftOutlined />}>
-        <ProCard>
+        <ProCard style={{ borderRadius: 8 }}>
           <LeadForm
             initial={lead}
             profiles={profiles}
@@ -136,7 +138,24 @@ export function LeadDetailPage() {
     )
   }
 
+  const SOURCE_LABELS: Record<string, string> = {
+    facebook: t('leads:sourceFacebook'),
+    website: t('leads:sourceWebsite'),
+    marketplace: t('leads:sourceMarketplace'),
+    walk_in: t('leads:sourceWalkIn'),
+    hotline: t('leads:sourceHotline'),
+  }
+  const STATUS_LABELS: Record<string, string> = {
+    new: t('leads:statusNew'),
+    contacted: t('leads:statusContacted'),
+    test_drive: t('leads:statusTestDrive'),
+    negotiation: t('leads:statusNegotiation'),
+    closed: t('leads:statusClosed'),
+    lost: t('leads:statusLost'),
+  }
+
   return (
+    <div className="lead-detail-page">
     <PageContainer
       title={lead.name || lead.phone || lead.id}
       onBack={() => navigate('/leads')}
@@ -156,13 +175,13 @@ export function LeadDetailPage() {
         </Button>,
       ]}
     >
-      <ProCard title={t('leads:info')} style={{ marginBottom: 16 }}>
+      <ProCard title={t('leads:info')} style={{ marginBottom: 16, borderRadius: 8 }} bordered>
         <Descriptions column={2} size="small">
-          <Descriptions.Item label={t('leads:source')}>{lead.source}</Descriptions.Item>
-          <Descriptions.Item label={t('leads:status')}>{lead.status}</Descriptions.Item>
+          <Descriptions.Item label={t('leads:source')}><Tag color={getLeadSourceTagColor(lead.source)}>{SOURCE_LABELS[lead.source] ?? lead.source}</Tag></Descriptions.Item>
+          <Descriptions.Item label={t('leads:status')}><Tag color={getLeadStatusTagColor(lead.status)}>{STATUS_LABELS[lead.status] ?? lead.status}</Tag></Descriptions.Item>
           <Descriptions.Item label={t('leads:name')}>{lead.name ?? t('common:dash')}</Descriptions.Item>
-          <Descriptions.Item label={t('leads:phone')}>{lead.phone ?? t('common:dash')}</Descriptions.Item>
-          <Descriptions.Item label={t('leads:email')}>{lead.email ?? t('common:dash')}</Descriptions.Item>
+          <Descriptions.Item label={t('leads:phone')}>{lead.phone ? <a href={`tel:${lead.phone}`}>{lead.phone}</a> : t('common:dash')}</Descriptions.Item>
+          <Descriptions.Item label={t('leads:email')}>{lead.email ? <a href={`mailto:${lead.email}`}>{lead.email}</a> : t('common:dash')}</Descriptions.Item>
           <Descriptions.Item label={t('leads:assignedToLabel')}>
             {lead.assignedTo
               ? (profiles.find((p) => p.id === lead.assignedTo)?.fullName ?? lead.assignedTo)
@@ -192,7 +211,7 @@ export function LeadDetailPage() {
           <Descriptions.Item label={t('leads:notes')} span={2}>{lead.notes ?? t('common:dash')}</Descriptions.Item>
         </Descriptions>
       </ProCard>
-      <ProCard title={t('leads:journalTitle')}>
+      <ProCard title={t('leads:journalTitle')} style={{ borderRadius: 8 }} bordered>
         <Space direction="vertical" style={{ width: '100%' }} size="small">
           <TextArea
             rows={3}
@@ -211,7 +230,7 @@ export function LeadDetailPage() {
           renderItem={(item) => (
             <List.Item>
               <div>
-                <strong>{item.type}</strong> — {new Date(item.createdAt).toLocaleString('vi-VN')}
+                <strong>{item.type}</strong> — {formatDateTime(item.createdAt)}
                 {item.content && <div style={{ marginTop: 4 }}>{item.content}</div>}
               </div>
             </List.Item>
@@ -219,5 +238,6 @@ export function LeadDetailPage() {
         />
       </ProCard>
     </PageContainer>
+    </div>
   )
 }

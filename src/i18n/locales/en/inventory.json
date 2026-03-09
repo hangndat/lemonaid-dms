@@ -4,6 +4,7 @@
   "addVehicle": "Add vehicle",
   "emptyText": "No vehicles yet. Click \"Add vehicle\" to create.",
   "searchPlaceholder": "VIN, brand, model...",
+  "filterByStatus": "All statuses",
   "status": "Status",
   "statusDraft": "Draft",
   "statusAvailable": "Available",

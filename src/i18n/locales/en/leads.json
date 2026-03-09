@@ -4,6 +4,8 @@
   "addLead": "Add lead",
   "emptyText": "No leads yet. Click \"Add lead\" to create.",
   "searchPlaceholder": "Name, phone, email...",
+  "filterByStatus": "All statuses",
+  "filterBySource": "All sources",
   "status": "Status",
   "source": "Source",
   "name": "Name",

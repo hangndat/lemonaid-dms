@@ -4,6 +4,7 @@
   "addVehicle": "เพิ่มรถ",
   "emptyText": "ยังไม่มีรถ คลิก \"เพิ่มรถ\" เพื่อสร้าง",
   "searchPlaceholder": "VIN ยี่ห้อ รุ่น...",
+  "filterByStatus": "ทุกสถานะ",
   "status": "สถานะ",
   "statusDraft": "ฉบับร่าง",
   "statusAvailable": "พร้อมขาย",

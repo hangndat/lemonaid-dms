@@ -1,8 +1,8 @@
-import type { LeadActivity } from '../types.js'
+import type { LeadActivity } from '../types'
 import { CONFIG } from '../config.js'
 import { id, pick, int, dateBetween, toISO } from '../utils.js'
-import type { Lead } from '../types.js'
-import type { LeadActivityType } from '../types.js'
+import type { Lead } from '../types'
+import type { LeadActivityType } from '../types'
 
 const NOTE_TEMPLATES = [
   'Customer inquired about pricing and COE.',

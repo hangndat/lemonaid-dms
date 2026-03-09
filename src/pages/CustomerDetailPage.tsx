@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { ProCard, PageContainer } from '@ant-design/pro-components'
-import { Descriptions, Button, Tabs, Table, Spin, message, Empty } from 'antd'
+import { Descriptions, Button, Tabs, Table, Spin, message, Empty, Tag } from 'antd'
 import { ArrowLeftOutlined, EditOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { customersRepo, leadsRepo, dealsRepo } from '../repos'
 import { CustomerForm } from '../components/CustomerForm'
 import type { Customer, Lead, Deal } from '../types'
+import { formatDateTime } from '../utils/format'
+import { getLeadStatusTagColor, getLeadSourceTagColor, getDealStageTagColor } from '../utils/tagColors'
+import { useCurrency } from '../context/CurrencyContext'
 
 export function CustomerDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { t } = useTranslation(['customers', 'common'])
+  const { formatPrice } = useCurrency()
   const [customer, setCustomer] = useState<Customer | null>(null)
   const [leads, setLeads] = useState<Lead[]>([])
   const [deals, setDeals] = useState<Deal[]>([])
@@ -78,7 +82,7 @@ export function CustomerDetailPage() {
   if (editing) {
     return (
       <PageContainer title={t('customers:editCustomer')} onBack={() => setEditing(false)} backIcon={<ArrowLeftOutlined />}>
-        <ProCard>
+        <ProCard style={{ borderRadius: 8 }}>
           <CustomerForm
             initial={customer}
             loading={saving}
@@ -95,84 +99,93 @@ export function CustomerDetailPage() {
       key: 'info',
       label: t('customers:info'),
       children: (
-        <Descriptions column={2} size="small">
+        <ProCard bordered style={{ borderRadius: 8 }}>
+          <Descriptions column={2} size="small">
             <Descriptions.Item label={t('customers:name')}>{customer.name}</Descriptions.Item>
-            <Descriptions.Item label={t('customers:phone')}>{customer.phone ?? t('common:dash')}</Descriptions.Item>
-            <Descriptions.Item label={t('customers:email')}>{customer.email ?? t('common:dash')}</Descriptions.Item>
+            <Descriptions.Item label={t('customers:phone')}>{customer.phone ? <a href={`tel:${customer.phone}`}>{customer.phone}</a> : t('common:dash')}</Descriptions.Item>
+            <Descriptions.Item label={t('customers:email')}>{customer.email ? <a href={`mailto:${customer.email}`}>{customer.email}</a> : t('common:dash')}</Descriptions.Item>
             <Descriptions.Item label={t('customers:notes')} span={2}>{customer.notes ?? t('common:dash')}</Descriptions.Item>
-        </Descriptions>
+          </Descriptions>
+        </ProCard>
       ),
     },
     {
       key: 'leads',
       label: t('customers:leadsTab', { count: leads.length }),
       children: (
-        <Table
-          size="small"
-          rowKey="id"
-          dataSource={leads}
-          columns={[
-            { dataIndex: 'source', title: t('customers:source') },
-            { dataIndex: 'status', title: t('customers:status') },
-            { dataIndex: 'createdAt', title: t('customers:createdAt'), render: (v: string) => new Date(v).toLocaleString() },
-            {
-              title: '',
-              render: (_: unknown, r: Lead) => (
-                <Button type="link" size="small" onClick={() => navigate(`/leads/${r.id}`)}>
-                  {t('common:view')}
-                </Button>
-              ),
-            },
-          ]}
-          pagination={false}
-        />
+        <ProCard bordered style={{ borderRadius: 8 }}>
+          <Table
+            size="small"
+            rowKey="id"
+            dataSource={leads}
+            columns={[
+              { dataIndex: 'source', title: t('customers:source'), render: (_: unknown, r: Lead) => <Tag color={getLeadSourceTagColor(r.source)}>{r.source}</Tag> },
+              { dataIndex: 'status', title: t('customers:status'), render: (_: unknown, r: Lead) => <Tag color={getLeadStatusTagColor(r.status)}>{r.status}</Tag> },
+              { dataIndex: 'createdAt', title: t('customers:createdAt'), render: (v: string) => formatDateTime(v) },
+              {
+                title: '',
+                render: (_: unknown, r: Lead) => (
+                  <Button type="link" size="small" onClick={() => navigate(`/leads/${r.id}`)}>
+                    {t('common:view')}
+                  </Button>
+                ),
+              },
+            ]}
+            pagination={false}
+          />
+        </ProCard>
       ),
     },
     {
       key: 'deals',
       label: t('customers:dealsTab', { count: deals.length }),
       children: (
-        <Table
-          size="small"
-          rowKey="id"
-          dataSource={deals}
-          columns={[
-            { dataIndex: 'stage', title: t('customers:stage') },
-            { dataIndex: 'expectedPrice', title: t('customers:expectedPrice'), render: (v: number) => (v != null ? (v / 1_000_000).toFixed(0) + ' tr' : t('common:dash')) },
-            { dataIndex: 'finalPrice', title: t('customers:finalPrice'), render: (v: number) => (v != null ? (v / 1_000_000).toFixed(0) + ' tr' : t('common:dash')) },
-            {
-              title: '',
-              render: (_: unknown, r: Deal) => (
-                <Button type="link" size="small" onClick={() => navigate(`/deals/${r.id}`)}>
-                  {t('common:view')}
-                </Button>
-              ),
-            },
-          ]}
-          pagination={false}
-        />
+        <ProCard bordered style={{ borderRadius: 8 }}>
+          <Table
+            size="small"
+            rowKey="id"
+            dataSource={deals}
+            columns={[
+              { dataIndex: 'stage', title: t('customers:stage'), render: (_: unknown, r: Deal) => <Tag color={getDealStageTagColor(r.stage)}>{r.stage}</Tag> },
+              { dataIndex: 'expectedPrice', title: t('customers:expectedPrice'), render: (v: number) => formatPrice(v) },
+              { dataIndex: 'finalPrice', title: t('customers:finalPrice'), render: (v: number) => formatPrice(v) },
+              {
+                title: '',
+                render: (_: unknown, r: Deal) => (
+                  <Button type="link" size="small" onClick={() => navigate(`/deals/${r.id}`)}>
+                    {t('common:view')}
+                  </Button>
+                ),
+              },
+            ]}
+            pagination={false}
+          />
+        </ProCard>
       ),
     },
     {
       key: 'purchase',
       label: t('customers:purchaseTab', { count: purchaseHistory.length }),
       children: (
-        <Table
-          size="small"
-          rowKey="id"
-          dataSource={purchaseHistory}
-          columns={[
-            { dataIndex: 'vehicleId', title: t('customers:vehicle') },
-            { dataIndex: 'finalPrice', title: t('customers:finalPriceVnd'), render: (v: number) => (v != null ? (v / 1_000_000).toFixed(0) + ' tr' : t('common:dash')) },
-            { dataIndex: 'updatedAt', title: t('customers:updatedAt'), render: (v: string) => new Date(v).toLocaleString() },
-          ]}
-          pagination={false}
-        />
+        <ProCard bordered style={{ borderRadius: 8 }}>
+          <Table
+            size="small"
+            rowKey="id"
+            dataSource={purchaseHistory}
+            columns={[
+              { dataIndex: 'vehicleId', title: t('customers:vehicle') },
+              { dataIndex: 'finalPrice', title: t('customers:finalPriceVnd'), render: (v: number) => formatPrice(v) },
+              { dataIndex: 'updatedAt', title: t('customers:updatedAt'), render: (v: string) => formatDateTime(v) },
+            ]}
+            pagination={false}
+          />
+        </ProCard>
       ),
     },
   ]
 
   return (
+    <div className="customer-detail-page">
     <PageContainer
       title={customer.name}
       onBack={() => navigate('/customers')}
@@ -191,5 +204,6 @@ export function CustomerDetailPage() {
     >
       <Tabs items={tabItems} />
     </PageContainer>
+    </div>
   )
 }

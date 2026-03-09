@@ -5,7 +5,9 @@ import type { ActionType, ProColumns } from '@ant-design/pro-components'
 import { Button, Tag, Modal, message } from 'antd'
 import { EyeOutlined, PlusOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
+import { useCurrency } from '../context/CurrencyContext'
 import { dealsRepo, profilesRepo, leadsRepo, customersRepo, vehiclesRepo } from '../repos'
+import { useIsMobile } from '../hooks/useIsMobile'
 import { DealForm } from '../components/DealForm'
 import type { Deal, DealStage } from '../types'
 import type { Lead } from '../types'
@@ -13,12 +15,16 @@ import type { Profile } from '../types'
 import type { Customer } from '../types'
 import type { Vehicle } from '../types'
 import { useAuth } from '../context/AuthContext'
+import { formatDate } from '../utils/format'
+import { getDealStageTagColor } from '../utils/tagColors'
 
 export function DealsPage() {
   const navigate = useNavigate()
   const location = useLocation()
   const { t } = useTranslation(['deals', 'common'])
   const { user } = useAuth()
+  const { formatPrice } = useCurrency()
+  const isMobile = useIsMobile()
   const actionRef = useRef<ActionType>(null)
 
   const STAGE_OPTIONS: { value: DealStage; label: string }[] = [
@@ -101,26 +107,28 @@ export function DealsPage() {
     : null
 
   const columns: ProColumns<Deal>[] = [
-    { dataIndex: 'stage', title: t('deals:stage'), width: 120, valueType: 'select', valueEnum: Object.fromEntries(STAGE_OPTIONS.map((o) => [o.value, { text: o.label }])), render: (_, r) => <Tag>{r.stage}</Tag> },
+    { dataIndex: 'stage', title: t('deals:stage'), hideInTable: true, valueType: 'select', valueEnum: Object.fromEntries(STAGE_OPTIONS.map((o) => [o.value, { text: o.label }])), fieldProps: { placeholder: t('deals:filterByStage') } },
+    { dataIndex: 'stage', title: t('deals:stage'), hideInSearch: true, width: 130, valueType: 'select', valueEnum: Object.fromEntries(STAGE_OPTIONS.map((o) => [o.value, { text: o.label }])), render: (_, r) => <Tag color={getDealStageTagColor(r.stage)}>{STAGE_OPTIONS.find((o) => o.value === r.stage)?.label ?? r.stage}</Tag> },
     { dataIndex: 'id', title: 'ID', width: 100, ellipsis: true, render: (_, r) => r.id.slice(0, 8) },
-    { dataIndex: 'assignedTo', title: t('deals:assignedTo'), width: 120, ellipsis: true },
+    { dataIndex: 'assignedTo', title: t('deals:assignedTo'), width: 120, ellipsis: true, render: (_, r) => r.assignedTo ?? '—' },
     {
       dataIndex: 'expectedPrice',
       title: t('deals:expectedPriceTr'),
       width: 120,
-      render: (_, r) => (r.expectedPrice != null ? (r.expectedPrice / 1_000_000).toFixed(0) : t('common:dash')),
+      render: (_, r) => formatPrice(r.expectedPrice),
     },
     {
       dataIndex: 'finalPrice',
       title: t('deals:finalPriceTr'),
       width: 110,
-      render: (_, r) => (r.finalPrice != null ? (r.finalPrice / 1_000_000).toFixed(0) : t('common:dash')),
+      render: (_, r) => formatPrice(r.finalPrice),
     },
-    { dataIndex: 'expectedCloseDate', title: t('deals:expectedCloseDate'), width: 120 },
+    { dataIndex: 'expectedCloseDate', title: t('deals:expectedCloseDate'), width: 120, render: (_, r) => (r.expectedCloseDate ? formatDate(r.expectedCloseDate) : '—') },
     {
       title: t('common:actions'),
       valueType: 'option',
-      width: 80,
+      width: 90,
+      fixed: 'right',
       render: (_, r) => [
         <Button type="link" size="small" key="view" icon={<EyeOutlined />} onClick={() => navigate(`/deals/${r.id}`)}>
           {t('common:view')}
@@ -130,7 +138,7 @@ export function DealsPage() {
   ]
 
   return (
-    <>
+    <div className="deals-page">
       <ProTable<Deal>
         actionRef={actionRef}
         rowKey="id"
@@ -144,9 +152,13 @@ export function DealsPage() {
           return { data: res.items, success: true, total: res.total }
         }}
         columns={columns}
-        search={{ labelWidth: 'auto', defaultCollapsed: false }}
+        scroll={{ x: 920 }}
+        search={{ labelWidth: 'auto', defaultCollapsed: isMobile, collapsed: isMobile }}
         form={{ initialValues: { stage: undefined } }}
         locale={{ emptyText: t('deals:emptyText') }}
+        options={{ fullScreen: true, reload: true, density: true }}
+        cardProps={{ bordered: true, style: { borderRadius: 8 } }}
+        tableStyle={{ minWidth: 900 }}
         toolBarRender={() => [
           <Button key="add" type="primary" icon={<PlusOutlined />} onClick={() => { setPrefillLead(null); setModalOpen(true); loadFormData(); }}>
             {t('deals:addDeal')}
@@ -172,6 +184,6 @@ export function DealsPage() {
           onCancel={() => { setModalOpen(false); setPrefillLead(null); }}
         />
       </Modal>
-    </>
+    </div>
   )
 }

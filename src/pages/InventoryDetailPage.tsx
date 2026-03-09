@@ -1,19 +1,23 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { ProCard, PageContainer } from '@ant-design/pro-components'
-import { Descriptions, Button, Table, Image, Spin, Space, Input, Modal, message, Empty } from 'antd'
+import { Descriptions, Button, Table, Image, Spin, Space, Input, Modal, message, Empty, Tag } from 'antd'
 import { ArrowLeftOutlined, EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { vehiclesRepo } from '../repos'
 import { VehicleForm } from '../components/VehicleForm'
 import type { Vehicle, VehiclePhoto, VehiclePriceHistory } from '../types'
 import { useAuth } from '../context/AuthContext'
+import { useCurrency } from '../context/CurrencyContext'
+import { formatDate, formatDateTime } from '../utils/format'
+import { getVehicleStatusTagColor } from '../utils/tagColors'
 
 export function InventoryDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const { t } = useTranslation(['inventory', 'common'])
   const { user } = useAuth()
+  const { formatPrice } = useCurrency()
   const [vehicle, setVehicle] = useState<Vehicle | null>(null)
   const [photos, setPhotos] = useState<VehiclePhoto[]>([])
   const [priceHistory, setPriceHistory] = useState<VehiclePriceHistory[]>([])
@@ -211,8 +215,9 @@ export function InventoryDetailPage() {
         </Button>,
       ]}
     >
+      <div className="inventory-detail-page">
       {(photos.length > 0 || vehicle) && (
-        <ProCard title={t('inventory:photosTitle')} style={{ marginBottom: 16 }}>
+        <ProCard title={t('inventory:photosTitle')} style={{ marginBottom: 16, borderRadius: 8 }} bordered>
           <Space direction="vertical" style={{ width: '100%' }} size="small">
             <Space wrap>
               <Input
@@ -248,9 +253,13 @@ export function InventoryDetailPage() {
           </Space>
         </ProCard>
       )}
-      <ProCard title={t('inventory:info')} style={{ marginBottom: 16 }}>
+      <ProCard title={t('inventory:info')} style={{ marginBottom: 16, borderRadius: 8 }} bordered>
         <Descriptions column={2} size="small">
-          <Descriptions.Item label={t('inventory:status')}>{vehicle.status}</Descriptions.Item>
+          <Descriptions.Item label={t('inventory:status')}>
+            <Tag color={getVehicleStatusTagColor(vehicle.status)}>
+              {vehicle.status === 'draft' ? t('inventory:statusDraft') : vehicle.status === 'available' ? t('inventory:statusAvailable') : vehicle.status === 'reserved' ? t('inventory:statusReserved') : t('inventory:statusSold')}
+            </Tag>
+          </Descriptions.Item>
           <Descriptions.Item label={t('inventory:vin')}>{vehicle.vin ?? t('common:dash')}</Descriptions.Item>
           <Descriptions.Item label={t('inventory:brand')}>{vehicle.brand}</Descriptions.Item>
           <Descriptions.Item label={t('inventory:model')}>{vehicle.model}</Descriptions.Item>
@@ -261,25 +270,26 @@ export function InventoryDetailPage() {
           <Descriptions.Item label={t('inventory:transmission')}>{vehicle.transmission ?? t('common:dash')}</Descriptions.Item>
           <Descriptions.Item label={t('inventory:fuelType')}>{vehicle.fuelType ?? t('common:dash')}</Descriptions.Item>
           <Descriptions.Item label={t('inventory:priceVnd')}>
-            {vehicle.price != null ? (vehicle.price / 1_000_000).toFixed(0) + ' tr' : t('common:dash')}
+            {formatPrice(vehicle.price)}
           </Descriptions.Item>
-          <Descriptions.Item label={t('inventory:stockInDate')}>{vehicle.stockInDate ?? t('common:dash')}</Descriptions.Item>
+          <Descriptions.Item label={t('inventory:stockInDate')}>{vehicle.stockInDate ? formatDate(vehicle.stockInDate) : t('common:dash')}</Descriptions.Item>
           <Descriptions.Item label={t('inventory:description')} span={2}>{vehicle.description ?? t('common:dash')}</Descriptions.Item>
         </Descriptions>
       </ProCard>
-      <ProCard title={t('inventory:priceHistory')}>
+      <ProCard title={t('inventory:priceHistory')} style={{ borderRadius: 8 }} bordered>
         <Table
           size="small"
           rowKey="id"
           dataSource={priceHistory}
           columns={[
-            { dataIndex: 'recordedAt', title: t('inventory:recordedAt'), render: (v: string) => new Date(v).toLocaleString() },
-            { dataIndex: 'price', title: t('inventory:priceVnd'), render: (v: number) => (v / 1_000_000).toFixed(0) + ' tr' },
+            { dataIndex: 'recordedAt', title: t('inventory:recordedAt'), render: (v: string) => formatDateTime(v) },
+            { dataIndex: 'price', title: t('inventory:priceVnd'), render: (v: number) => formatPrice(v) },
             { dataIndex: 'recordedBy', title: t('inventory:recordedBy') },
           ]}
           pagination={false}
         />
       </ProCard>
+      </div>
     </PageContainer>
   )
 }

@@ -1,13 +1,13 @@
-import type { Profile } from '../types.js'
+import type { Profile } from '../types'
 import { CONFIG } from '../config.js'
 import { id, toISO } from '../utils.js'
 
 const PROFILES: Array<{ fullName: string; email: string; role: Profile['role'] }> = [
-  { fullName: 'James Tan', email: 'james.tan@company.sg', role: 'admin' },
-  { fullName: 'Sarah Lim', email: 'sarah.lim@company.sg', role: 'manager' },
-  { fullName: 'Wei Ming Chen', email: 'weiming@company.sg', role: 'sales' },
-  { fullName: 'Priya Rajan', email: 'priya@company.sg', role: 'sales' },
-  { fullName: 'David Wong', email: 'david.wong@company.sg', role: 'sales' },
+  { fullName: 'James Tan', email: 'james.tan@gmail.com', role: 'admin' },
+  { fullName: 'Sarah Lim', email: 'sarah.lim@outlook.com', role: 'manager' },
+  { fullName: 'Wei Ming Chen', email: 'weiming.chen@gmail.com', role: 'sales' },
+  { fullName: 'Priya Rajan', email: 'priya.rajan@gmail.com', role: 'sales' },
+  { fullName: 'David Wong', email: 'david.wong@icloud.com', role: 'sales' },
 ]
 
 const PROFILE_IDS = ['profile-admin', 'profile-manager', 'profile-sales-1', 'profile-sales-2', 'profile-sales-3'] as const

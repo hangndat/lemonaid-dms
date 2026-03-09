@@ -5,5 +5,10 @@
   "deals": "Deal / Pipeline",
   "customers": "Customers",
   "reloadData": "Reload data",
-  "logout": "Log out"
+  "logout": "Log out",
+  "currency": "Currency",
+  "currencyVnd": "VND (triệu)",
+  "currencyUsd": "USD",
+  "currencySgd": "SGD",
+  "currencyThb": "THB"
 }

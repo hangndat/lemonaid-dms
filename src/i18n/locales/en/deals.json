@@ -4,6 +4,7 @@
   "addDeal": "Add deal",
   "addDealFromLead": "Create deal from lead",
   "emptyText": "No deals yet. Click \"Add deal\" to create.",
+  "filterByStage": "All stages",
   "stage": "Stage",
   "expectedPriceTr": "Expected price (M)",
   "finalPriceTr": "Final price (M)",

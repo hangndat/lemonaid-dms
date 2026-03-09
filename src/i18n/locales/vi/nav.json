@@ -5,5 +5,10 @@
   "deals": "Deal / Pipeline",
   "customers": "Khách hàng",
   "reloadData": "Tải lại dữ liệu",
-  "logout": "Đăng xuất"
+  "logout": "Đăng xuất",
+  "currency": "Đơn vị tiền tệ",
+  "currencyVnd": "VNĐ (triệu)",
+  "currencyUsd": "Đô Mỹ (USD)",
+  "currencySgd": "Đô Sing (SGD)",
+  "currencyThb": "Bạt (THB)"
 }

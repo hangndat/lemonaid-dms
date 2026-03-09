@@ -1,8 +1,8 @@
-import type { DealActivity } from '../types.js'
+import type { DealActivity } from '../types'
 import { CONFIG } from '../config.js'
 import { id, pick, int, dateBetween, toISO } from '../utils.js'
-import type { Deal } from '../types.js'
-import type { DealActivityType } from '../types.js'
+import type { Deal } from '../types'
+import type { DealActivityType } from '../types'
 
 const NOTE_TEMPLATES = [
   'Sent quote and financing options.',

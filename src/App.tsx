@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { LEMONAIDE } from './theme/lemonaide'
 import { AuthProvider, useAuth } from './context/AuthContext'
+import { CurrencyProvider } from './context/CurrencyContext'
 import { AppLayout } from './components/AppLayout'
 import { LoginPage } from './pages/LoginPage'
 import { DashboardPage } from './pages/DashboardPage'
@@ -82,7 +83,9 @@ function AppWithLocale() {
     >
       <BrowserRouter>
         <AuthProvider>
-          <AppRoutes />
+          <CurrencyProvider>
+            <AppRoutes />
+          </CurrencyProvider>
         </AuthProvider>
       </BrowserRouter>
     </ConfigProvider>

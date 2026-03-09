@@ -6,14 +6,17 @@ import { Button, Modal, message } from 'antd'
 import { EyeOutlined, PlusOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { customersRepo } from '../repos'
+import { useIsMobile } from '../hooks/useIsMobile'
 import { CustomerForm } from '../components/CustomerForm'
 import type { Customer } from '../types'
 import { useAuth } from '../context/AuthContext'
+import { formatDateTime } from '../utils/format'
 
 export function CustomersPage() {
   const navigate = useNavigate()
   const { t } = useTranslation(['customers', 'common'])
   const { user } = useAuth()
+  const isMobile = useIsMobile()
   const actionRef = useRef<ActionType>(null)
   const [modalOpen, setModalOpen] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -37,14 +40,15 @@ export function CustomersPage() {
 
   const columns: ProColumns<Customer>[] = [
     { dataIndex: 'keyword', title: t('common:search'), hideInTable: true, valueType: 'text', fieldProps: { placeholder: t('customers:searchPlaceholder') } },
-    { dataIndex: 'name', title: t('customers:name'), width: 180 },
-    { dataIndex: 'phone', title: t('customers:phone'), width: 120 },
-    { dataIndex: 'email', title: t('customers:email'), width: 180, ellipsis: true },
-    { dataIndex: 'createdAt', title: t('customers:createdAt'), width: 150, valueType: 'dateTime', render: (_, r) => new Date(r.createdAt).toLocaleString() },
+    { dataIndex: 'name', title: t('customers:name'), width: 180, ellipsis: true, render: (_, r) => <span style={{ fontWeight: 500 }}>{r.name || '—'}</span> },
+    { dataIndex: 'phone', title: t('customers:phone'), width: 120, render: (_, r) => (r.phone ? <a href={`tel:${r.phone}`}>{r.phone}</a> : '—') },
+    { dataIndex: 'email', title: t('customers:email'), width: 180, ellipsis: true, render: (_, r) => (r.email ? <a href={`mailto:${r.email}`}>{r.email}</a> : '—') },
+    { dataIndex: 'createdAt', title: t('customers:createdAt'), width: 150, valueType: 'dateTime', render: (_, r) => (r.createdAt ? formatDateTime(r.createdAt) : '—') },
     {
       title: t('common:actions'),
       valueType: 'option',
-      width: 80,
+      width: 90,
+      fixed: 'right',
       render: (_, r) => [
         <Button type="link" size="small" key="view" icon={<EyeOutlined />} onClick={() => navigate(`/customers/${r.id}`)}>
           {t('common:view')}
@@ -54,7 +58,7 @@ export function CustomersPage() {
   ]
 
   return (
-    <>
+    <div className="customers-page">
       <ProTable<Customer>
         actionRef={actionRef}
         rowKey="id"
@@ -68,8 +72,12 @@ export function CustomersPage() {
           return { data: res.items, success: true, total: res.total }
         }}
         columns={columns}
-        search={{ labelWidth: 'auto', defaultCollapsed: false }}
+        scroll={{ x: 750 }}
+        search={{ labelWidth: 'auto', defaultCollapsed: isMobile, collapsed: isMobile }}
         locale={{ emptyText: t('customers:emptyText') }}
+        options={{ fullScreen: true, reload: true, density: true }}
+        cardProps={{ bordered: true, style: { borderRadius: 8 } }}
+        tableStyle={{ minWidth: 700 }}
         toolBarRender={() => [
           <Button key="add" type="primary" icon={<PlusOutlined />} onClick={() => setModalOpen(true)}>
             {t('customers:addCustomer')}
@@ -79,6 +87,6 @@ export function CustomersPage() {
       <Modal title={t('customers:modalTitle')} open={modalOpen} onCancel={() => setModalOpen(false)} footer={null} destroyOnClose>
         <CustomerForm onFinish={handleCreate} loading={saving} onCancel={() => setModalOpen(false)} />
       </Modal>
-    </>
+    </div>
   )
 }

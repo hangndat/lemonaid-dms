@@ -4,6 +4,8 @@
   "addLead": "Thêm lead",
   "emptyText": "Chưa có lead nào. Bấm \"Thêm lead\" để tạo.",
   "searchPlaceholder": "Tên, SĐT, email...",
+  "filterByStatus": "Tất cả trạng thái",
+  "filterBySource": "Tất cả nguồn",
   "status": "Trạng thái",
   "source": "Nguồn",
   "name": "Tên",

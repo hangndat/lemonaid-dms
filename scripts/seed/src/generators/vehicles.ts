@@ -1,8 +1,8 @@
-import type { Vehicle } from '../types.js'
+import type { Vehicle } from '../types'
 import { CONFIG } from '../config.js'
 import { BRANDS_MODELS, COLORS, TRANSMISSIONS, FUEL_TYPES } from '../data/brands-models.js'
 import { id, pick, int, float, dateBetween, formatDate, toISO, fakeVin, weightedPick, random } from '../utils.js'
-import type { VehicleStatus } from '../types.js'
+import type { VehicleStatus } from '../types'
 
 export function generateVehicles(profileIds: string[]): Vehicle[] {
   const start = CONFIG.startDate

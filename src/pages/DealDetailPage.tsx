@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { ProCard, PageContainer } from '@ant-design/pro-components'
-import { Descriptions, Button, Input, List, Space, Spin, Form, InputNumber, Select, message, Empty } from 'antd'
+import { Descriptions, Button, Input, List, Space, Spin, Form, InputNumber, Select, message, Empty, Tag } from 'antd'
 import { ArrowLeftOutlined, EditOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { dealsRepo, profilesRepo, leadsRepo, customersRepo, vehiclesRepo } from '../repos'
 import { useAuth } from '../context/AuthContext'
+import { useCurrency } from '../context/CurrencyContext'
 import type { Deal, DealActivity, DealStage } from '../types'
+import { formatDateTime, formatDate } from '../utils/format'
+import { getDealStageTagColor } from '../utils/tagColors'
 import type { Profile } from '../types'
 import type { Lead } from '../types'
 import type { Customer } from '../types'
@@ -19,6 +22,7 @@ export function DealDetailPage() {
   const navigate = useNavigate()
   const { t } = useTranslation(['deals', 'common'])
   const { user } = useAuth()
+  const { formatPrice } = useCurrency()
   const [deal, setDeal] = useState<Deal | null>(null)
 
   const STAGE_OPTIONS: { value: DealStage; label: string }[] = [
@@ -147,7 +151,7 @@ export function DealDetailPage() {
   if (editing) {
     return (
       <PageContainer title={t('deals:editDeal')} onBack={() => setEditing(false)} backIcon={<ArrowLeftOutlined />}>
-        <ProCard>
+        <ProCard style={{ borderRadius: 8 }}>
           <Form form={form} layout="vertical" onFinish={handleSave}>
             <Form.Item name="stage" label={t('deals:stage')} rules={[{ required: true }]}>
               <Select options={STAGE_OPTIONS} />
@@ -189,9 +193,12 @@ export function DealDetailPage() {
     )
   }
 
+  const stageLabel = STAGE_OPTIONS.find((o) => o.value === deal.stage)?.label ?? deal.stage
+
   return (
+    <div className="deal-detail-page">
     <PageContainer
-      title={`Deal #${deal.id.slice(0, 8)} — ${deal.stage}`}
+      title={`Deal #${deal.id.slice(0, 8)} — ${stageLabel}`}
       onBack={() => navigate('/deals')}
       backIcon={<ArrowLeftOutlined />}
       breadcrumb={{
@@ -206,9 +213,9 @@ export function DealDetailPage() {
         </Button>,
       ]}
     >
-      <ProCard title={t('deals:info')} style={{ marginBottom: 16 }}>
+      <ProCard title={t('deals:info')} style={{ marginBottom: 16, borderRadius: 8 }} bordered>
         <Descriptions column={2} size="small">
-          <Descriptions.Item label={t('deals:stage')}>{deal.stage}</Descriptions.Item>
+          <Descriptions.Item label={t('deals:stage')}><Tag color={getDealStageTagColor(deal.stage)}>{stageLabel}</Tag></Descriptions.Item>
           <Descriptions.Item label={t('deals:assignedTo')}>
             {deal.assignedTo
               ? (profiles.find((p) => p.id === deal.assignedTo)?.fullName ?? deal.assignedTo)
@@ -245,16 +252,16 @@ export function DealDetailPage() {
             )}
           </Descriptions.Item>
           <Descriptions.Item label={t('deals:expectedPrice')}>
-            {deal.expectedPrice != null ? (deal.expectedPrice / 1_000_000).toFixed(0) + ' tr' : t('common:dash')}
+            {formatPrice(deal.expectedPrice)}
           </Descriptions.Item>
           <Descriptions.Item label={t('deals:finalPrice')}>
-            {deal.finalPrice != null ? (deal.finalPrice / 1_000_000).toFixed(0) + ' tr' : t('common:dash')}
+            {formatPrice(deal.finalPrice)}
           </Descriptions.Item>
-          <Descriptions.Item label={t('deals:expectedCloseDate')}>{deal.expectedCloseDate ?? t('common:dash')}</Descriptions.Item>
+          <Descriptions.Item label={t('deals:expectedCloseDate')}>{deal.expectedCloseDate ? formatDate(deal.expectedCloseDate) : t('common:dash')}</Descriptions.Item>
           <Descriptions.Item label={t('deals:lostReason')} span={2}>{deal.lostReason ?? t('common:dash')}</Descriptions.Item>
         </Descriptions>
       </ProCard>
-      <ProCard title={t('deals:timeline')}>
+      <ProCard title={t('deals:timeline')} style={{ borderRadius: 8 }} bordered>
         <Space direction="vertical" style={{ width: '100%' }} size="small">
           <TextArea
             rows={3}
@@ -273,7 +280,7 @@ export function DealDetailPage() {
           renderItem={(item) => (
             <List.Item>
               <div>
-                <strong>{item.type}</strong> — {new Date(item.createdAt).toLocaleString('vi-VN')}
+                <strong>{item.type}</strong> — {formatDateTime(item.createdAt)}
                 {item.content && <div style={{ marginTop: 4 }}>{item.content}</div>}
               </div>
             </List.Item>
@@ -281,5 +288,6 @@ export function DealDetailPage() {
         />
       </ProCard>
     </PageContainer>
+    </div>
   )
 }

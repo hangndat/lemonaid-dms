@@ -1,11 +1,11 @@
-import type { Deal } from '../types.js'
+import type { Deal } from '../types'
 import { CONFIG } from '../config.js'
 import { id, pick, dateBetween, formatDate, toISO, weightedPick, random } from '../utils.js'
-import type { Lead } from '../types.js'
-import type { Vehicle } from '../types.js'
-import type { Customer } from '../types.js'
-import type { Profile } from '../types.js'
-import type { DealStage } from '../types.js'
+import type { Lead } from '../types'
+import type { Vehicle } from '../types'
+import type { Customer } from '../types'
+import type { Profile } from '../types'
+import type { DealStage } from '../types'
 
 const LOST_REASONS = [
   'Competitor offered lower price.',

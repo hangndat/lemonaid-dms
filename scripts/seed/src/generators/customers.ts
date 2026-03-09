@@ -1,8 +1,22 @@
-import type { Customer, Profile } from '../types.js'
+import type { Customer, Profile } from '../types'
 import { CONFIG } from '../config.js'
 import { DEALER_NAME_PREFIXES, DEALER_NAME_SUFFIXES, CONTACT_NOTES } from '../data/dealer-names.js'
 import { id, pick, dateBetween, toISO, random } from '../utils.js'
 import { faker } from '@faker-js/faker'
+
+/** Chỉ dùng domain email thật (không dùng company.sg, v.v.) */
+const REAL_EMAIL_DOMAINS = [
+  'gmail.com',
+  'outlook.com',
+  'hotmail.com',
+  'icloud.com',
+  'live.com',
+  'protonmail.com',
+  'mail.com',
+  'zoho.com',
+  'hotmail.sg',
+  'live.com.sg',
+] as const
 
 /** Singapore phone: +65 9xxx xxxx or +65 8xxx xxxx */
 function sgPhone(): string {
@@ -19,12 +33,14 @@ export function generateCustomers(profiles: Profile[]): Customer[] {
   const list: Customer[] = []
 
   for (let i = 0; i < CONFIG.customers; i++) {
-    let name: string
-    do {
-      const prefix = pick(DEALER_NAME_PREFIXES)
-      const suffix = pick(DEALER_NAME_SUFFIXES)
-      name = `${prefix} ${suffix}`.trim()
-    } while (usedNames.has(name))
+    const prefix = pick(DEALER_NAME_PREFIXES)
+    const suffix = pick(DEALER_NAME_SUFFIXES)
+    let name = `${prefix} ${suffix}`.trim()
+    if (usedNames.has(name)) {
+      let n = 1
+      while (usedNames.has(`${name} ${n}`)) n++
+      name = `${name} ${n}`
+    }
     usedNames.add(name)
 
     const createdAt = dateBetween(start, end)
@@ -36,7 +52,7 @@ export function generateCustomers(profiles: Profile[]): Customer[] {
       id: id('customer', i + 1),
       name,
       phone: sgPhone(),
-      email: hasEmail ? faker.internet.email({ firstName: name.split(' ')[0]?.toLowerCase(), provider: pick(['gmail.com', 'company.sg', 'yahoo.com.sg']) }) : undefined,
+      email: hasEmail ? faker.internet.email({ firstName: name.split(' ')[0]?.toLowerCase(), provider: pick(REAL_EMAIL_DOMAINS) }) : undefined,
       notes: notes || undefined,
       createdAt: toISO(createdAt),
       updatedAt: toISO(createdAt),

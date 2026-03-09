@@ -5,9 +5,32 @@ import { useTranslation } from 'react-i18next'
 import { vehiclesRepo, leadsRepo, dealsRepo, profilesRepo } from '../repos'
 import type { VehicleStatus } from '../types'
 import type { Profile } from '../types'
+import { getLeadStatusTagColor } from '../utils/tagColors'
+import { getDealStageTagColor } from '../utils/tagColors'
+import { useCurrency } from '../context/CurrencyContext'
+import type { LeadStatus } from '../types'
+import type { DealStage } from '../types'
+
+const LEAD_STATUS_I18N: Record<LeadStatus, string> = {
+  new: 'leads:statusNew',
+  contacted: 'leads:statusContacted',
+  test_drive: 'leads:statusTestDrive',
+  negotiation: 'leads:statusNegotiation',
+  closed: 'leads:statusClosed',
+  lost: 'leads:statusLost',
+}
+const DEAL_STAGE_I18N: Record<DealStage, string> = {
+  lead: 'deals:stageLead',
+  test_drive: 'deals:stageTestDrive',
+  negotiation: 'deals:stageNegotiation',
+  loan_processing: 'deals:stageLoan',
+  closed_won: 'deals:stageWon',
+  closed_lost: 'deals:stageLost',
+}
 
 export function DashboardPage() {
-  const { t } = useTranslation('dashboard')
+  const { t } = useTranslation(['dashboard', 'leads', 'deals'])
+  const { formatPrice } = useCurrency()
   const [vehicleCounts, setVehicleCounts] = useState<Record<VehicleStatus, number>>({
     draft: 0,
     available: 0,
@@ -80,76 +103,78 @@ export function DashboardPage() {
     vehicleCounts.draft + vehicleCounts.available + vehicleCounts.reserved + vehicleCounts.sold
 
   return (
-    <PageContainer title={t('title')} subTitle={t('subTitle')}>
-      <ProCard style={{ marginBottom: 24 }}>
+    <div className="dashboard-page">
+      <PageContainer title={t('dashboard:title')} subTitle={t('dashboard:subTitle')}>
+        <ProCard className="dashboard-stats-card" style={{ marginBottom: 24, borderRadius: 8 }}>
+          <Row gutter={[16, 16]}>
+            <Col xs={24} sm={12} md={6}>
+              <ProCard loading={loading} bordered style={{ borderRadius: 8 }}>
+                <Statistic title={t('dashboard:totalVehicles')} value={totalVehicles} />
+              </ProCard>
+            </Col>
+            <Col xs={24} sm={12} md={6}>
+              <ProCard loading={loading} bordered style={{ borderRadius: 8 }}>
+                <Statistic title={t('dashboard:available')} value={vehicleCounts.available} />
+              </ProCard>
+            </Col>
+            <Col xs={24} sm={12} md={6}>
+              <ProCard loading={loading} bordered style={{ borderRadius: 8 }}>
+                <Statistic title={t('dashboard:reserved')} value={vehicleCounts.reserved} />
+              </ProCard>
+            </Col>
+            <Col xs={24} sm={12} md={6}>
+              <ProCard loading={loading} bordered style={{ borderRadius: 8 }}>
+                <Statistic title={t('dashboard:sold')} value={vehicleCounts.sold} />
+              </ProCard>
+            </Col>
+          </Row>
+        </ProCard>
         <Row gutter={[16, 16]}>
-          <Col xs={24} sm={12} md={6}>
-            <ProCard loading={loading}>
-              <Statistic title={t('totalVehicles')} value={totalVehicles} />
+          <Col span={24} md={12}>
+            <ProCard title={t('dashboard:leadsByStatus')} loading={loading} bordered style={{ borderRadius: 8 }}>
+              <Space wrap size={[8, 8]}>
+                {(Object.entries(leadCounts) as [LeadStatus, number][]).map(([k, v]) => (
+                  <Tag key={k} color={getLeadStatusTagColor(k)}>{t(LEAD_STATUS_I18N[k] ?? k)}: {v}</Tag>
+                ))}
+                {Object.keys(leadCounts).length === 0 && !loading && <span style={{ color: '#999' }}>{t('dashboard:noLeads')}</span>}
+              </Space>
             </ProCard>
           </Col>
-          <Col xs={24} sm={12} md={6}>
-            <ProCard loading={loading}>
-              <Statistic title={t('available')} value={vehicleCounts.available} />
-            </ProCard>
-          </Col>
-          <Col xs={24} sm={12} md={6}>
-            <ProCard loading={loading}>
-              <Statistic title={t('reserved')} value={vehicleCounts.reserved} />
-            </ProCard>
-          </Col>
-          <Col xs={24} sm={12} md={6}>
-            <ProCard loading={loading}>
-              <Statistic title={t('sold')} value={vehicleCounts.sold} />
+          <Col span={24} md={12}>
+            <ProCard title={t('dashboard:dealsByStage')} loading={loading} bordered style={{ borderRadius: 8 }}>
+              <Space wrap size={[8, 8]}>
+                {(Object.entries(dealCounts) as [DealStage, number][]).map(([k, v]) => (
+                  <Tag key={k} color={getDealStageTagColor(k)}>{t(DEAL_STAGE_I18N[k] ?? k)}: {v}</Tag>
+                ))}
+                {Object.keys(dealCounts).length === 0 && !loading && <span style={{ color: '#999' }}>{t('dashboard:noDeals')}</span>}
+              </Space>
             </ProCard>
           </Col>
         </Row>
-      </ProCard>
-      <Row gutter={[16, 16]}>
-        <Col span={24} md={12}>
-          <ProCard title={t('leadsByStatus')} loading={loading}>
-            <Space wrap size={[8, 8]}>
-              {Object.entries(leadCounts).map(([k, v]) => (
-                <Tag key={k}>{k}: {v}</Tag>
-              ))}
-              {Object.keys(leadCounts).length === 0 && !loading && <span style={{ color: '#999' }}>{t('noLeads')}</span>}
-            </Space>
-          </ProCard>
-        </Col>
-        <Col span={24} md={12}>
-          <ProCard title={t('dealsByStage')} loading={loading}>
-            <Space wrap size={[8, 8]}>
-              {Object.entries(dealCounts).map(([k, v]) => (
-                <Tag key={k}>{k}: {v}</Tag>
-              ))}
-              {Object.keys(dealCounts).length === 0 && !loading && <span style={{ color: '#999' }}>{t('noDeals')}</span>}
-            </Space>
-          </ProCard>
-        </Col>
-      </Row>
-      <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
-        <Col span={24} md={12}>
-          <ProCard title={t('conversionRate', { rate: conversionRate })} loading={loading} />
-        </Col>
-        <Col span={24} md={12}>
-          <ProCard title={t('salesByStaff')} loading={loading}>
-            <Table
-              size="small"
-              dataSource={salesByPerson}
-              columns={[
-                { dataIndex: 'name', title: t('staff') },
-                { dataIndex: 'deals', title: t('dealCount') },
-                {
-                  dataIndex: 'total',
-                  title: t('totalVnd'),
-                  render: (v: number) => (v / 1_000_000).toFixed(0) + ' tr',
-                },
-              ]}
-              pagination={false}
-            />
-          </ProCard>
-        </Col>
-      </Row>
-    </PageContainer>
+        <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
+          <Col span={24} md={12}>
+            <ProCard title={t('dashboard:conversionRate', { rate: conversionRate })} loading={loading} bordered style={{ borderRadius: 8 }} />
+          </Col>
+          <Col span={24} md={12}>
+            <ProCard title={t('dashboard:salesByStaff')} loading={loading} bordered style={{ borderRadius: 8 }}>
+              <Table
+                size="small"
+                dataSource={salesByPerson}
+                columns={[
+                  { dataIndex: 'name', title: t('dashboard:staff'), render: (v: string) => <span style={{ fontWeight: 500 }}>{v}</span> },
+                  { dataIndex: 'deals', title: t('dashboard:dealCount') },
+                  {
+                    dataIndex: 'total',
+                    title: t('dashboard:totalVnd'),
+                    render: (v: number) => formatPrice(v),
+                  },
+                ]}
+                pagination={false}
+              />
+            </ProCard>
+          </Col>
+        </Row>
+      </PageContainer>
+    </div>
   )
 }

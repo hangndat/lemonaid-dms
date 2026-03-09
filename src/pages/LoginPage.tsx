@@ -36,6 +36,7 @@ export function LoginPage() {
 
   return (
     <div
+      className="login-page"
       style={{
         minHeight: '100vh',
         display: 'flex',
@@ -45,7 +46,7 @@ export function LoginPage() {
         padding: 24,
       }}
     >
-      <ProCard style={{ width: 400 }} title={<Title level={3}>{t('auth:loginTitle')}</Title>}>
+      <ProCard className="login-card" style={{ width: '100%', maxWidth: 400, borderRadius: 12, boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }} title={<Title level={3}>{t('auth:loginTitle')}</Title>}>
         <Paragraph type="secondary">
           {t('auth:loginSubtitle')}
         </Paragraph>
