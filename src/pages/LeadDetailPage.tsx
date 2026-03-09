@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { ProCard } from '@ant-design/pro-components'
-import { Descriptions, Button, Input, List, Space, Spin, Typography } from 'antd'
+import { ProCard, PageContainer } from '@ant-design/pro-components'
+import { Descriptions, Button, Input, List, Space, Spin } from 'antd'
 import { ArrowLeftOutlined, EditOutlined, SwapOutlined } from '@ant-design/icons'
 import { leadsRepo, profilesRepo, customersRepo, vehiclesRepo } from '../repos'
 import { LeadForm } from '../components/LeadForm'
@@ -11,7 +11,6 @@ import type { Customer } from '../types'
 import type { Vehicle } from '../types'
 import { useAuth } from '../context/AuthContext'
 
-const { Title } = Typography
 const { TextArea } = Input
 
 export function LeadDetailPage() {
@@ -100,20 +99,15 @@ export function LeadDetailPage() {
   if (loading && !lead) return <Spin size="large" style={{ display: 'block', margin: 48 }} />
   if (!id || !lead) {
     return (
-      <div>
-        <Button icon={<ArrowLeftOutlined />} onClick={() => navigate('/leads')}>Quay lại</Button>
+      <PageContainer title="Chi tiết lead" onBack={() => navigate('/leads')} backIcon={<ArrowLeftOutlined />}>
         <p>Không tìm thấy lead.</p>
-      </div>
+      </PageContainer>
     )
   }
 
   if (editing) {
     return (
-      <div>
-        <Button icon={<ArrowLeftOutlined />} onClick={() => setEditing(false)} style={{ marginBottom: 16 }}>
-          Quay lại
-        </Button>
-        <Title level={4}>Sửa lead</Title>
+      <PageContainer title="Sửa lead" onBack={() => setEditing(false)} backIcon={<ArrowLeftOutlined />}>
         <ProCard>
           <LeadForm
             initial={lead}
@@ -125,24 +119,24 @@ export function LeadDetailPage() {
             onCancel={() => setEditing(false)}
           />
         </ProCard>
-      </div>
+      </PageContainer>
     )
   }
 
   return (
-    <div>
-      <Space style={{ marginBottom: 16 }} wrap>
-        <Button icon={<ArrowLeftOutlined />} onClick={() => navigate('/leads')}>
-          Quay lại
-        </Button>
-        <Button type="primary" icon={<EditOutlined />} onClick={() => setEditing(true)}>
+    <PageContainer
+      title={lead.name || lead.phone || lead.id}
+      onBack={() => navigate('/leads')}
+      backIcon={<ArrowLeftOutlined />}
+      extra={[
+        <Button key="edit" type="primary" icon={<EditOutlined />} onClick={() => setEditing(true)}>
           Sửa
-        </Button>
-        <Button icon={<SwapOutlined />} onClick={handleCreateDeal}>
+        </Button>,
+        <Button key="deal" icon={<SwapOutlined />} onClick={handleCreateDeal}>
           Tạo deal
-        </Button>
-      </Space>
-      <Title level={4}>{lead.name || lead.phone || lead.id}</Title>
+        </Button>,
+      ]}
+    >
       <ProCard title="Thông tin" style={{ marginBottom: 16 }}>
         <Descriptions column={2} size="small">
           <Descriptions.Item label="Nguồn">{lead.source}</Descriptions.Item>
@@ -182,6 +176,6 @@ export function LeadDetailPage() {
           )}
         />
       </ProCard>
-    </div>
+    </PageContainer>
   )
 }

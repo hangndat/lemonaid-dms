@@ -2,6 +2,7 @@ import React from 'react'
 import { ConfigProvider } from 'antd'
 import viVN from 'antd/locale/vi_VN'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { LEMONAIDE } from './theme/lemonaide'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { AppLayout } from './components/AppLayout'
 import { LoginPage } from './pages/LoginPage'
@@ -51,7 +52,16 @@ function AppRoutes() {
 
 export default function App() {
   return (
-    <ConfigProvider locale={viVN}>
+    <ConfigProvider
+      locale={viVN}
+      theme={{
+        token: {
+          colorPrimary: LEMONAIDE.colorPrimary,
+          colorPrimaryHover: LEMONAIDE.colorPrimaryHover,
+          fontFamily: LEMONAIDE.fontFamily,
+        },
+      }}
+    >
       <BrowserRouter>
         <AuthProvider>
           <AppRoutes />

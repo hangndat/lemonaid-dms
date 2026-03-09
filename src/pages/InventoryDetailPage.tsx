@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { ProCard } from '@ant-design/pro-components'
-import { Descriptions, Button, Table, Image, Spin, Space, Typography, Input, Modal } from 'antd'
+import { ProCard, PageContainer } from '@ant-design/pro-components'
+import { Descriptions, Button, Table, Image, Spin, Space, Input, Modal } from 'antd'
 import { ArrowLeftOutlined, EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import { vehiclesRepo } from '../repos'
 import { VehicleForm } from '../components/VehicleForm'
 import type { Vehicle, VehiclePhoto, VehiclePriceHistory } from '../types'
 import { useAuth } from '../context/AuthContext'
-
-const { Title } = Typography
 
 export function InventoryDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -135,56 +133,55 @@ export function InventoryDetailPage() {
 
   if (id === 'new') {
     return (
-      <div>
-        <Button icon={<ArrowLeftOutlined />} onClick={() => navigate('/inventory')} style={{ marginBottom: 16 }}>
-          Quay lại
-        </Button>
-        <Title level={4}>Thêm xe mới</Title>
+      <PageContainer
+        title="Thêm xe mới"
+        onBack={() => navigate('/inventory')}
+        backIcon={<ArrowLeftOutlined />}
+      >
         <VehicleForm onFinish={handleCreate} loading={saving} onCancel={() => navigate('/inventory')} />
-      </div>
+      </PageContainer>
     )
   }
 
   if (!vehicle) {
     return (
-      <div>
-        <Button icon={<ArrowLeftOutlined />} onClick={() => navigate('/inventory')}>Quay lại</Button>
+      <PageContainer title="Chi tiết xe" onBack={() => navigate('/inventory')} backIcon={<ArrowLeftOutlined />}>
         <p>Không tìm thấy xe.</p>
-      </div>
+      </PageContainer>
     )
   }
 
   if (editing) {
     return (
-      <div>
-        <Button icon={<ArrowLeftOutlined />} onClick={() => setEditing(false)} style={{ marginBottom: 16 }}>
-          Quay lại
-        </Button>
-        <Title level={4}>Sửa xe</Title>
+      <PageContainer
+        title="Sửa xe"
+        onBack={() => setEditing(false)}
+        backIcon={<ArrowLeftOutlined />}
+      >
         <VehicleForm
           initial={vehicle}
           loading={saving}
           onFinish={handleUpdate}
           onCancel={() => setEditing(false)}
         />
-      </div>
+      </PageContainer>
     )
   }
 
   return (
-    <div>
-      <Space style={{ marginBottom: 16 }} wrap>
-        <Button icon={<ArrowLeftOutlined />} onClick={() => navigate('/inventory')}>
-          Quay lại
-        </Button>
-        <Button type="primary" icon={<EditOutlined />} onClick={() => setEditing(true)}>
+    <PageContainer
+      title={`${vehicle.brand} ${vehicle.model} (${vehicle.year})`}
+      onBack={() => navigate('/inventory')}
+      backIcon={<ArrowLeftOutlined />}
+      extra={[
+        <Button key="edit" type="primary" icon={<EditOutlined />} onClick={() => setEditing(true)}>
           Sửa
-        </Button>
-        <Button danger icon={<DeleteOutlined />} onClick={handleDelete}>
+        </Button>,
+        <Button key="delete" danger icon={<DeleteOutlined />} onClick={handleDelete}>
           Xóa xe
-        </Button>
-      </Space>
-      <Title level={4}>{vehicle.brand} {vehicle.model} ({vehicle.year})</Title>
+        </Button>,
+      ]}
+    >
       {(photos.length > 0 || vehicle) && (
         <ProCard title="Ảnh xe" style={{ marginBottom: 16 }}>
           <Space direction="vertical" style={{ width: '100%' }} size="small">
@@ -254,6 +251,6 @@ export function InventoryDetailPage() {
           pagination={false}
         />
       </ProCard>
-    </div>
+    </PageContainer>
   )
 }

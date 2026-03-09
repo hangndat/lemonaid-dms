@@ -1,6 +1,7 @@
+import { useState } from 'react'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
-import { ProLayout, PageContainer } from '@ant-design/pro-components'
-import { Button, Dropdown } from 'antd'
+import { ProLayout } from '@ant-design/pro-components'
+import { Button, Dropdown, Space, Typography } from 'antd'
 import {
   DashboardOutlined,
   CarOutlined,
@@ -11,6 +12,9 @@ import {
   ReloadOutlined,
 } from '@ant-design/icons'
 import { useAuth } from '../context/AuthContext'
+import { LEMONAIDE } from '../theme/lemonaide'
+
+const { Text } = Typography
 
 const route = {
   path: '/',
@@ -27,23 +31,61 @@ export function AppLayout() {
   const navigate = useNavigate()
   const location = useLocation()
   const { user, logout, resetDemoData } = useAuth()
+  const [logoError, setLogoError] = useState(false)
 
   return (
     <ProLayout
-      title="DMS Lemonaid"
-      logo={false}
+      title="Lemonaide DMS"
+      logo={
+        logoError ? (
+          <div
+            style={{
+              width: 32,
+              height: 32,
+              borderRadius: 6,
+              background: LEMONAIDE.colorPrimary,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#fff',
+              fontWeight: 700,
+              fontSize: 14,
+            }}
+          >
+            L
+          </div>
+        ) : (
+          <img
+            src={LEMONAIDE.logoUrl}
+            alt="Lemonaide"
+            style={{ height: 32, width: 32, minWidth: 32, objectFit: 'contain', display: 'block' }}
+            onError={() => setLogoError(true)}
+          />
+        )
+      }
       layout="side"
+      siderWidth={220}
+      fixSiderbar
       token={{
         header: {
           colorBgHeader: '#fff',
+          colorHeaderTitle: 'rgba(0, 0, 0, 0.85)',
         },
         sider: {
-          colorMenuBackground: '#001529',
-          colorTextMenu: 'rgba(255,255,255,0.85)',
-          colorTextMenuSelected: '#fff',
-          colorBgMenuItemSelected: '#1890ff',
+          colorMenuBackground: LEMONAIDE.siderBg,
+          colorTextMenu: LEMONAIDE.siderText,
+          colorTextMenuSelected: LEMONAIDE.siderSelectedText,
+          colorBgMenuItemSelected: LEMONAIDE.siderSelectedBg,
+          colorTextCollapsedButton: 'rgba(255, 255, 255, 0.7)',
+          colorTextMenuTitle: '#fff',
         },
       }}
+      menuHeaderRender={(logo) => (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, minHeight: 48 }}>
+          {logo}
+          <span style={{ color: '#fff', fontWeight: 600, fontSize: 16 }}>Lemonaide DMS</span>
+        </div>
+      )}
       route={route}
       location={{ pathname: location.pathname }}
       menuItemRender={(item, dom) => (
@@ -54,10 +96,20 @@ export function AppLayout() {
           {dom}
         </div>
       )}
+      headerContentRender={() => (
+        <Space size="middle" style={{ marginLeft: 16 }}>
+          <Text strong style={{ color: 'rgba(0,0,0,0.85)' }}>
+            {user?.fullName ?? user?.email}
+          </Text>
+          <Text type="secondary" style={{ fontSize: 12 }}>
+            {user?.role}
+          </Text>
+        </Space>
+      )}
       avatarProps={{
         src: undefined,
-        title: user?.fullName ?? user?.email,
         size: 'small',
+        title: user?.fullName ?? user?.email,
         render: (_, defaultDom) => (
           <Dropdown
             menu={{
@@ -80,6 +132,7 @@ export function AppLayout() {
         <Button
           key="reset"
           type="default"
+          size="small"
           icon={<ReloadOutlined />}
           onClick={() => {
             if (window.confirm('Reset toàn bộ dữ liệu demo về seed? Bạn sẽ cần đăng nhập lại.')) {
@@ -87,13 +140,17 @@ export function AppLayout() {
             }
           }}
         >
-          Reset demo data
+          Reset demo
         </Button>,
       ]}
+      contentStyle={{
+        padding: 24,
+        margin: 0,
+        minHeight: 'calc(100vh - 48px)',
+        background: LEMONAIDE.contentBg,
+      }}
     >
-      <PageContainer fixedHeader>
-        <Outlet />
-      </PageContainer>
+      <Outlet />
     </ProLayout>
   )
 }

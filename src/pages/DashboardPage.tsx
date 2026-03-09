@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ProCard } from '@ant-design/pro-components'
+import { ProCard, PageContainer } from '@ant-design/pro-components'
 import { Row, Col, Statistic, Table } from 'antd'
 import { vehiclesRepo, leadsRepo, dealsRepo, profilesRepo } from '../repos'
 import type { VehicleStatus } from '../types'
@@ -78,8 +78,8 @@ export function DashboardPage() {
     vehicleCounts.draft + vehicleCounts.available + vehicleCounts.reserved + vehicleCounts.sold
 
   return (
-    <div>
-      <ProCard title="Tổng quan" style={{ marginBottom: 24 }}>
+    <PageContainer title="Tổng quan" subTitle="Thống kê nhanh kho xe, lead và deal">
+      <ProCard style={{ marginBottom: 24 }}>
         <Row gutter={[16, 16]}>
           <Col xs={24} sm={12} md={6}>
             <ProCard loading={loading}>
@@ -146,6 +146,6 @@ export function DashboardPage() {
           </ProCard>
         </Col>
       </Row>
-    </div>
+    </PageContainer>
   )
 }

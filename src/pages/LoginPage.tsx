@@ -4,6 +4,7 @@ import { ProCard } from '@ant-design/pro-components'
 import { Form, Select, Button, Typography } from 'antd'
 import { useAuth } from '../context/AuthContext'
 import { profilesRepo } from '../repos'
+import { LEMONAIDE } from '../theme/lemonaide'
 import type { Profile } from '../types'
 
 const { Title, Paragraph } = Typography
@@ -38,11 +39,11 @@ export function LoginPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%)',
+        background: `linear-gradient(135deg, ${LEMONAIDE.contentBg} 0%, #e4e8ec 100%)`,
         padding: 24,
       }}
     >
-      <ProCard style={{ width: 400 }} title={<Title level={3}>Đăng nhập (Mock)</Title>}>
+      <ProCard style={{ width: 400 }} title={<Title level={3}>Lemonaide DMS — Đăng nhập</Title>}>
         <Paragraph type="secondary">
           Chọn tài khoản để đăng nhập. Dữ liệu lưu trong localStorage.
         </Paragraph>

@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { ProCard } from '@ant-design/pro-components'
-import { Descriptions, Button, Input, List, Space, Spin, Typography, Form, InputNumber, Select } from 'antd'
+import { ProCard, PageContainer } from '@ant-design/pro-components'
+import { Descriptions, Button, Input, List, Space, Spin, Form, InputNumber, Select } from 'antd'
 import { ArrowLeftOutlined, EditOutlined } from '@ant-design/icons'
 import { dealsRepo } from '../repos'
 import { useAuth } from '../context/AuthContext'
 import type { Deal, DealActivity, DealStage } from '../types'
 
-const { Title } = Typography
 const { TextArea } = Input
 
 const STAGE_OPTIONS: { value: DealStage; label: string }[] = [
@@ -101,20 +100,15 @@ export function DealDetailPage() {
   if (loading && !deal) return <Spin size="large" style={{ display: 'block', margin: 48 }} />
   if (!id || !deal) {
     return (
-      <div>
-        <Button icon={<ArrowLeftOutlined />} onClick={() => navigate('/deals')}>Quay lại</Button>
+      <PageContainer title="Chi tiết deal" onBack={() => navigate('/deals')} backIcon={<ArrowLeftOutlined />}>
         <p>Không tìm thấy deal.</p>
-      </div>
+      </PageContainer>
     )
   }
 
   if (editing) {
     return (
-      <div>
-        <Button icon={<ArrowLeftOutlined />} onClick={() => setEditing(false)} style={{ marginBottom: 16 }}>
-          Quay lại
-        </Button>
-        <Title level={4}>Sửa deal</Title>
+      <PageContainer title="Sửa deal" onBack={() => setEditing(false)} backIcon={<ArrowLeftOutlined />}>
         <ProCard>
           <Form form={form} layout="vertical" onFinish={handleSave}>
             <Form.Item name="stage" label="Giai đoạn" rules={[{ required: true }]}>
@@ -153,21 +147,21 @@ export function DealDetailPage() {
             </Form.Item>
           </Form>
         </ProCard>
-      </div>
+      </PageContainer>
     )
   }
 
   return (
-    <div>
-      <Space style={{ marginBottom: 16 }} wrap>
-        <Button icon={<ArrowLeftOutlined />} onClick={() => navigate('/deals')}>
-          Quay lại
-        </Button>
-        <Button type="primary" icon={<EditOutlined />} onClick={() => setEditing(true)}>
+    <PageContainer
+      title={`Deal #${deal.id.slice(0, 8)} — ${deal.stage}`}
+      onBack={() => navigate('/deals')}
+      backIcon={<ArrowLeftOutlined />}
+      extra={[
+        <Button key="edit" type="primary" icon={<EditOutlined />} onClick={() => setEditing(true)}>
           Sửa
-        </Button>
-      </Space>
-      <Title level={4}>Deal #{deal.id.slice(0, 8)} — {deal.stage}</Title>
+        </Button>,
+      ]}
+    >
       <ProCard title="Thông tin" style={{ marginBottom: 16 }}>
         <Descriptions column={2} size="small">
           <Descriptions.Item label="Giai đoạn">{deal.stage}</Descriptions.Item>
@@ -211,6 +205,6 @@ export function DealDetailPage() {
           )}
         />
       </ProCard>
-    </div>
+    </PageContainer>
   )
 }

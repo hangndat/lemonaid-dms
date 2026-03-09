@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { ProCard } from '@ant-design/pro-components'
-import { Descriptions, Button, Tabs, Table, Spin, Typography } from 'antd'
+import { ProCard, PageContainer } from '@ant-design/pro-components'
+import { Descriptions, Button, Tabs, Table, Spin } from 'antd'
 import { ArrowLeftOutlined, EditOutlined } from '@ant-design/icons'
 import { customersRepo, leadsRepo, dealsRepo } from '../repos'
 import { CustomerForm } from '../components/CustomerForm'
 import type { Customer, Lead, Deal } from '../types'
-
-const { Title } = Typography
 
 export function CustomerDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -62,10 +60,9 @@ export function CustomerDetailPage() {
   if (loading && !customer) return <Spin size="large" style={{ display: 'block', margin: 48 }} />
   if (!id || !customer) {
     return (
-      <div>
-        <Button icon={<ArrowLeftOutlined />} onClick={() => navigate('/customers')}>Quay lại</Button>
+      <PageContainer title="Chi tiết khách hàng" onBack={() => navigate('/customers')} backIcon={<ArrowLeftOutlined />}>
         <p>Không tìm thấy khách hàng.</p>
-      </div>
+      </PageContainer>
     )
   }
 
@@ -73,11 +70,7 @@ export function CustomerDetailPage() {
 
   if (editing) {
     return (
-      <div>
-        <Button icon={<ArrowLeftOutlined />} onClick={() => setEditing(false)} style={{ marginBottom: 16 }}>
-          Quay lại
-        </Button>
-        <Title level={4}>Sửa khách hàng</Title>
+      <PageContainer title="Sửa khách hàng" onBack={() => setEditing(false)} backIcon={<ArrowLeftOutlined />}>
         <ProCard>
           <CustomerForm
             initial={customer}
@@ -86,7 +79,7 @@ export function CustomerDetailPage() {
             onCancel={() => setEditing(false)}
           />
         </ProCard>
-      </div>
+      </PageContainer>
     )
   }
 
@@ -95,17 +88,12 @@ export function CustomerDetailPage() {
       key: 'info',
       label: 'Thông tin',
       children: (
-        <>
-          <Button type="primary" icon={<EditOutlined />} onClick={() => setEditing(true)} style={{ marginBottom: 16 }}>
-            Sửa
-          </Button>
-          <Descriptions column={2} size="small">
+        <Descriptions column={2} size="small">
             <Descriptions.Item label="Tên">{customer.name}</Descriptions.Item>
             <Descriptions.Item label="SĐT">{customer.phone ?? '—'}</Descriptions.Item>
             <Descriptions.Item label="Email">{customer.email ?? '—'}</Descriptions.Item>
             <Descriptions.Item label="Ghi chú" span={2}>{customer.notes ?? '—'}</Descriptions.Item>
-          </Descriptions>
-        </>
+        </Descriptions>
       ),
     },
     {
@@ -178,12 +166,17 @@ export function CustomerDetailPage() {
   ]
 
   return (
-    <div>
-      <Button icon={<ArrowLeftOutlined />} onClick={() => navigate('/customers')} style={{ marginBottom: 16 }}>
-        Quay lại
-      </Button>
-      <Title level={4}>{customer.name}</Title>
+    <PageContainer
+      title={customer.name}
+      onBack={() => navigate('/customers')}
+      backIcon={<ArrowLeftOutlined />}
+      extra={[
+        <Button key="edit" type="primary" icon={<EditOutlined />} onClick={() => setEditing(true)}>
+          Sửa
+        </Button>,
+      ]}
+    >
       <Tabs items={tabItems} />
-    </div>
+    </PageContainer>
   )
 }
