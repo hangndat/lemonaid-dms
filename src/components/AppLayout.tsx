@@ -18,6 +18,7 @@ import {
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
 import { useCurrency, type Currency } from '../context/CurrencyContext'
+import { clearAllDemoData } from '../data/storage'
 import { LEMONAIDE } from '../theme/lemonaide'
 import { LANG_STORAGE_KEY } from '../i18n'
 
@@ -179,6 +180,7 @@ export function AppLayout() {
                   icon: <ReloadOutlined />,
                   label: t('nav:reloadData'),
                   onClick: async () => {
+                    clearAllDemoData()
                     await refreshUser()
                     window.location.reload()
                   },
