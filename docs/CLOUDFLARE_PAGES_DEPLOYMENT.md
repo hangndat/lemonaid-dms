@@ -46,13 +46,18 @@ File nằm trong `public/` nên Vite sẽ copy vào thư mục `dist` khi build.
 
 ## 4. Các bước triển khai
 
-**Lưu ý:** Cài GitHub App "Cloudflare Workers and Pages" trên GitHub **chưa tạo** project Pages. Bạn phải vào **Cloudflare Dashboard** và chọn **Create project** → Connect to Git → chọn repo thì project mới xuất hiện trong danh sách.
+**Tóm tắt:** Tạo project **Pages** (không phải Workers). Chỉ cần:
+- **Build command:** `npm run build`
+- **Build output directory:** `dist`  
+Cloudflare sẽ tự build và deploy; không cần Deploy command.
+
+**Lưu ý:** Cài GitHub App "Cloudflare Workers and Pages" trên GitHub **chưa tạo** project Pages. Bạn phải vào **Cloudflare Dashboard** và chọn **Create project** → **Pages** → Connect to Git → chọn repo thì project mới xuất hiện trong danh sách.
 
 ### Bước 0: Tạo project Pages trên Cloudflare (nếu chưa thấy project)
 
 1. Mở **[Cloudflare Dashboard](https://dash.cloudflare.com/)** và đăng nhập.
 2. Sidebar trái: chọn **Workers & Pages** (hoặc **Pages** nếu giao diện mới).
-3. Bấm nút **Create** / **Create application** → chọn **Pages**.
+3. Bấm nút **Create** / **Create application** → chọn **Pages** (không chọn Workers — Workers dùng deploy command, Pages chỉ cần build config).
 4. Chọn **Connect to Git** (không chọn "Direct Upload").
 5. Chọn **GitHub** → authorize nếu được hỏi → chọn repo **hangndat/lemonaid-dms**.
 6. Điền **Build configuration** (xem Bước 2 bên dưới) → **Save and Deploy**.
@@ -71,17 +76,19 @@ git push origin main
 
 ### Bước 2: Tạo project trên Cloudflare Pages
 
-1. Vào [Cloudflare Dashboard](https://dash.cloudflare.com/) → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**.
+**Quan trọng:** Tạo project **Pages** (static site), không tạo **Workers**. Với Pages, Cloudflare tự build và deploy thư mục output — chỉ cần cấu hình build, không cần Deploy command.
+
+1. Vào [Cloudflare Dashboard](https://dash.cloudflare.com/) → **Workers & Pages** → **Create** → **Pages** (không chọn Workers) → **Connect to Git**.
 2. Chọn **GitHub** (hoặc GitLab), authorize Cloudflare.
 3. Chọn repository **lemonaid-dms**.
-4. Điền cấu hình build:
-   - **Project name:** `lemonaid-dms` (hoặc tên bạn muốn, sẽ thành subdomain `*.pages.dev`).
+4. Điền cấu hình build (đủ cho SPA Vite):
+   - **Project name:** `lemonaid-dms` (hoặc tên bạn muốn → subdomain `*.pages.dev`).
    - **Production branch:** `main`.
    - **Build command:** `npm run build`
    - **Build output directory:** `dist`
-   - **Root directory:** (để trống nếu repo là root của project).
-   - **Deploy command:** Nếu UI **bắt buộc** điền: dùng `npx wrangler pages deploy dist --project-name=lemonaid-dms` (upload thư mục `dist` lên Pages, không dùng Vite plugin). Nếu để trống được thì để trống.
-   - **Environment variables (optional):** thêm nếu sau này dùng biến môi trường (vd. `VITE_SUPABASE_URL`).
+   - **Root directory:** (để trống nếu repo là root).
+   - **Deploy command:** Để trống (chỉ Workers mới bắt buộc; Pages tự deploy thư mục `dist` sau khi build).
+   - **Environment variables (optional):** thêm khi cần (vd. `VITE_SUPABASE_URL`).
 
 ### Bước 3: Cấu hình Node version (khuyến nghị)
 
