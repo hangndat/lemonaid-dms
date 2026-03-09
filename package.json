@@ -2,6 +2,9 @@
   "name": "lemonaid-dms",
   "private": true,
   "version": "0.0.1",
+  "description": "Admin portal DMS — Lemonaid Thái",
+  "author": "Lemonaid Thái (Lemonaid Thailand)",
+  "license": "UNLICENSED",
   "type": "module",
   "scripts": {
     "dev": "vite",

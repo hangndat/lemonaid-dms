@@ -65,3 +65,7 @@ Mở http://localhost:5173 → trang **Đăng nhập (Mock)**: chọn một tài
 **Tài liệu:**  
 - Checklist & trạng thái: `docs/MOCK_FIRST_PLAN_CHECKLIST.md`  
 - Kế hoạch tổng & roadmap phần tiếp theo: `docs/IMPLEMENTATION_PLAN.md`
+
+---
+
+**Bản quyền:** © Lemonaid Thái (Lemonaid Thailand). Mọi quyền thuộc về Lemonaid Thái.
