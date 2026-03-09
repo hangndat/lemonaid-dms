@@ -41,11 +41,22 @@ export function generateDeals(
     const stage = weightedPick(CONFIG.dealStageWeights as Record<DealStage, number>)
     const assignedTo = lead.assignedTo ?? pick(salesIds)
     const customerId = lead.customerId ?? pick(customers).id
-    const vehicle = lead.interestedVehicleId
+    const vehiclesWithPrice = vehicles.filter((v) => v.price != null && v.price > 0)
+    const vehicleByLead = lead.interestedVehicleId
       ? vehicles.find((v) => v.id === lead.interestedVehicleId)
-      : pick(vehicles)
+      : null
+    const vehicle =
+      vehicleByLead?.price != null && vehicleByLead.price > 0
+        ? vehicleByLead
+        : vehiclesWithPrice.length > 0
+          ? pick(vehiclesWithPrice)
+          : pick(vehicles)
     const vehicleId = vehicle?.id
-    const expectedPrice = vehicle?.price ? Math.round(vehicle.price * (0.95 + random() * 0.1)) : undefined
+    const vehiclePrice = vehicle?.price ?? 0
+    const expectedPrice =
+      vehiclePrice > 0
+        ? Math.round(vehiclePrice * (0.98 + random() * 0.05))
+        : undefined
     const isClosed = stage === 'closed_won' || stage === 'closed_lost'
     const createdAt = new Date(lead.createdAt)
     const closedDate = isClosed ? dateBetween(createdAt, end) : null
@@ -53,7 +64,7 @@ export function generateDeals(
     const expectedCloseDate = isClosed && closedDate ? formatDate(closedDate) : formatDate(dateBetween(createdAt, futureEnd))
     const finalPrice =
       stage === 'closed_won' && expectedPrice
-        ? Math.round(expectedPrice * (0.97 + random() * 0.04))
+        ? Math.round(expectedPrice * (0.99 + random() * 0.02))
         : undefined
     const lostReason = stage === 'closed_lost' ? pick(LOST_REASONS) : undefined
     const updatedAt = closedDate ?? dateBetween(createdAt, end)
