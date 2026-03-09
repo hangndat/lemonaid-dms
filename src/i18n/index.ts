@@ -80,7 +80,7 @@ i18n
       },
     },
     fallbackLng: 'en',
-    lng: typeof localStorage !== 'undefined' ? (localStorage.getItem(STORAGE_KEY) || 'vi') : 'vi',
+    lng: typeof localStorage !== 'undefined' ? (localStorage.getItem(STORAGE_KEY) || 'en') : 'en',
     supportedLngs: ['en', 'th', 'vi'],
     defaultNS: 'common',
     ns: ['common', 'nav', 'auth', 'dashboard', 'inventory', 'leads', 'deals', 'customers', 'about', 'process'],

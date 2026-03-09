@@ -13,10 +13,10 @@ export const CURRENCY_RATES: Record<Exclude<Currency, 'VND'>, number> = {
 const CURRENCY_STORAGE_KEY = 'dms-currency'
 
 function loadStoredCurrency(): Currency {
-  if (typeof localStorage === 'undefined') return 'VND'
+  if (typeof localStorage === 'undefined') return 'USD'
   const s = localStorage.getItem(CURRENCY_STORAGE_KEY)
   if (s === 'USD' || s === 'SGD' || s === 'THB' || s === 'VND') return s
-  return 'VND'
+  return 'USD'
 }
 
 interface CurrencyContextValue {
