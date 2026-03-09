@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ProCard } from '@ant-design/pro-components'
 import { Form, Select, Button, Typography } from 'antd'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
 import { profilesRepo } from '../repos'
 import { LEMONAIDE } from '../theme/lemonaide'
@@ -11,6 +12,7 @@ const { Title, Paragraph } = Typography
 
 export function LoginPage() {
   const navigate = useNavigate()
+  const { t } = useTranslation(['auth', 'common'])
   const { user, login, loading } = useAuth()
   const [profiles, setProfiles] = useState<Profile[]>([])
   const [submitting, setSubmitting] = useState(false)
@@ -43,18 +45,18 @@ export function LoginPage() {
         padding: 24,
       }}
     >
-      <ProCard style={{ width: 400 }} title={<Title level={3}>Lemonaide DMS — Đăng nhập</Title>}>
+      <ProCard style={{ width: 400 }} title={<Title level={3}>{t('auth:loginTitle')}</Title>}>
         <Paragraph type="secondary">
-          Chọn tài khoản để đăng nhập. Dữ liệu lưu trong localStorage.
+          {t('auth:loginSubtitle')}
         </Paragraph>
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item
             name="profileId"
-            label="Tài khoản"
-            rules={[{ required: true, message: 'Chọn một tài khoản' }]}
+            label={t('auth:selectAccount')}
+            rules={[{ required: true, message: t('auth:selectAccountRequired') }]}
           >
             <Select
-              placeholder="Chọn nhân viên"
+              placeholder={t('auth:selectStaff')}
               loading={loading && profiles.length === 0}
               optionFilterProp="label"
               options={profiles.map((p) => ({
@@ -65,7 +67,7 @@ export function LoginPage() {
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit" block loading={submitting}>
-              Đăng nhập
+              {t('auth:signIn')}
             </Button>
           </Form.Item>
         </Form>

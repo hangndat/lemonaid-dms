@@ -1,28 +1,34 @@
 import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import { ProCard, PageContainer } from '@ant-design/pro-components'
-import { Descriptions, Button, Input, List, Space, Spin, Form, InputNumber, Select } from 'antd'
+import { Descriptions, Button, Input, List, Space, Spin, Form, InputNumber, Select, message, Empty } from 'antd'
 import { ArrowLeftOutlined, EditOutlined } from '@ant-design/icons'
-import { dealsRepo } from '../repos'
+import { useTranslation } from 'react-i18next'
+import { dealsRepo, profilesRepo, leadsRepo, customersRepo, vehiclesRepo } from '../repos'
 import { useAuth } from '../context/AuthContext'
 import type { Deal, DealActivity, DealStage } from '../types'
+import type { Profile } from '../types'
+import type { Lead } from '../types'
+import type { Customer } from '../types'
+import type { Vehicle } from '../types'
 
 const { TextArea } = Input
-
-const STAGE_OPTIONS: { value: DealStage; label: string }[] = [
-  { value: 'lead', label: 'Lead' },
-  { value: 'test_drive', label: 'Lái thử' },
-  { value: 'negotiation', label: 'Thương lượng' },
-  { value: 'loan_processing', label: 'Duyệt vay' },
-  { value: 'closed_won', label: 'Thắng' },
-  { value: 'closed_lost', label: 'Thua' },
-]
 
 export function DealDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const { t } = useTranslation(['deals', 'common'])
   const { user } = useAuth()
   const [deal, setDeal] = useState<Deal | null>(null)
+
+  const STAGE_OPTIONS: { value: DealStage; label: string }[] = [
+    { value: 'lead', label: t('deals:stageLead') },
+    { value: 'test_drive', label: t('deals:stageTestDrive') },
+    { value: 'negotiation', label: t('deals:stageNegotiation') },
+    { value: 'loan_processing', label: t('deals:stageLoan') },
+    { value: 'closed_won', label: t('deals:stageWon') },
+    { value: 'closed_lost', label: t('deals:stageLost') },
+  ]
   const [activities, setActivities] = useState<DealActivity[]>([])
   const [loading, setLoading] = useState(true)
   const [editing, setEditing] = useState(false)
@@ -30,6 +36,10 @@ export function DealDetailPage() {
   const [note, setNote] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [form] = Form.useForm()
+  const [profiles, setProfiles] = useState<Profile[]>([])
+  const [leads, setLeads] = useState<Lead[]>([])
+  const [customers, setCustomers] = useState<Customer[]>([])
+  const [vehicles, setVehicles] = useState<Vehicle[]>([])
 
   const load = async () => {
     if (!id) return
@@ -46,6 +56,21 @@ export function DealDetailPage() {
     setLoading(true)
     load().then(() => setLoading(false))
   }, [id])
+
+  useEffect(() => {
+    if (!deal) return
+    Promise.all([
+      profilesRepo.list(),
+      leadsRepo.list({ pageSize: 500 }),
+      customersRepo.list({ pageSize: 500 }),
+      vehiclesRepo.list({ pageSize: 500 }),
+    ]).then(([p, lRes, cRes, vRes]) => {
+      setProfiles(p)
+      setLeads(lRes.items)
+      setCustomers(cRes.items)
+      setVehicles(vRes.items)
+    })
+  }, [deal?.id])
 
   useEffect(() => {
     if (deal && editing) {
@@ -81,8 +106,13 @@ export function DealDetailPage() {
           user?.id
         )
       }
+      message.success(t('deals:updatedSuccess'))
       setEditing(false)
       load()
+    } catch (e) {
+      const err = e as { errorFields?: unknown[] }
+      if (err?.errorFields?.length) return // validation error
+      message.error(e instanceof Error ? e.message : t('deals:updateError'))
     } finally {
       setSaving(false)
     }
@@ -91,46 +121,54 @@ export function DealDetailPage() {
   const handleAddNote = async () => {
     if (!id || !note.trim()) return
     setSubmitting(true)
-    await dealsRepo.addActivity(id, 'note', note.trim(), user?.id)
-    setNote('')
-    await load()
-    setSubmitting(false)
+    try {
+      await dealsRepo.addActivity(id, 'note', note.trim(), user?.id)
+      setNote('')
+      await load()
+      message.success(t('deals:noteAdded'))
+    } catch (e) {
+      message.error(e instanceof Error ? e.message : t('deals:noteError'))
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   if (loading && !deal) return <Spin size="large" style={{ display: 'block', margin: 48 }} />
   if (!id || !deal) {
     return (
-      <PageContainer title="Chi tiết deal" onBack={() => navigate('/deals')} backIcon={<ArrowLeftOutlined />}>
-        <p>Không tìm thấy deal.</p>
+      <PageContainer title={t('deals:detailTitle')} onBack={() => navigate('/deals')} backIcon={<ArrowLeftOutlined />}>
+        <Empty description={t('deals:notFound')}>
+          <Button type="primary" onClick={() => navigate('/deals')}>{t('common:backToList')}</Button>
+        </Empty>
       </PageContainer>
     )
   }
 
   if (editing) {
     return (
-      <PageContainer title="Sửa deal" onBack={() => setEditing(false)} backIcon={<ArrowLeftOutlined />}>
+      <PageContainer title={t('deals:editDeal')} onBack={() => setEditing(false)} backIcon={<ArrowLeftOutlined />}>
         <ProCard>
           <Form form={form} layout="vertical" onFinish={handleSave}>
-            <Form.Item name="stage" label="Giai đoạn" rules={[{ required: true }]}>
+            <Form.Item name="stage" label={t('deals:stage')} rules={[{ required: true }]}>
               <Select options={STAGE_OPTIONS} />
             </Form.Item>
-            <Form.Item name="expectedPrice" label="Giá dự kiến (triệu VNĐ)">
-              <InputNumber min={0} style={{ width: '100%' }} />
+            <Form.Item name="expectedPrice" label={t('deals:expectedPriceMillion')}>
+              <InputNumber min={0} style={{ width: '100%' }} addonAfter={t('deals:million')} placeholder="VD: 500" />
             </Form.Item>
-            <Form.Item name="finalPrice" label="Giá chốt (triệu VNĐ)">
-              <InputNumber min={0} style={{ width: '100%' }} />
+            <Form.Item name="finalPrice" label={t('deals:finalPriceMillion')}>
+              <InputNumber min={0} style={{ width: '100%' }} addonAfter={t('deals:million')} placeholder="VD: 480" />
             </Form.Item>
-            <Form.Item name="expectedCloseDate" label="Ngày dự kiến chốt">
+            <Form.Item name="expectedCloseDate" label={t('deals:expectedCloseDateLabel')}>
               <Input type="date" />
             </Form.Item>
             <Form.Item
               name="lostReason"
-              label="Lý do thua (bắt buộc khi giai đoạn = Thua)"
+              label={t('deals:lostReasonRequiredWhenLost')}
               rules={[
                 {
                   validator: (_, value) => {
                     if (form.getFieldValue('stage') === 'closed_lost' && !value?.trim()) {
-                      return Promise.reject(new Error('Nhập lý do thua'))
+                      return Promise.reject(new Error(t('deals:lostReasonRequired')))
                     }
                     return Promise.resolve()
                   },
@@ -141,9 +179,9 @@ export function DealDetailPage() {
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" loading={saving} style={{ marginRight: 8 }}>
-                Lưu
+                {t('common:save')}
               </Button>
-              <Button onClick={() => setEditing(false)}>Hủy</Button>
+              <Button onClick={() => setEditing(false)}>{t('common:cancel')}</Button>
             </Form.Item>
           </Form>
         </ProCard>
@@ -156,39 +194,76 @@ export function DealDetailPage() {
       title={`Deal #${deal.id.slice(0, 8)} — ${deal.stage}`}
       onBack={() => navigate('/deals')}
       backIcon={<ArrowLeftOutlined />}
+      breadcrumb={{
+        items: [
+          { title: <Link to="/deals">{t('deals:title')}</Link> },
+          { title: `#${deal.id.slice(0, 8)}` },
+        ],
+      }}
       extra={[
         <Button key="edit" type="primary" icon={<EditOutlined />} onClick={() => setEditing(true)}>
-          Sửa
+          {t('common:edit')}
         </Button>,
       ]}
     >
-      <ProCard title="Thông tin" style={{ marginBottom: 16 }}>
+      <ProCard title={t('deals:info')} style={{ marginBottom: 16 }}>
         <Descriptions column={2} size="small">
-          <Descriptions.Item label="Giai đoạn">{deal.stage}</Descriptions.Item>
-          <Descriptions.Item label="Người phụ trách">{deal.assignedTo}</Descriptions.Item>
-          <Descriptions.Item label="Lead">{deal.leadId ?? '—'}</Descriptions.Item>
-          <Descriptions.Item label="Xe">{deal.vehicleId ?? '—'}</Descriptions.Item>
-          <Descriptions.Item label="Khách">{deal.customerId ?? '—'}</Descriptions.Item>
-          <Descriptions.Item label="Giá dự kiến">
-            {deal.expectedPrice != null ? (deal.expectedPrice / 1_000_000).toFixed(0) + ' tr' : '—'}
+          <Descriptions.Item label={t('deals:stage')}>{deal.stage}</Descriptions.Item>
+          <Descriptions.Item label={t('deals:assignedTo')}>
+            {deal.assignedTo
+              ? (profiles.find((p) => p.id === deal.assignedTo)?.fullName ?? deal.assignedTo)
+              : t('common:dash')}
           </Descriptions.Item>
-          <Descriptions.Item label="Giá chốt">
-            {deal.finalPrice != null ? (deal.finalPrice / 1_000_000).toFixed(0) + ' tr' : '—'}
+          <Descriptions.Item label={t('deals:lead')}>
+            {deal.leadId ? (
+              <Link to={`/leads/${deal.leadId}`}>
+                {leads.find((l) => l.id === deal.leadId)?.name ?? leads.find((l) => l.id === deal.leadId)?.phone ?? deal.leadId.slice(0, 8)}
+              </Link>
+            ) : (
+              t('common:dash')
+            )}
           </Descriptions.Item>
-          <Descriptions.Item label="Ngày dự kiến">{deal.expectedCloseDate ?? '—'}</Descriptions.Item>
-          <Descriptions.Item label="Lý do thua" span={2}>{deal.lostReason ?? '—'}</Descriptions.Item>
+          <Descriptions.Item label={t('deals:vehicle')}>
+            {deal.vehicleId ? (
+              <Link to={`/inventory/${deal.vehicleId}`}>
+                {(() => {
+                  const v = vehicles.find((x) => x.id === deal.vehicleId)
+                  return v ? `${v.brand} ${v.model} (${v.year})` : deal.vehicleId.slice(0, 8)
+                })()}
+              </Link>
+            ) : (
+              t('common:dash')
+            )}
+          </Descriptions.Item>
+          <Descriptions.Item label={t('deals:customer')}>
+            {deal.customerId ? (
+              <Link to={`/customers/${deal.customerId}`}>
+                {customers.find((c) => c.id === deal.customerId)?.name ?? deal.customerId}
+              </Link>
+            ) : (
+              t('common:dash')
+            )}
+          </Descriptions.Item>
+          <Descriptions.Item label={t('deals:expectedPrice')}>
+            {deal.expectedPrice != null ? (deal.expectedPrice / 1_000_000).toFixed(0) + ' tr' : t('common:dash')}
+          </Descriptions.Item>
+          <Descriptions.Item label={t('deals:finalPrice')}>
+            {deal.finalPrice != null ? (deal.finalPrice / 1_000_000).toFixed(0) + ' tr' : t('common:dash')}
+          </Descriptions.Item>
+          <Descriptions.Item label={t('deals:expectedCloseDate')}>{deal.expectedCloseDate ?? t('common:dash')}</Descriptions.Item>
+          <Descriptions.Item label={t('deals:lostReason')} span={2}>{deal.lostReason ?? t('common:dash')}</Descriptions.Item>
         </Descriptions>
       </ProCard>
-      <ProCard title="Timeline">
+      <ProCard title={t('deals:timeline')}>
         <Space direction="vertical" style={{ width: '100%' }} size="small">
           <TextArea
             rows={3}
-            placeholder="Thêm ghi chú..."
+            placeholder={t('deals:addNotePlaceholder')}
             value={note}
             onChange={(e) => setNote(e.target.value)}
           />
           <Button type="primary" onClick={handleAddNote} loading={submitting}>
-            Thêm ghi chú
+            {t('deals:addNote')}
           </Button>
         </Space>
         <List

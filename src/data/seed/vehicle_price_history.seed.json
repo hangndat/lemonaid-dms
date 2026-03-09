@@ -1,5 +1,828 @@
 [
-  { "id": "vph-1", "vehicleId": "vehicle-1", "price": 620000000, "recordedAt": "2024-01-15T08:00:00.000Z", "recordedBy": "profile-admin" },
-  { "id": "vph-2", "vehicleId": "vehicle-2", "price": 480000000, "recordedAt": "2024-02-01T09:00:00.000Z", "recordedBy": "profile-admin" },
-  { "id": "vph-3", "vehicleId": "vehicle-5", "price": 1150000000, "recordedAt": "2023-11-01T07:00:00.000Z", "recordedBy": "profile-manager" }
+  {
+    "id": "vph-1",
+    "vehicleId": "vehicle-1",
+    "price": 1010000,
+    "recordedAt": "2025-01-23T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-2",
+    "vehicleId": "vehicle-2",
+    "price": 600000,
+    "recordedAt": "2024-07-29T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-3",
+    "vehicleId": "vehicle-2",
+    "price": 578676,
+    "recordedAt": "2024-08-05T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-4",
+    "vehicleId": "vehicle-3",
+    "price": 1350000,
+    "recordedAt": "2024-08-26T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-5",
+    "vehicleId": "vehicle-4",
+    "price": 1320000,
+    "recordedAt": "2024-08-11T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-6",
+    "vehicleId": "vehicle-4",
+    "price": 1302176,
+    "recordedAt": "2024-08-18T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-7",
+    "vehicleId": "vehicle-6",
+    "price": 710000,
+    "recordedAt": "2024-05-16T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-8",
+    "vehicleId": "vehicle-8",
+    "price": 1080000,
+    "recordedAt": "2024-11-29T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-9",
+    "vehicleId": "vehicle-8",
+    "price": 1069339,
+    "recordedAt": "2024-12-06T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-10",
+    "vehicleId": "vehicle-9",
+    "price": 1240000,
+    "recordedAt": "2024-03-03T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-11",
+    "vehicleId": "vehicle-11",
+    "price": 2150000,
+    "recordedAt": "2024-08-13T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-12",
+    "vehicleId": "vehicle-11",
+    "price": 2153488,
+    "recordedAt": "2024-08-20T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-13",
+    "vehicleId": "vehicle-12",
+    "price": 1170000,
+    "recordedAt": "2024-06-05T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-14",
+    "vehicleId": "vehicle-13",
+    "price": 1450000,
+    "recordedAt": "2025-02-04T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-15",
+    "vehicleId": "vehicle-13",
+    "price": 1372578,
+    "recordedAt": "2025-02-11T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-16",
+    "vehicleId": "vehicle-14",
+    "price": 1470000,
+    "recordedAt": "2024-09-17T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-17",
+    "vehicleId": "vehicle-15",
+    "price": 1630000,
+    "recordedAt": "2024-11-25T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-18",
+    "vehicleId": "vehicle-16",
+    "price": 660000,
+    "recordedAt": "2024-10-21T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-19",
+    "vehicleId": "vehicle-17",
+    "price": 1670000,
+    "recordedAt": "2024-08-18T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-20",
+    "vehicleId": "vehicle-17",
+    "price": 1633409,
+    "recordedAt": "2024-08-25T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-21",
+    "vehicleId": "vehicle-18",
+    "price": 1200000,
+    "recordedAt": "2024-12-27T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-22",
+    "vehicleId": "vehicle-20",
+    "price": 1390000,
+    "recordedAt": "2024-11-12T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-23",
+    "vehicleId": "vehicle-20",
+    "price": 1353386,
+    "recordedAt": "2024-11-19T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-24",
+    "vehicleId": "vehicle-21",
+    "price": 2520000,
+    "recordedAt": "2024-11-29T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-25",
+    "vehicleId": "vehicle-22",
+    "price": 1630000,
+    "recordedAt": "2024-03-26T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-26",
+    "vehicleId": "vehicle-23",
+    "price": 670000,
+    "recordedAt": "2024-10-13T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-27",
+    "vehicleId": "vehicle-24",
+    "price": 1240000,
+    "recordedAt": "2025-02-24T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-28",
+    "vehicleId": "vehicle-25",
+    "price": 1050000,
+    "recordedAt": "2025-01-12T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-29",
+    "vehicleId": "vehicle-26",
+    "price": 1470000,
+    "recordedAt": "2024-07-05T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-30",
+    "vehicleId": "vehicle-27",
+    "price": 1430000,
+    "recordedAt": "2024-06-02T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-31",
+    "vehicleId": "vehicle-28",
+    "price": 840000,
+    "recordedAt": "2024-04-03T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-32",
+    "vehicleId": "vehicle-29",
+    "price": 1120000,
+    "recordedAt": "2024-06-09T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-33",
+    "vehicleId": "vehicle-30",
+    "price": 1780000,
+    "recordedAt": "2024-08-09T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-34",
+    "vehicleId": "vehicle-32",
+    "price": 1410000,
+    "recordedAt": "2024-04-09T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-35",
+    "vehicleId": "vehicle-33",
+    "price": 1240000,
+    "recordedAt": "2024-04-18T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-36",
+    "vehicleId": "vehicle-33",
+    "price": 1176935,
+    "recordedAt": "2024-04-25T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-37",
+    "vehicleId": "vehicle-34",
+    "price": 1350000,
+    "recordedAt": "2024-03-22T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-38",
+    "vehicleId": "vehicle-35",
+    "price": 1140000,
+    "recordedAt": "2024-09-03T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-39",
+    "vehicleId": "vehicle-36",
+    "price": 1260000,
+    "recordedAt": "2024-03-29T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-40",
+    "vehicleId": "vehicle-36",
+    "price": 1197226,
+    "recordedAt": "2024-04-05T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-41",
+    "vehicleId": "vehicle-37",
+    "price": 1220000,
+    "recordedAt": "2024-12-09T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-42",
+    "vehicleId": "vehicle-38",
+    "price": 2250000,
+    "recordedAt": "2025-02-18T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-43",
+    "vehicleId": "vehicle-39",
+    "price": 1240000,
+    "recordedAt": "2025-01-25T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-44",
+    "vehicleId": "vehicle-40",
+    "price": 940000,
+    "recordedAt": "2024-05-31T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-45",
+    "vehicleId": "vehicle-41",
+    "price": 1290000,
+    "recordedAt": "2024-04-12T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-46",
+    "vehicleId": "vehicle-42",
+    "price": 1260000,
+    "recordedAt": "2024-09-15T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-47",
+    "vehicleId": "vehicle-43",
+    "price": 1340000,
+    "recordedAt": "2024-04-03T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-48",
+    "vehicleId": "vehicle-44",
+    "price": 1640000,
+    "recordedAt": "2024-08-17T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-49",
+    "vehicleId": "vehicle-45",
+    "price": 600000,
+    "recordedAt": "2025-03-08T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-50",
+    "vehicleId": "vehicle-45",
+    "price": 578918,
+    "recordedAt": "2025-03-15T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-51",
+    "vehicleId": "vehicle-46",
+    "price": 1830000,
+    "recordedAt": "2024-09-11T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-52",
+    "vehicleId": "vehicle-47",
+    "price": 2550000,
+    "recordedAt": "2024-03-19T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-53",
+    "vehicleId": "vehicle-47",
+    "price": 2591199,
+    "recordedAt": "2024-03-26T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-54",
+    "vehicleId": "vehicle-48",
+    "price": 1480000,
+    "recordedAt": "2024-10-30T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-55",
+    "vehicleId": "vehicle-49",
+    "price": 1000000,
+    "recordedAt": "2024-11-23T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-56",
+    "vehicleId": "vehicle-50",
+    "price": 1190000,
+    "recordedAt": "2025-01-12T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-57",
+    "vehicleId": "vehicle-51",
+    "price": 1230000,
+    "recordedAt": "2024-10-26T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-58",
+    "vehicleId": "vehicle-51",
+    "price": 1215344,
+    "recordedAt": "2024-11-02T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-59",
+    "vehicleId": "vehicle-52",
+    "price": 1340000,
+    "recordedAt": "2024-06-02T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-60",
+    "vehicleId": "vehicle-54",
+    "price": 1350000,
+    "recordedAt": "2025-02-26T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-61",
+    "vehicleId": "vehicle-54",
+    "price": 1329050,
+    "recordedAt": "2025-03-05T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-62",
+    "vehicleId": "vehicle-55",
+    "price": 1390000,
+    "recordedAt": "2024-03-28T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-63",
+    "vehicleId": "vehicle-55",
+    "price": 1413604,
+    "recordedAt": "2024-04-04T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-64",
+    "vehicleId": "vehicle-56",
+    "price": 1160000,
+    "recordedAt": "2025-02-18T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-65",
+    "vehicleId": "vehicle-57",
+    "price": 1530000,
+    "recordedAt": "2025-02-21T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-66",
+    "vehicleId": "vehicle-57",
+    "price": 1497677,
+    "recordedAt": "2025-02-28T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-67",
+    "vehicleId": "vehicle-58",
+    "price": 1380000,
+    "recordedAt": "2025-01-14T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-68",
+    "vehicleId": "vehicle-59",
+    "price": 1720000,
+    "recordedAt": "2024-11-27T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-69",
+    "vehicleId": "vehicle-60",
+    "price": 1440000,
+    "recordedAt": "2025-02-17T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-70",
+    "vehicleId": "vehicle-61",
+    "price": 660000,
+    "recordedAt": "2024-04-26T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-71",
+    "vehicleId": "vehicle-63",
+    "price": 1870000,
+    "recordedAt": "2024-08-07T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-72",
+    "vehicleId": "vehicle-64",
+    "price": 1350000,
+    "recordedAt": "2025-02-27T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-73",
+    "vehicleId": "vehicle-65",
+    "price": 2520000,
+    "recordedAt": "2024-06-12T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-74",
+    "vehicleId": "vehicle-66",
+    "price": 1360000,
+    "recordedAt": "2024-03-13T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-75",
+    "vehicleId": "vehicle-67",
+    "price": 990000,
+    "recordedAt": "2024-11-02T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-76",
+    "vehicleId": "vehicle-67",
+    "price": 912978,
+    "recordedAt": "2024-11-09T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-77",
+    "vehicleId": "vehicle-68",
+    "price": 1050000,
+    "recordedAt": "2024-04-05T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-78",
+    "vehicleId": "vehicle-68",
+    "price": 979251,
+    "recordedAt": "2024-04-12T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-79",
+    "vehicleId": "vehicle-69",
+    "price": 2390000,
+    "recordedAt": "2024-12-05T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-80",
+    "vehicleId": "vehicle-69",
+    "price": 2406061,
+    "recordedAt": "2024-12-12T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-81",
+    "vehicleId": "vehicle-70",
+    "price": 1630000,
+    "recordedAt": "2024-12-24T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-82",
+    "vehicleId": "vehicle-70",
+    "price": 1628489,
+    "recordedAt": "2024-12-31T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-83",
+    "vehicleId": "vehicle-71",
+    "price": 2240000,
+    "recordedAt": "2024-09-15T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-84",
+    "vehicleId": "vehicle-72",
+    "price": 710000,
+    "recordedAt": "2024-10-26T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-85",
+    "vehicleId": "vehicle-73",
+    "price": 1760000,
+    "recordedAt": "2024-09-03T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-86",
+    "vehicleId": "vehicle-73",
+    "price": 1672835,
+    "recordedAt": "2024-09-10T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-87",
+    "vehicleId": "vehicle-74",
+    "price": 1320000,
+    "recordedAt": "2025-01-31T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-88",
+    "vehicleId": "vehicle-74",
+    "price": 1268669,
+    "recordedAt": "2025-02-07T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-89",
+    "vehicleId": "vehicle-75",
+    "price": 1390000,
+    "recordedAt": "2024-07-31T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-90",
+    "vehicleId": "vehicle-76",
+    "price": 1590000,
+    "recordedAt": "2024-08-19T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-91",
+    "vehicleId": "vehicle-77",
+    "price": 1630000,
+    "recordedAt": "2024-12-01T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-92",
+    "vehicleId": "vehicle-77",
+    "price": 1661482,
+    "recordedAt": "2024-12-08T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-93",
+    "vehicleId": "vehicle-78",
+    "price": 1540000,
+    "recordedAt": "2024-08-12T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-94",
+    "vehicleId": "vehicle-78",
+    "price": 1530444,
+    "recordedAt": "2024-08-19T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-95",
+    "vehicleId": "vehicle-79",
+    "price": 2430000,
+    "recordedAt": "2025-03-04T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-96",
+    "vehicleId": "vehicle-80",
+    "price": 780000,
+    "recordedAt": "2024-12-03T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-97",
+    "vehicleId": "vehicle-81",
+    "price": 1400000,
+    "recordedAt": "2024-10-20T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-98",
+    "vehicleId": "vehicle-81",
+    "price": 1288154,
+    "recordedAt": "2024-10-27T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-99",
+    "vehicleId": "vehicle-82",
+    "price": 1630000,
+    "recordedAt": "2024-08-05T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-100",
+    "vehicleId": "vehicle-83",
+    "price": 1680000,
+    "recordedAt": "2025-02-26T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-101",
+    "vehicleId": "vehicle-84",
+    "price": 990000,
+    "recordedAt": "2024-10-01T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-102",
+    "vehicleId": "vehicle-85",
+    "price": 1230000,
+    "recordedAt": "2024-09-03T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-103",
+    "vehicleId": "vehicle-86",
+    "price": 760000,
+    "recordedAt": "2024-03-13T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-104",
+    "vehicleId": "vehicle-87",
+    "price": 1330000,
+    "recordedAt": "2024-12-19T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-105",
+    "vehicleId": "vehicle-88",
+    "price": 1360000,
+    "recordedAt": "2024-07-04T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-106",
+    "vehicleId": "vehicle-89",
+    "price": 750000,
+    "recordedAt": "2024-12-24T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-107",
+    "vehicleId": "vehicle-90",
+    "price": 2470000,
+    "recordedAt": "2025-03-09T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-108",
+    "vehicleId": "vehicle-91",
+    "price": 1480000,
+    "recordedAt": "2024-07-30T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-109",
+    "vehicleId": "vehicle-92",
+    "price": 1070000,
+    "recordedAt": "2024-04-14T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-110",
+    "vehicleId": "vehicle-93",
+    "price": 1300000,
+    "recordedAt": "2024-05-02T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-111",
+    "vehicleId": "vehicle-94",
+    "price": 1240000,
+    "recordedAt": "2024-06-06T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-112",
+    "vehicleId": "vehicle-94",
+    "price": 1244820,
+    "recordedAt": "2024-06-13T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-113",
+    "vehicleId": "vehicle-95",
+    "price": 1680000,
+    "recordedAt": "2024-12-04T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-114",
+    "vehicleId": "vehicle-96",
+    "price": 2090000,
+    "recordedAt": "2024-03-03T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-115",
+    "vehicleId": "vehicle-97",
+    "price": 1470000,
+    "recordedAt": "2024-12-22T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-116",
+    "vehicleId": "vehicle-98",
+    "price": 1370000,
+    "recordedAt": "2024-07-05T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-117",
+    "vehicleId": "vehicle-99",
+    "price": 1210000,
+    "recordedAt": "2024-03-29T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  },
+  {
+    "id": "vph-118",
+    "vehicleId": "vehicle-99",
+    "price": 1219296,
+    "recordedAt": "2024-04-05T08:00:00.000Z",
+    "recordedBy": "profile-admin"
+  }
 ]

@@ -1,4 +1,5 @@
 import { Form, Input, Button } from 'antd'
+import { useTranslation } from 'react-i18next'
 import type { Customer } from '../types'
 
 const { TextArea } = Input
@@ -12,6 +13,7 @@ interface CustomerFormProps {
 
 export function CustomerForm({ initial, loading, onFinish, onCancel }: CustomerFormProps) {
   const [form] = Form.useForm()
+  const { t } = useTranslation(['customers', 'common'])
 
   return (
     <Form
@@ -25,23 +27,23 @@ export function CustomerForm({ initial, loading, onFinish, onCancel }: CustomerF
       }}
       onFinish={onFinish}
     >
-      <Form.Item name="name" label="Họ tên" rules={[{ required: true, message: 'Nhập họ tên' }]}>
-        <Input placeholder="Họ và tên" />
+      <Form.Item name="name" label={t('customers:fullNameLabel')} rules={[{ required: true, message: t('customers:fullNameRequired') }]}>
+        <Input placeholder={t('customers:fullNamePlaceholder')} />
       </Form.Item>
-      <Form.Item name="phone" label="Số điện thoại">
-        <Input placeholder="VD: 0901234567" />
+      <Form.Item name="phone" label={t('customers:phone')}>
+        <Input placeholder={t('customers:phonePlaceholder')} />
       </Form.Item>
-      <Form.Item name="email" label="Email">
-        <Input type="email" placeholder="email@example.com" />
+      <Form.Item name="email" label={t('customers:email')}>
+        <Input type="email" placeholder={t('customers:emailPlaceholder')} />
       </Form.Item>
-      <Form.Item name="notes" label="Ghi chú">
-        <TextArea rows={3} />
+      <Form.Item name="notes" label={t('customers:notes')}>
+        <TextArea rows={3} placeholder={t('customers:notesPlaceholder')} />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit" loading={loading} style={{ marginRight: 8 }}>
-          Lưu
+          {t('common:save')}
         </Button>
-        {onCancel && <Button onClick={onCancel}>Hủy</Button>}
+        {onCancel && <Button onClick={onCancel}>{t('common:cancel')}</Button>}
       </Form.Item>
     </Form>
   )

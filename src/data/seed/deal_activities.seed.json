@@ -1,6 +1,1658 @@
 [
-  { "id": "da-1", "dealId": "deal-1", "type": "note", "content": "Gửi bảng giá và chương trình trả góp.", "createdAt": "2024-02-19T10:30:00.000Z", "createdBy": "profile-sales-1" },
-  { "id": "da-2", "dealId": "deal-1", "type": "stage_change", "content": "Chuyển từ test_drive sang negotiation.", "createdAt": "2024-02-22T14:00:00.000Z", "createdBy": "profile-sales-1" },
-  { "id": "da-3", "dealId": "deal-3", "type": "stage_change", "content": "Chốt đơn, đã nhận cọc.", "createdAt": "2024-02-28T10:00:00.000Z", "createdBy": "profile-sales-2" },
-  { "id": "da-4", "dealId": "deal-4", "type": "note", "content": "Khách báo không mua nữa.", "createdAt": "2024-02-15T11:00:00.000Z", "createdBy": "profile-sales-1" }
+  {
+    "id": "da-1",
+    "dealId": "deal-1",
+    "type": "stage_change",
+    "content": "Loan processing started.",
+    "createdAt": "2024-07-21T21:29:06.953Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-2",
+    "dealId": "deal-1",
+    "type": "stage_change",
+    "content": "Moved to test drive.",
+    "createdAt": "2025-02-16T06:47:00.811Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-3",
+    "dealId": "deal-1",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2025-02-19T01:11:43.564Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-4",
+    "dealId": "deal-2",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2025-03-04T19:39:20.412Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-5",
+    "dealId": "deal-2",
+    "type": "note",
+    "content": "Follow-up call scheduled.",
+    "createdAt": "2025-03-09T23:59:27.543Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-6",
+    "dealId": "deal-2",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2025-03-09T23:59:55.382Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-7",
+    "dealId": "deal-3",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2024-10-09T15:34:32.987Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-8",
+    "dealId": "deal-3",
+    "type": "note",
+    "content": "Customer requested COE details.",
+    "createdAt": "2024-12-29T08:52:13.039Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-9",
+    "dealId": "deal-3",
+    "type": "stage_change",
+    "content": "Loan processing started.",
+    "createdAt": "2025-03-04T01:59:53.744Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-10",
+    "dealId": "deal-3",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2025-03-06T07:08:39.242Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-11",
+    "dealId": "deal-4",
+    "type": "note",
+    "content": "Customer requested COE details.",
+    "createdAt": "2024-09-20T17:43:28.090Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-12",
+    "dealId": "deal-5",
+    "type": "stage_change",
+    "content": "Loan processing started.",
+    "createdAt": "2024-09-23T04:16:18.963Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-13",
+    "dealId": "deal-5",
+    "type": "stage_change",
+    "content": "Loan processing started.",
+    "createdAt": "2024-12-08T01:13:18.530Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-14",
+    "dealId": "deal-6",
+    "type": "stage_change",
+    "content": "Loan processing started.",
+    "createdAt": "2024-10-06T15:27:39.359Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-15",
+    "dealId": "deal-7",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2025-01-09T15:26:49.476Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-16",
+    "dealId": "deal-7",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2025-01-14T08:39:46.917Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-17",
+    "dealId": "deal-8",
+    "type": "stage_change",
+    "content": "Deal closed lost.",
+    "createdAt": "2024-06-24T02:23:01.168Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-18",
+    "dealId": "deal-9",
+    "type": "note",
+    "content": "Customer requested COE details.",
+    "createdAt": "2024-04-02T22:40:47.446Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-19",
+    "dealId": "deal-9",
+    "type": "note",
+    "content": "Follow-up call scheduled.",
+    "createdAt": "2024-06-11T19:35:27.729Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-20",
+    "dealId": "deal-9",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2024-11-26T23:55:43.919Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-21",
+    "dealId": "deal-10",
+    "type": "stage_change",
+    "content": "Loan processing started.",
+    "createdAt": "2024-11-14T18:05:52.223Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-22",
+    "dealId": "deal-10",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2024-11-17T06:13:55.341Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-23",
+    "dealId": "deal-11",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2024-11-20T19:50:50.684Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-24",
+    "dealId": "deal-12",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2025-03-03T16:20:59.971Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-25",
+    "dealId": "deal-12",
+    "type": "stage_change",
+    "content": "Moved to test drive.",
+    "createdAt": "2025-03-06T15:17:49.743Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-26",
+    "dealId": "deal-12",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2025-03-07T07:34:37.336Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-27",
+    "dealId": "deal-13",
+    "type": "stage_change",
+    "content": "Moved to test drive.",
+    "createdAt": "2025-02-28T07:47:34.748Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-28",
+    "dealId": "deal-14",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2025-02-13T09:54:20.804Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-29",
+    "dealId": "deal-15",
+    "type": "note",
+    "content": "Customer requested COE details.",
+    "createdAt": "2025-03-02T00:30:28.321Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-30",
+    "dealId": "deal-15",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2025-03-05T06:28:05.107Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-31",
+    "dealId": "deal-15",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2025-03-07T10:13:31.652Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-32",
+    "dealId": "deal-16",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2024-10-25T19:21:05.639Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-33",
+    "dealId": "deal-16",
+    "type": "note",
+    "content": "Follow-up call scheduled.",
+    "createdAt": "2025-03-02T16:51:08.790Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-34",
+    "dealId": "deal-17",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2024-09-19T07:06:50.993Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-35",
+    "dealId": "deal-17",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2025-03-03T09:18:09.741Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-36",
+    "dealId": "deal-18",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2024-12-08T11:02:27.336Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-37",
+    "dealId": "deal-18",
+    "type": "note",
+    "content": "Follow-up call scheduled.",
+    "createdAt": "2025-01-29T02:28:12.544Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-38",
+    "dealId": "deal-19",
+    "type": "note",
+    "content": "Customer requested COE details.",
+    "createdAt": "2025-01-24T19:29:59.693Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-39",
+    "dealId": "deal-19",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2025-01-26T19:33:36.556Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-40",
+    "dealId": "deal-19",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2025-03-01T21:27:28.061Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-41",
+    "dealId": "deal-19",
+    "type": "stage_change",
+    "content": "Moved to test drive.",
+    "createdAt": "2025-03-08T19:34:00.273Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-42",
+    "dealId": "deal-20",
+    "type": "note",
+    "content": "Follow-up call scheduled.",
+    "createdAt": "2025-02-08T09:44:53.042Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-43",
+    "dealId": "deal-21",
+    "type": "note",
+    "content": "Follow-up call scheduled.",
+    "createdAt": "2025-02-28T23:49:45.585Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-44",
+    "dealId": "deal-21",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2025-03-01T06:49:13.426Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-45",
+    "dealId": "deal-22",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2024-08-12T19:30:02.845Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-46",
+    "dealId": "deal-22",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2024-11-22T16:43:17.528Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-47",
+    "dealId": "deal-22",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2025-02-13T11:16:51.117Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-48",
+    "dealId": "deal-22",
+    "type": "stage_change",
+    "content": "Deal closed lost.",
+    "createdAt": "2025-03-07T22:45:23.496Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-49",
+    "dealId": "deal-23",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2025-02-12T23:13:21.478Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-50",
+    "dealId": "deal-24",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2025-01-31T07:46:08.444Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-51",
+    "dealId": "deal-25",
+    "type": "stage_change",
+    "content": "Deal closed lost.",
+    "createdAt": "2024-09-15T16:39:18.262Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-52",
+    "dealId": "deal-26",
+    "type": "note",
+    "content": "Follow-up call scheduled.",
+    "createdAt": "2024-05-27T11:27:13.012Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-53",
+    "dealId": "deal-27",
+    "type": "stage_change",
+    "content": "Deal closed lost.",
+    "createdAt": "2025-02-07T18:38:08.710Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-54",
+    "dealId": "deal-27",
+    "type": "stage_change",
+    "content": "Deal closed lost.",
+    "createdAt": "2025-02-15T01:33:36.144Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-55",
+    "dealId": "deal-27",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2025-03-06T15:32:37.018Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-56",
+    "dealId": "deal-28",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2025-01-18T20:13:46.069Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-57",
+    "dealId": "deal-28",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2025-03-05T21:38:39.226Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-58",
+    "dealId": "deal-29",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2025-03-03T17:02:15.631Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-59",
+    "dealId": "deal-29",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2025-03-05T16:27:24.433Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-60",
+    "dealId": "deal-29",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2025-03-09T19:46:04.206Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-61",
+    "dealId": "deal-29",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2025-03-09T20:24:52.520Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-62",
+    "dealId": "deal-30",
+    "type": "stage_change",
+    "content": "Deal closed lost.",
+    "createdAt": "2024-12-31T09:01:27.804Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-63",
+    "dealId": "deal-30",
+    "type": "stage_change",
+    "content": "Loan processing started.",
+    "createdAt": "2025-03-03T13:55:48.588Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-64",
+    "dealId": "deal-31",
+    "type": "stage_change",
+    "content": "Deal closed lost.",
+    "createdAt": "2024-12-14T11:03:03.082Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-65",
+    "dealId": "deal-31",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2025-01-02T08:05:31.864Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-66",
+    "dealId": "deal-32",
+    "type": "stage_change",
+    "content": "Loan processing started.",
+    "createdAt": "2024-09-12T10:43:33.697Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-67",
+    "dealId": "deal-32",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2024-12-05T14:36:59.357Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-68",
+    "dealId": "deal-32",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2024-12-14T10:48:33.344Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-69",
+    "dealId": "deal-32",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2025-02-18T09:43:45.192Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-70",
+    "dealId": "deal-33",
+    "type": "stage_change",
+    "content": "Deal closed lost.",
+    "createdAt": "2025-03-05T18:14:37.414Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-71",
+    "dealId": "deal-33",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2025-03-06T19:58:24.831Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-72",
+    "dealId": "deal-33",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2025-03-08T03:54:45.651Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-73",
+    "dealId": "deal-34",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2025-02-25T18:25:18.846Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-74",
+    "dealId": "deal-34",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2025-03-03T15:07:21.097Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-75",
+    "dealId": "deal-35",
+    "type": "stage_change",
+    "content": "Loan processing started.",
+    "createdAt": "2025-02-15T10:42:51.848Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-76",
+    "dealId": "deal-35",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2025-02-19T12:04:47.461Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-77",
+    "dealId": "deal-36",
+    "type": "stage_change",
+    "content": "Moved to test drive.",
+    "createdAt": "2024-12-31T13:15:01.603Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-78",
+    "dealId": "deal-36",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2025-02-15T03:48:48.804Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-79",
+    "dealId": "deal-37",
+    "type": "stage_change",
+    "content": "Deal closed lost.",
+    "createdAt": "2024-12-23T22:17:32.739Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-80",
+    "dealId": "deal-37",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2025-02-01T01:05:26.086Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-81",
+    "dealId": "deal-37",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2025-02-20T08:10:43.734Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-82",
+    "dealId": "deal-38",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2024-06-27T19:22:13.958Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-83",
+    "dealId": "deal-38",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2024-07-28T06:30:02.278Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-84",
+    "dealId": "deal-39",
+    "type": "note",
+    "content": "Follow-up call scheduled.",
+    "createdAt": "2024-11-15T01:42:45.738Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-85",
+    "dealId": "deal-40",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2024-09-05T05:53:47.760Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-86",
+    "dealId": "deal-40",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2025-02-28T19:30:48.032Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-87",
+    "dealId": "deal-40",
+    "type": "note",
+    "content": "Follow-up call scheduled.",
+    "createdAt": "2025-03-03T20:23:09.132Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-88",
+    "dealId": "deal-41",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2024-09-15T22:13:17.133Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-89",
+    "dealId": "deal-41",
+    "type": "note",
+    "content": "Customer requested COE details.",
+    "createdAt": "2024-10-23T13:29:29.319Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-90",
+    "dealId": "deal-41",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2025-03-02T21:29:52.800Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-91",
+    "dealId": "deal-42",
+    "type": "stage_change",
+    "content": "Loan processing started.",
+    "createdAt": "2024-12-27T20:48:11.022Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-92",
+    "dealId": "deal-42",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2025-03-05T02:47:05.471Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-93",
+    "dealId": "deal-43",
+    "type": "note",
+    "content": "Customer requested COE details.",
+    "createdAt": "2024-06-08T23:24:09.067Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-94",
+    "dealId": "deal-43",
+    "type": "note",
+    "content": "Customer requested COE details.",
+    "createdAt": "2025-02-20T13:10:23.217Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-95",
+    "dealId": "deal-43",
+    "type": "stage_change",
+    "content": "Deal closed lost.",
+    "createdAt": "2025-03-03T05:49:16.554Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-96",
+    "dealId": "deal-44",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2025-01-11T19:14:33.314Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-97",
+    "dealId": "deal-44",
+    "type": "note",
+    "content": "Follow-up call scheduled.",
+    "createdAt": "2025-03-03T22:42:42.411Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-98",
+    "dealId": "deal-45",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2025-01-07T10:35:39.488Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-99",
+    "dealId": "deal-45",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2025-02-04T23:29:26.550Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-100",
+    "dealId": "deal-45",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2025-03-05T21:39:46.902Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-101",
+    "dealId": "deal-45",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2025-03-08T20:04:28.855Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-102",
+    "dealId": "deal-46",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2024-11-17T09:45:15.081Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-103",
+    "dealId": "deal-46",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2025-01-07T12:25:26.810Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-104",
+    "dealId": "deal-46",
+    "type": "stage_change",
+    "content": "Loan processing started.",
+    "createdAt": "2025-02-23T02:13:30.562Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-105",
+    "dealId": "deal-46",
+    "type": "stage_change",
+    "content": "Loan processing started.",
+    "createdAt": "2025-03-01T11:29:59.414Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-106",
+    "dealId": "deal-47",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2025-01-10T01:15:34.863Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-107",
+    "dealId": "deal-47",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2025-02-02T17:39:25.630Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-108",
+    "dealId": "deal-48",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2025-01-31T10:40:34.638Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-109",
+    "dealId": "deal-48",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2025-02-18T23:09:39.743Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-110",
+    "dealId": "deal-49",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2024-10-31T00:47:59.785Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-111",
+    "dealId": "deal-49",
+    "type": "stage_change",
+    "content": "Moved to test drive.",
+    "createdAt": "2025-01-20T18:56:40.520Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-112",
+    "dealId": "deal-49",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2025-02-14T13:18:55.180Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-113",
+    "dealId": "deal-50",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2024-12-08T19:11:31.436Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-114",
+    "dealId": "deal-50",
+    "type": "stage_change",
+    "content": "Loan processing started.",
+    "createdAt": "2025-01-22T06:39:26.451Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-115",
+    "dealId": "deal-51",
+    "type": "note",
+    "content": "Customer requested COE details.",
+    "createdAt": "2025-01-28T20:19:45.277Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-116",
+    "dealId": "deal-51",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2025-02-25T05:45:00.690Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-117",
+    "dealId": "deal-51",
+    "type": "note",
+    "content": "Customer requested COE details.",
+    "createdAt": "2025-02-26T05:05:06.438Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-118",
+    "dealId": "deal-51",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2025-03-07T12:55:01.873Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-119",
+    "dealId": "deal-52",
+    "type": "note",
+    "content": "Customer requested COE details.",
+    "createdAt": "2024-10-07T04:51:34.948Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-120",
+    "dealId": "deal-52",
+    "type": "stage_change",
+    "content": "Deal closed lost.",
+    "createdAt": "2024-10-20T23:09:56.447Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-121",
+    "dealId": "deal-53",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2025-01-31T20:49:49.425Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-122",
+    "dealId": "deal-53",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2025-02-24T00:09:21.542Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-123",
+    "dealId": "deal-53",
+    "type": "note",
+    "content": "Follow-up call scheduled.",
+    "createdAt": "2025-03-05T10:28:46.398Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-124",
+    "dealId": "deal-53",
+    "type": "note",
+    "content": "Follow-up call scheduled.",
+    "createdAt": "2025-03-08T00:30:17.952Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-125",
+    "dealId": "deal-54",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2024-12-20T06:26:24.054Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-126",
+    "dealId": "deal-55",
+    "type": "stage_change",
+    "content": "Moved to test drive.",
+    "createdAt": "2024-11-07T00:27:51.993Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-127",
+    "dealId": "deal-56",
+    "type": "note",
+    "content": "Customer requested COE details.",
+    "createdAt": "2024-11-18T03:26:03.699Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-128",
+    "dealId": "deal-56",
+    "type": "stage_change",
+    "content": "Deal closed lost.",
+    "createdAt": "2025-01-19T06:15:17.838Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-129",
+    "dealId": "deal-56",
+    "type": "stage_change",
+    "content": "Moved to test drive.",
+    "createdAt": "2025-02-09T17:09:21.700Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-130",
+    "dealId": "deal-56",
+    "type": "note",
+    "content": "Follow-up call scheduled.",
+    "createdAt": "2025-02-21T23:46:02.477Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-131",
+    "dealId": "deal-57",
+    "type": "note",
+    "content": "Customer requested COE details.",
+    "createdAt": "2025-02-05T00:06:48.744Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-132",
+    "dealId": "deal-57",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2025-03-06T19:22:16.447Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-133",
+    "dealId": "deal-57",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2025-03-07T00:36:30.737Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-134",
+    "dealId": "deal-58",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2024-10-24T06:16:51.012Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-135",
+    "dealId": "deal-58",
+    "type": "note",
+    "content": "Follow-up call scheduled.",
+    "createdAt": "2025-02-04T08:58:10.992Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-136",
+    "dealId": "deal-59",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2024-07-07T07:52:58.761Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-137",
+    "dealId": "deal-59",
+    "type": "stage_change",
+    "content": "Loan processing started.",
+    "createdAt": "2024-09-23T14:56:16.914Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-138",
+    "dealId": "deal-59",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2025-03-07T23:34:04.520Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-139",
+    "dealId": "deal-60",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2024-12-20T03:24:06.937Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-140",
+    "dealId": "deal-60",
+    "type": "stage_change",
+    "content": "Deal closed lost.",
+    "createdAt": "2024-12-31T13:51:03.472Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-141",
+    "dealId": "deal-61",
+    "type": "note",
+    "content": "Customer requested COE details.",
+    "createdAt": "2024-12-18T07:00:10.061Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-142",
+    "dealId": "deal-61",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2025-01-08T10:42:43.363Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-143",
+    "dealId": "deal-62",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2025-01-23T10:57:10.718Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-144",
+    "dealId": "deal-63",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2024-09-25T01:25:12.123Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-145",
+    "dealId": "deal-63",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2024-11-14T06:58:22.261Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-146",
+    "dealId": "deal-64",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2025-03-04T10:04:53.691Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-147",
+    "dealId": "deal-64",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2025-03-05T09:06:01.691Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-148",
+    "dealId": "deal-64",
+    "type": "stage_change",
+    "content": "Deal closed lost.",
+    "createdAt": "2025-03-05T20:39:07.967Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-149",
+    "dealId": "deal-65",
+    "type": "stage_change",
+    "content": "Loan processing started.",
+    "createdAt": "2024-11-05T21:35:54.503Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-150",
+    "dealId": "deal-66",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2025-02-27T23:37:30.454Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-151",
+    "dealId": "deal-67",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2024-09-13T08:53:24.667Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-152",
+    "dealId": "deal-67",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2024-12-13T04:18:56.659Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-153",
+    "dealId": "deal-68",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2024-10-29T00:03:08.314Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-154",
+    "dealId": "deal-68",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2025-02-26T03:22:29.075Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-155",
+    "dealId": "deal-69",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2024-12-18T22:14:44.243Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-156",
+    "dealId": "deal-70",
+    "type": "note",
+    "content": "Follow-up call scheduled.",
+    "createdAt": "2024-10-12T13:57:37.763Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-157",
+    "dealId": "deal-70",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2025-02-24T17:25:58.281Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-158",
+    "dealId": "deal-70",
+    "type": "note",
+    "content": "Follow-up call scheduled.",
+    "createdAt": "2025-03-05T09:51:10.610Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-159",
+    "dealId": "deal-70",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2025-03-08T12:21:53.905Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-160",
+    "dealId": "deal-71",
+    "type": "stage_change",
+    "content": "Deal closed lost.",
+    "createdAt": "2025-03-09T22:49:23.022Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-161",
+    "dealId": "deal-71",
+    "type": "note",
+    "content": "Customer requested COE details.",
+    "createdAt": "2025-03-09T23:25:20.950Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-162",
+    "dealId": "deal-71",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2025-03-09T23:55:30.474Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-163",
+    "dealId": "deal-72",
+    "type": "note",
+    "content": "Customer requested COE details.",
+    "createdAt": "2024-07-13T20:04:31.748Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-164",
+    "dealId": "deal-73",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2024-11-19T20:08:57.740Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-165",
+    "dealId": "deal-73",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2024-12-27T12:52:30.260Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-166",
+    "dealId": "deal-73",
+    "type": "stage_change",
+    "content": "Moved to test drive.",
+    "createdAt": "2025-01-21T13:51:38.743Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-167",
+    "dealId": "deal-74",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2024-09-08T22:05:57.138Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-168",
+    "dealId": "deal-74",
+    "type": "stage_change",
+    "content": "Deal closed lost.",
+    "createdAt": "2025-01-13T14:36:56.522Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-169",
+    "dealId": "deal-74",
+    "type": "stage_change",
+    "content": "Stage changed to negotiation.",
+    "createdAt": "2025-02-12T12:38:29.679Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-170",
+    "dealId": "deal-75",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2024-07-08T10:32:40.300Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-171",
+    "dealId": "deal-75",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2025-02-12T18:47:24.512Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-172",
+    "dealId": "deal-75",
+    "type": "note",
+    "content": "Follow-up call scheduled.",
+    "createdAt": "2025-03-04T13:32:50.214Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-173",
+    "dealId": "deal-76",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2025-01-20T19:42:34.364Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-174",
+    "dealId": "deal-76",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2025-02-16T13:35:03.727Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-175",
+    "dealId": "deal-76",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2025-03-06T18:58:50.599Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-176",
+    "dealId": "deal-77",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2024-11-20T22:34:54.717Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-177",
+    "dealId": "deal-78",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2025-02-02T11:49:44.739Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-178",
+    "dealId": "deal-79",
+    "type": "stage_change",
+    "content": "Moved to test drive.",
+    "createdAt": "2025-02-22T04:04:36.739Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-179",
+    "dealId": "deal-79",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2025-02-22T09:44:18.336Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-180",
+    "dealId": "deal-79",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2025-03-01T07:46:30.459Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-181",
+    "dealId": "deal-80",
+    "type": "stage_change",
+    "content": "Loan processing started.",
+    "createdAt": "2024-11-24T12:28:05.443Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-182",
+    "dealId": "deal-81",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2024-11-01T22:40:48.002Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-183",
+    "dealId": "deal-81",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2025-02-18T05:23:34.894Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "da-184",
+    "dealId": "deal-82",
+    "type": "stage_change",
+    "content": "Deal closed lost.",
+    "createdAt": "2025-01-04T18:42:36.097Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-185",
+    "dealId": "deal-82",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2025-01-30T07:26:16.732Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-186",
+    "dealId": "deal-83",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2025-02-02T10:14:52.988Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-187",
+    "dealId": "deal-83",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2025-02-23T12:56:53.441Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-188",
+    "dealId": "deal-83",
+    "type": "note",
+    "content": "Customer requested COE details.",
+    "createdAt": "2025-02-28T04:42:45.547Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-189",
+    "dealId": "deal-83",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2025-03-01T01:42:21.773Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-190",
+    "dealId": "deal-84",
+    "type": "stage_change",
+    "content": "Loan processing started.",
+    "createdAt": "2025-02-11T11:57:42.711Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-191",
+    "dealId": "deal-84",
+    "type": "stage_change",
+    "content": "Loan processing started.",
+    "createdAt": "2025-02-14T11:38:49.637Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-192",
+    "dealId": "deal-84",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2025-02-20T08:35:21.674Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-193",
+    "dealId": "deal-85",
+    "type": "stage_change",
+    "content": "Loan processing started.",
+    "createdAt": "2024-11-14T17:17:44.548Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-194",
+    "dealId": "deal-85",
+    "type": "note",
+    "content": "Sent quote and financing options.",
+    "createdAt": "2025-01-21T11:59:58.284Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-195",
+    "dealId": "deal-85",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2025-02-25T06:50:10.656Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-196",
+    "dealId": "deal-86",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2025-01-30T17:20:19.663Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-197",
+    "dealId": "deal-87",
+    "type": "stage_change",
+    "content": "Loan processing started.",
+    "createdAt": "2024-10-18T11:07:24.376Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-198",
+    "dealId": "deal-87",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2025-01-23T09:48:50.183Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-199",
+    "dealId": "deal-87",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2025-02-03T18:52:40.161Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "da-200",
+    "dealId": "deal-87",
+    "type": "stage_change",
+    "content": "Deal closed lost.",
+    "createdAt": "2025-02-08T03:34:18.225Z",
+    "createdBy": "profile-admin"
+  },
+  {
+    "id": "da-201",
+    "dealId": "deal-88",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2024-11-12T03:35:34.718Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-202",
+    "dealId": "deal-88",
+    "type": "note",
+    "content": "Deposit received.",
+    "createdAt": "2024-12-06T05:10:26.298Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-203",
+    "dealId": "deal-88",
+    "type": "stage_change",
+    "content": "Deal closed won.",
+    "createdAt": "2025-01-12T03:48:41.922Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-204",
+    "dealId": "deal-89",
+    "type": "stage_change",
+    "content": "Deal closed lost.",
+    "createdAt": "2024-11-02T21:49:56.964Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-205",
+    "dealId": "deal-89",
+    "type": "stage_change",
+    "content": "Moved to test drive.",
+    "createdAt": "2024-12-12T04:14:41.981Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "da-206",
+    "dealId": "deal-90",
+    "type": "note",
+    "content": "Paperwork in progress for export.",
+    "createdAt": "2024-08-31T00:08:07.658Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "da-207",
+    "dealId": "deal-90",
+    "type": "stage_change",
+    "content": "Deal closed lost.",
+    "createdAt": "2025-01-25T21:18:42.864Z",
+    "createdBy": "profile-sales-1"
+  }
 ]

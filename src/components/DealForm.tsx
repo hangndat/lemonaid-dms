@@ -1,18 +1,10 @@
 import { Form, Input, InputNumber, Select, Button } from 'antd'
+import { useTranslation } from 'react-i18next'
 import type { Deal, DealStage } from '../types'
 import type { Profile } from '../types'
 import type { Lead } from '../types'
 import type { Customer } from '../types'
 import type { Vehicle } from '../types'
-
-const STAGE_OPTIONS: { value: DealStage; label: string }[] = [
-  { value: 'lead', label: 'Lead' },
-  { value: 'test_drive', label: 'Lái thử' },
-  { value: 'negotiation', label: 'Thương lượng' },
-  { value: 'loan_processing', label: 'Duyệt vay' },
-  { value: 'closed_won', label: 'Thắng' },
-  { value: 'closed_lost', label: 'Thua' },
-]
 
 interface DealFormProps {
   initial?: Partial<Deal> | null
@@ -36,6 +28,16 @@ export function DealForm({
   onCancel,
 }: DealFormProps) {
   const [form] = Form.useForm()
+  const { t } = useTranslation(['deals', 'common'])
+
+  const STAGE_OPTIONS: { value: DealStage; label: string }[] = [
+    { value: 'lead', label: t('deals:stageLead') },
+    { value: 'test_drive', label: t('deals:stageTestDrive') },
+    { value: 'negotiation', label: t('deals:stageNegotiation') },
+    { value: 'loan_processing', label: t('deals:stageLoan') },
+    { value: 'closed_won', label: t('deals:stageWon') },
+    { value: 'closed_lost', label: t('deals:stageLost') },
+  ]
 
   return (
     <Form
@@ -61,76 +63,76 @@ export function DealForm({
         return onFinish(payload)
       }}
     >
-      <Form.Item name="leadId" label="Lead">
+      <Form.Item name="leadId" label={t('deals:lead')}>
         <Select
           allowClear
           showSearch
           optionFilterProp="label"
-          placeholder="Chọn lead"
+          placeholder={t('deals:selectLead')}
           options={leads.map((l) => ({
             value: l.id,
             label: `${l.name || l.phone || l.id.slice(0, 8)} — ${l.source} (${l.status})`,
           }))}
         />
       </Form.Item>
-      <Form.Item name="assignedTo" label="Người phụ trách" rules={[{ required: true, message: 'Chọn người phụ trách' }]}>
+      <Form.Item name="assignedTo" label={t('deals:assignedTo')} rules={[{ required: true, message: t('deals:assignedToRequired') }]}>
         <Select
           options={profiles.map((p) => ({ value: p.id, label: `${p.fullName} (${p.role})` }))}
         />
       </Form.Item>
-      <Form.Item name="vehicleId" label="Xe">
+      <Form.Item name="vehicleId" label={t('deals:vehicle')}>
         <Select
           allowClear
           showSearch
           optionFilterProp="label"
-          placeholder="Chọn xe"
+          placeholder={t('deals:selectVehicle')}
           options={vehicles.map((v) => ({
             value: v.id,
             label: `${v.brand} ${v.model} (${v.year}) — ${(v.price ?? 0) / 1_000_000} tr`,
           }))}
         />
       </Form.Item>
-      <Form.Item name="customerId" label="Khách hàng">
+      <Form.Item name="customerId" label={t('deals:customer')}>
         <Select
           allowClear
           showSearch
           optionFilterProp="label"
-          placeholder="Chọn khách"
+          placeholder={t('deals:selectCustomer')}
           options={customers.map((c) => ({ value: c.id, label: `${c.name} — ${c.phone ?? ''}` }))}
         />
       </Form.Item>
-      <Form.Item name="stage" label="Giai đoạn" rules={[{ required: true }]}>
-        <Select options={STAGE_OPTIONS} />
+      <Form.Item name="stage" label={t('deals:stage')} rules={[{ required: true, message: t('deals:stageRequired') }]}>
+        <Select options={STAGE_OPTIONS} placeholder={t('deals:selectStage')} />
       </Form.Item>
-      <Form.Item name="expectedPrice" label="Giá dự kiến (triệu VNĐ)">
-        <InputNumber min={0} style={{ width: '100%' }} />
+      <Form.Item name="expectedPrice" label={t('deals:expectedPrice')} tooltip={t('deals:expectedPriceMillion')}>
+        <InputNumber min={0} style={{ width: '100%' }} addonAfter={t('deals:million')} placeholder="VD: 500" />
       </Form.Item>
-      <Form.Item name="finalPrice" label="Giá chốt (triệu VNĐ)">
-        <InputNumber min={0} style={{ width: '100%' }} />
+      <Form.Item name="finalPrice" label={t('deals:finalPrice')} tooltip={t('deals:finalPriceMillion')}>
+        <InputNumber min={0} style={{ width: '100%' }} addonAfter={t('deals:million')} placeholder="VD: 480" />
       </Form.Item>
-      <Form.Item name="expectedCloseDate" label="Ngày dự kiến chốt">
+      <Form.Item name="expectedCloseDate" label={t('deals:expectedCloseDateLabel')}>
         <Input type="date" />
       </Form.Item>
       <Form.Item
         name="lostReason"
-        label="Lý do thua (bắt buộc khi giai đoạn = Thua)"
+        label={t('deals:lostReasonRequiredWhenLost')}
         rules={[
           {
             validator: (_, value) => {
               const stage = form.getFieldValue('stage')
-              if (stage === 'closed_lost' && !value?.trim()) return Promise.reject(new Error('Nhập lý do thua'))
+              if (stage === 'closed_lost' && !value?.trim()) return Promise.reject(new Error(t('deals:lostReasonRequired')))
               return Promise.resolve()
             },
           },
         ]}
       >
-        <Input.TextArea rows={2} placeholder="Bắt buộc khi giai đoạn = Thua" />
+        <Input.TextArea rows={2} placeholder={t('deals:lostReasonPlaceholder')} />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit" loading={loading} style={{ marginRight: 8 }}>
-          Lưu
+          {t('common:save')}
         </Button>
-        {onCancel && <Button onClick={onCancel}>Hủy</Button>}
+        {onCancel && <Button onClick={onCancel}>{t('common:cancel')}</Button>}
       </Form.Item>
     </Form>
   )

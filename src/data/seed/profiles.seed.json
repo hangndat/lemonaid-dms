@@ -1,26 +1,42 @@
 [
   {
     "id": "profile-admin",
-    "fullName": "Nguyễn Văn Admin",
-    "email": "admin@dealer.vn",
-    "role": "admin"
+    "fullName": "James Tan",
+    "email": "james.tan@company.sg",
+    "role": "admin",
+    "createdAt": "2024-03-01T00:00:00.000Z",
+    "updatedAt": "2024-03-01T00:00:00.000Z"
   },
   {
     "id": "profile-manager",
-    "fullName": "Trần Thị Quản Lý",
-    "email": "manager@dealer.vn",
-    "role": "manager"
+    "fullName": "Sarah Lim",
+    "email": "sarah.lim@company.sg",
+    "role": "manager",
+    "createdAt": "2024-03-02T00:00:00.000Z",
+    "updatedAt": "2024-03-02T00:00:00.000Z"
   },
   {
     "id": "profile-sales-1",
-    "fullName": "Lê Văn Sales",
-    "email": "sales1@dealer.vn",
-    "role": "sales"
+    "fullName": "Wei Ming Chen",
+    "email": "weiming@company.sg",
+    "role": "sales",
+    "createdAt": "2024-03-03T00:00:00.000Z",
+    "updatedAt": "2024-03-03T00:00:00.000Z"
   },
   {
     "id": "profile-sales-2",
-    "fullName": "Phạm Thị Bán",
-    "email": "sales2@dealer.vn",
-    "role": "sales"
+    "fullName": "Priya Rajan",
+    "email": "priya@company.sg",
+    "role": "sales",
+    "createdAt": "2024-03-04T00:00:00.000Z",
+    "updatedAt": "2024-03-04T00:00:00.000Z"
+  },
+  {
+    "id": "profile-sales-3",
+    "fullName": "David Wong",
+    "email": "david.wong@company.sg",
+    "role": "sales",
+    "createdAt": "2024-03-05T00:00:00.000Z",
+    "updatedAt": "2024-03-05T00:00:00.000Z"
   }
 ]

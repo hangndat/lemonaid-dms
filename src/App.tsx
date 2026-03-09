@@ -1,6 +1,9 @@
 import React from 'react'
-import { ConfigProvider } from 'antd'
+import { ConfigProvider, Spin } from 'antd'
+import enUS from 'antd/locale/en_US'
+import thTH from 'antd/locale/th_TH'
 import viVN from 'antd/locale/vi_VN'
+import { useTranslation } from 'react-i18next'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { LEMONAIDE } from './theme/lemonaide'
 import { AuthProvider, useAuth } from './context/AuthContext'
@@ -16,9 +19,22 @@ import { DealDetailPage } from './pages/DealDetailPage'
 import { CustomersPage } from './pages/CustomersPage'
 import { CustomerDetailPage } from './pages/CustomerDetailPage'
 
+const ANT_LOCALES: Record<string, typeof enUS> = {
+  en: enUS,
+  th: thTH,
+  vi: viVN,
+}
+
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth()
-  if (loading) return <div style={{ padding: 24, textAlign: 'center' }}>Đang tải...</div>
+  const { t } = useTranslation('common')
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+        <Spin size="large" tip={t('loading')} />
+      </div>
+    )
+  }
   if (!user) return <Navigate to="/login" replace />
   return <>{children}</>
 }
@@ -50,10 +66,12 @@ function AppRoutes() {
   )
 }
 
-export default function App() {
+function AppWithLocale() {
+  const { i18n } = useTranslation()
+  const antLocale = ANT_LOCALES[i18n.language] ?? ANT_LOCALES.en
   return (
     <ConfigProvider
-      locale={viVN}
+      locale={antLocale}
       theme={{
         token: {
           colorPrimary: LEMONAIDE.colorPrimary,
@@ -69,4 +87,8 @@ export default function App() {
       </BrowserRouter>
     </ConfigProvider>
   )
+}
+
+export default function App() {
+  return <AppWithLocale />
 }

@@ -6,7 +6,7 @@
 
 | Phần | Trạng thái |
 |------|-------------|
-| **Phase 0** | ✅ Vite + React + TS + Ant Design + Router, AuthContext mock, seed JSON, repos, Reset demo data |
+| **Phase 0** | ✅ Vite + React + TS + Ant Design + Router, AuthContext mock, seed JSON, repos (seed nạp lần đầu; Reset demo data đã bỏ) |
 | **Phase 1 — Inventory** | ✅ CRUD xe, form tạo/sửa, xóa xe, ảnh (thêm/xóa URL), price history, search/filter/sort |
 | **Phase 2 — Customers** | ✅ CRUD khách, modal Thêm khách, chi tiết + Sửa, tabs Lead/Deal/Lịch sử mua |
 | **Phase 3 — Leads** | ✅ Thêm lead (modal), Sửa lead, ghi chú → lead_activities, link xe quan tâm + khách, nút Tạo deal |
@@ -51,7 +51,7 @@ Nguyên tắc:
 - **Seed JSON**: dùng để nạp dữ liệu ban đầu lần đầu mở app.
 - **localStorage**: là “DB tạm” cho demo:
   - Key versioned: `dms.v1.vehicles`, `dms.v1.leads`, ...
-  - Có hàm “Reset demo data” trong UI (Admin menu) để nạp lại seed.
+  - Seed nạp lần đầu khi chưa có data. (Reset demo data đã bỏ; nạp lại: npm run seed:generate + xóa localStorage + refresh.)
 - **ID**: dùng `crypto.randomUUID()` để tạo id.
 - **Timestamps**: `new Date().toISOString()`.
 
@@ -113,7 +113,7 @@ Nguyên tắc:
 
 ### Layout & Navigation
 - **Sidebar**: Dashboard / Inventory / Leads / Deals / Customers
-- **Header**: tên user + role, nút “Reset demo data”, nút Logout (mock)
+- **Header**: tên user + role, nút Logout (mock). (Reset demo data đã bỏ.)
 
 ### Inventory UI
 - **Trang danh sách**:
@@ -225,13 +225,13 @@ MVP có 2 lựa chọn, chọn 1 để nhanh:
 - Cài Ant Design + React Router
 - Dựng `AppLayout` + routing
 - Tạo `AuthContext` (mock): chọn user từ danh sách seed (admin/manager/sales)
-- Tạo seed JSON + loader + nút “Reset demo data”
+- Tạo seed JSON + loader (Reset demo data đã bỏ).
 - Tạo repo interfaces + mock repos (vehicles/leads/deals/customers)
 
 **Checklist Phase 0**
 - [x] `src/types/*` có enums/status đúng theo yêu cầu
 - [x] Có seed tối thiểu: 10 xe, 20 leads, 10 customers, 8 deals, 3–5 profiles
-- [x] `Reset demo data` hoạt động (xoá localStorage keys và nạp lại seed)
+- [x] ~~Reset demo data~~ (đã bỏ). Seed nạp lần đầu qua ensureInitialized; nạp lại: seed:generate + xóa localStorage + refresh
 - [x] Mock login: chọn user và role; app nhớ user (localStorage) sau reload
 
 ### Phase 1 — Inventory (2–4 ngày)
@@ -309,7 +309,7 @@ MVP có 2 lựa chọn, chọn 1 để nhanh:
 
 - **Auth mock**
   - [x] Chọn user/role và app ghi nhớ
-  - [x] Logout + reset demo ok
+  - [x] Logout ok (reset demo đã bỏ)
 
 - **Inventory**
   - [x] CRUD xe

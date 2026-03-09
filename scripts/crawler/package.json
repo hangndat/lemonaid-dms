@@ -1,0 +1,20 @@
+{
+  "name": "lemonaid-crawler",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "crawl": "tsx src/index.ts",
+    "crawl:dry": "tsx src/index.ts --dry",
+    "import": "tsx src/import-to-dms.ts"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "cheerio": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "tsx": "^4.19.2",
+    "typescript": "~5.6.2"
+  }
+}

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import { ProCard, PageContainer } from '@ant-design/pro-components'
-import { Descriptions, Button, Tabs, Table, Spin } from 'antd'
+import { Descriptions, Button, Tabs, Table, Spin, message, Empty } from 'antd'
 import { ArrowLeftOutlined, EditOutlined } from '@ant-design/icons'
+import { useTranslation } from 'react-i18next'
 import { customersRepo, leadsRepo, dealsRepo } from '../repos'
 import { CustomerForm } from '../components/CustomerForm'
 import type { Customer, Lead, Deal } from '../types'
@@ -10,6 +11,7 @@ import type { Customer, Lead, Deal } from '../types'
 export function CustomerDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const { t } = useTranslation(['customers', 'common'])
   const [customer, setCustomer] = useState<Customer | null>(null)
   const [leads, setLeads] = useState<Lead[]>([])
   const [deals, setDeals] = useState<Deal[]>([])
@@ -50,8 +52,11 @@ export function CustomerDetailPage() {
     setSaving(true)
     try {
       await customersRepo.update(customer.id, values)
+      message.success(t('customers:updatedSuccess'))
       setEditing(false)
       load()
+    } catch (e) {
+      message.error(e instanceof Error ? e.message : t('customers:updateError'))
     } finally {
       setSaving(false)
     }
@@ -60,8 +65,10 @@ export function CustomerDetailPage() {
   if (loading && !customer) return <Spin size="large" style={{ display: 'block', margin: 48 }} />
   if (!id || !customer) {
     return (
-      <PageContainer title="Chi tiết khách hàng" onBack={() => navigate('/customers')} backIcon={<ArrowLeftOutlined />}>
-        <p>Không tìm thấy khách hàng.</p>
+      <PageContainer title={t('customers:detailTitle')} onBack={() => navigate('/customers')} backIcon={<ArrowLeftOutlined />}>
+        <Empty description={t('customers:notFound')}>
+          <Button type="primary" onClick={() => navigate('/customers')}>{t('common:backToList')}</Button>
+        </Empty>
       </PageContainer>
     )
   }
@@ -70,7 +77,7 @@ export function CustomerDetailPage() {
 
   if (editing) {
     return (
-      <PageContainer title="Sửa khách hàng" onBack={() => setEditing(false)} backIcon={<ArrowLeftOutlined />}>
+      <PageContainer title={t('customers:editCustomer')} onBack={() => setEditing(false)} backIcon={<ArrowLeftOutlined />}>
         <ProCard>
           <CustomerForm
             initial={customer}
@@ -86,33 +93,33 @@ export function CustomerDetailPage() {
   const tabItems = [
     {
       key: 'info',
-      label: 'Thông tin',
+      label: t('customers:info'),
       children: (
         <Descriptions column={2} size="small">
-            <Descriptions.Item label="Tên">{customer.name}</Descriptions.Item>
-            <Descriptions.Item label="SĐT">{customer.phone ?? '—'}</Descriptions.Item>
-            <Descriptions.Item label="Email">{customer.email ?? '—'}</Descriptions.Item>
-            <Descriptions.Item label="Ghi chú" span={2}>{customer.notes ?? '—'}</Descriptions.Item>
+            <Descriptions.Item label={t('customers:name')}>{customer.name}</Descriptions.Item>
+            <Descriptions.Item label={t('customers:phone')}>{customer.phone ?? t('common:dash')}</Descriptions.Item>
+            <Descriptions.Item label={t('customers:email')}>{customer.email ?? t('common:dash')}</Descriptions.Item>
+            <Descriptions.Item label={t('customers:notes')} span={2}>{customer.notes ?? t('common:dash')}</Descriptions.Item>
         </Descriptions>
       ),
     },
     {
       key: 'leads',
-      label: `Lead (${leads.length})`,
+      label: t('customers:leadsTab', { count: leads.length }),
       children: (
         <Table
           size="small"
           rowKey="id"
           dataSource={leads}
           columns={[
-            { dataIndex: 'source', title: 'Nguồn' },
-            { dataIndex: 'status', title: 'Trạng thái' },
-            { dataIndex: 'createdAt', title: 'Tạo lúc', render: (v: string) => new Date(v).toLocaleString('vi-VN') },
+            { dataIndex: 'source', title: t('customers:source') },
+            { dataIndex: 'status', title: t('customers:status') },
+            { dataIndex: 'createdAt', title: t('customers:createdAt'), render: (v: string) => new Date(v).toLocaleString() },
             {
               title: '',
               render: (_: unknown, r: Lead) => (
                 <Button type="link" size="small" onClick={() => navigate(`/leads/${r.id}`)}>
-                  Xem
+                  {t('common:view')}
                 </Button>
               ),
             },
@@ -123,21 +130,21 @@ export function CustomerDetailPage() {
     },
     {
       key: 'deals',
-      label: `Deal (${deals.length})`,
+      label: t('customers:dealsTab', { count: deals.length }),
       children: (
         <Table
           size="small"
           rowKey="id"
           dataSource={deals}
           columns={[
-            { dataIndex: 'stage', title: 'Giai đoạn' },
-            { dataIndex: 'expectedPrice', title: 'Giá dự kiến', render: (v: number) => (v != null ? (v / 1_000_000).toFixed(0) + ' tr' : '—') },
-            { dataIndex: 'finalPrice', title: 'Giá chốt', render: (v: number) => (v != null ? (v / 1_000_000).toFixed(0) + ' tr' : '—') },
+            { dataIndex: 'stage', title: t('customers:stage') },
+            { dataIndex: 'expectedPrice', title: t('customers:expectedPrice'), render: (v: number) => (v != null ? (v / 1_000_000).toFixed(0) + ' tr' : t('common:dash')) },
+            { dataIndex: 'finalPrice', title: t('customers:finalPrice'), render: (v: number) => (v != null ? (v / 1_000_000).toFixed(0) + ' tr' : t('common:dash')) },
             {
               title: '',
               render: (_: unknown, r: Deal) => (
                 <Button type="link" size="small" onClick={() => navigate(`/deals/${r.id}`)}>
-                  Xem
+                  {t('common:view')}
                 </Button>
               ),
             },
@@ -148,16 +155,16 @@ export function CustomerDetailPage() {
     },
     {
       key: 'purchase',
-      label: `Lịch sử mua (${purchaseHistory.length})`,
+      label: t('customers:purchaseTab', { count: purchaseHistory.length }),
       children: (
         <Table
           size="small"
           rowKey="id"
           dataSource={purchaseHistory}
           columns={[
-            { dataIndex: 'vehicleId', title: 'Xe' },
-            { dataIndex: 'finalPrice', title: 'Giá chốt (VNĐ)', render: (v: number) => (v != null ? (v / 1_000_000).toFixed(0) + ' tr' : '—') },
-            { dataIndex: 'updatedAt', title: 'Cập nhật', render: (v: string) => new Date(v).toLocaleString('vi-VN') },
+            { dataIndex: 'vehicleId', title: t('customers:vehicle') },
+            { dataIndex: 'finalPrice', title: t('customers:finalPriceVnd'), render: (v: number) => (v != null ? (v / 1_000_000).toFixed(0) + ' tr' : t('common:dash')) },
+            { dataIndex: 'updatedAt', title: t('customers:updatedAt'), render: (v: string) => new Date(v).toLocaleString() },
           ]}
           pagination={false}
         />
@@ -170,9 +177,15 @@ export function CustomerDetailPage() {
       title={customer.name}
       onBack={() => navigate('/customers')}
       backIcon={<ArrowLeftOutlined />}
+      breadcrumb={{
+        items: [
+          { title: <Link to="/customers">{t('customers:title')}</Link> },
+          { title: customer.name },
+        ],
+      }}
       extra={[
         <Button key="edit" type="primary" icon={<EditOutlined />} onClick={() => setEditing(true)}>
-          Sửa
+          {t('common:edit')}
         </Button>,
       ]}
     >

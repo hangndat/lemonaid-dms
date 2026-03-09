@@ -1,12 +1,582 @@
 [
-  { "id": "customer-1", "name": "Hoàng Minh Tuấn", "phone": "0901234567", "email": "tuan.hoang@gmail.com", "notes": "Khách quan tâm SUV", "createdAt": "2024-01-10T08:00:00.000Z", "updatedAt": "2024-01-10T08:00:00.000Z", "createdBy": "profile-sales-1" },
-  { "id": "customer-2", "name": "Nguyễn Thị Hương", "phone": "0912345678", "email": "huong.nguyen@yahoo.com", "createdAt": "2024-01-12T09:00:00.000Z", "updatedAt": "2024-01-12T09:00:00.000Z", "createdBy": "profile-sales-1" },
-  { "id": "customer-3", "name": "Trần Văn Đức", "phone": "0923456789", "createdAt": "2024-01-15T10:00:00.000Z", "updatedAt": "2024-01-15T10:00:00.000Z", "createdBy": "profile-sales-2" },
-  { "id": "customer-4", "name": "Lê Thị Mai", "phone": "0934567890", "email": "mai.le@gmail.com", "createdAt": "2024-02-01T11:00:00.000Z", "updatedAt": "2024-02-01T11:00:00.000Z", "createdBy": "profile-sales-1" },
-  { "id": "customer-5", "name": "Phạm Quốc Bảo", "phone": "0945678901", "createdAt": "2024-02-05T14:00:00.000Z", "updatedAt": "2024-02-05T14:00:00.000Z", "createdBy": "profile-sales-2" },
-  { "id": "customer-6", "name": "Võ Thị Lan", "phone": "0956789012", "email": "lan.vo@gmail.com", "createdAt": "2024-02-10T08:00:00.000Z", "updatedAt": "2024-02-10T08:00:00.000Z", "createdBy": "profile-sales-1" },
-  { "id": "customer-7", "name": "Đặng Minh Khôi", "phone": "0967890123", "createdAt": "2024-02-15T09:00:00.000Z", "updatedAt": "2024-02-15T09:00:00.000Z", "createdBy": "profile-manager" },
-  { "id": "customer-8", "name": "Bùi Thị Hà", "phone": "0978901234", "email": "ha.bui@gmail.com", "createdAt": "2024-02-20T10:00:00.000Z", "updatedAt": "2024-02-20T10:00:00.000Z", "createdBy": "profile-sales-2" },
-  { "id": "customer-9", "name": "Đinh Văn Nam", "phone": "0989012345", "createdAt": "2024-02-25T11:00:00.000Z", "updatedAt": "2024-02-25T11:00:00.000Z", "createdBy": "profile-sales-1" },
-  { "id": "customer-10", "name": "Vũ Thị Phương", "phone": "0990123456", "email": "phuong.vu@gmail.com", "createdAt": "2024-03-01T08:00:00.000Z", "updatedAt": "2024-03-01T08:00:00.000Z", "createdBy": "profile-sales-1" }
+  {
+    "id": "customer-1",
+    "name": "Jurong East Auto Pte Ltd",
+    "phone": "+65 9273 9041",
+    "notes": "Regular buyer",
+    "createdAt": "2024-03-13T07:14:50.354Z",
+    "updatedAt": "2024-03-13T07:14:50.354Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "customer-2",
+    "name": "Loyang Car Centre Singapore",
+    "phone": "+65 9910 4808",
+    "email": "loyang.Hermann@gmail.com",
+    "createdAt": "2024-03-08T07:06:09.335Z",
+    "updatedAt": "2024-03-08T07:06:09.335Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "customer-3",
+    "name": "Toa Payoh Motors Pte Ltd",
+    "phone": "+65 9286 5559",
+    "email": "toa.Barrows@yahoo.com.sg",
+    "notes": "New partnership",
+    "createdAt": "2024-08-28T02:24:00.812Z",
+    "updatedAt": "2024-08-28T02:24:00.812Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "customer-4",
+    "name": "East Coast Auto SG",
+    "phone": "+65 8547 8268",
+    "email": "east_Klein91@gmail.com",
+    "notes": "Inquiry for SUV segment",
+    "createdAt": "2025-02-28T10:07:20.039Z",
+    "updatedAt": "2025-02-28T10:07:20.039Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "customer-5",
+    "name": "Clementi Motors SG",
+    "phone": "+65 9971 3658",
+    "createdAt": "2025-01-10T08:09:50.795Z",
+    "updatedAt": "2025-01-10T08:09:50.795Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "customer-6",
+    "name": "Clarke Quay Cars Pte Ltd",
+    "phone": "+65 8648 4873",
+    "email": "clarke.Adams@company.sg",
+    "notes": "Main contact: sales manager",
+    "createdAt": "2024-03-06T12:11:01.810Z",
+    "updatedAt": "2024-03-06T12:11:01.810Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "customer-7",
+    "name": "Hougang Car Centre Centre",
+    "phone": "+65 9342 7496",
+    "email": "hougang8@company.sg",
+    "notes": "Focus on Toyota/Honda",
+    "createdAt": "2024-05-18T17:03:53.791Z",
+    "updatedAt": "2024-05-18T17:03:53.791Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "customer-8",
+    "name": "Changi Auto Hub",
+    "phone": "+65 9018 7670",
+    "email": "changi77@yahoo.com.sg",
+    "notes": "Contact via WhatsApp",
+    "createdAt": "2024-07-18T22:49:50.553Z",
+    "updatedAt": "2024-07-18T22:49:50.553Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "customer-9",
+    "name": "Katong Motors Singapore",
+    "phone": "+65 9290 8294",
+    "email": "katong.Lubowitz18@yahoo.com.sg",
+    "notes": "Bulk orders preferred",
+    "createdAt": "2025-01-05T18:42:32.364Z",
+    "updatedAt": "2025-01-05T18:42:32.364Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "customer-10",
+    "name": "Simei Car Centre Trading",
+    "phone": "+65 8563 2526",
+    "email": "simei_Hagenes@yahoo.com.sg",
+    "createdAt": "2024-09-18T03:13:33.389Z",
+    "updatedAt": "2024-09-18T03:13:33.389Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "customer-11",
+    "name": "Clementi Motors Singapore",
+    "phone": "+65 8383 5059",
+    "email": "clementi.Runolfsdottir16@yahoo.com.sg",
+    "createdAt": "2024-05-31T03:59:03.896Z",
+    "updatedAt": "2024-05-31T03:59:03.896Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "customer-12",
+    "name": "Novena Auto Trading",
+    "phone": "+65 9298 8645",
+    "email": "novena51@company.sg",
+    "notes": "Re-export to Thailand",
+    "createdAt": "2024-11-10T07:54:37.479Z",
+    "updatedAt": "2024-11-10T07:54:37.479Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "customer-13",
+    "name": "Hougang Car Centre Pte Ltd",
+    "phone": "+65 8658 8770",
+    "email": "hougang61@yahoo.com.sg",
+    "notes": "Main contact: sales manager",
+    "createdAt": "2024-06-12T14:02:58.999Z",
+    "updatedAt": "2024-06-12T14:02:58.999Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "customer-14",
+    "name": "Toa Payoh Motors Singapore",
+    "phone": "+65 8776 2715",
+    "email": "toa81@yahoo.com.sg",
+    "notes": "Export to Bangkok",
+    "createdAt": "2024-08-22T11:29:02.209Z",
+    "updatedAt": "2024-08-22T11:29:02.209Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "customer-15",
+    "name": "Ang Mo Kio Car Pte Ltd",
+    "phone": "+65 8008 0457",
+    "email": "ang30@yahoo.com.sg",
+    "notes": "Bulk orders preferred",
+    "createdAt": "2024-06-27T00:26:05.868Z",
+    "updatedAt": "2024-06-27T00:26:05.868Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "customer-16",
+    "name": "Raffles Auto Singapore",
+    "phone": "+65 8154 9103",
+    "email": "raffles.Schamberger@company.sg",
+    "notes": "Regular buyer",
+    "createdAt": "2024-09-07T20:30:01.152Z",
+    "updatedAt": "2024-09-07T20:30:01.152Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "customer-17",
+    "name": "Ang Mo Kio Car Group",
+    "phone": "+65 9689 4186",
+    "email": "ang.Prosacco@yahoo.com.sg",
+    "notes": "COE cars only",
+    "createdAt": "2024-08-09T18:22:53.100Z",
+    "updatedAt": "2024-08-09T18:22:53.100Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "customer-18",
+    "name": "Bishan Car Export Singapore",
+    "phone": "+65 8021 3073",
+    "email": "bishan.Ankunding93@company.sg",
+    "notes": "COE cars only",
+    "createdAt": "2024-09-30T10:53:34.569Z",
+    "updatedAt": "2024-09-30T10:53:34.569Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "customer-19",
+    "name": "Tampines Motors Trading",
+    "phone": "+65 8282 6517",
+    "notes": "Main contact: sales manager",
+    "createdAt": "2025-02-21T01:39:41.530Z",
+    "updatedAt": "2025-02-21T01:39:41.530Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "customer-20",
+    "name": "Punggol Auto Centre",
+    "phone": "+65 9176 6040",
+    "email": "punggol.Stiedemann@company.sg",
+    "notes": "Focus on Toyota/Honda",
+    "createdAt": "2024-10-30T21:54:02.014Z",
+    "updatedAt": "2024-10-30T21:54:02.014Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "customer-21",
+    "name": "Yishun Motors Hub",
+    "phone": "+65 9151 5108",
+    "createdAt": "2024-08-10T13:24:39.806Z",
+    "updatedAt": "2024-08-10T13:24:39.806Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "customer-22",
+    "name": "Little India Auto Trading",
+    "phone": "+65 8385 7614",
+    "email": "little_Simonis37@gmail.com",
+    "notes": "Inquiry for SUV segment",
+    "createdAt": "2024-05-13T14:53:19.626Z",
+    "updatedAt": "2024-05-13T14:53:19.626Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "customer-23",
+    "name": "Raffles Auto Trading",
+    "phone": "+65 9967 3605",
+    "email": "raffles_Schmeler56@yahoo.com.sg",
+    "createdAt": "2025-02-10T14:14:40.465Z",
+    "updatedAt": "2025-02-10T14:14:40.465Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "customer-24",
+    "name": "Raffles Auto Hub",
+    "phone": "+65 9293 5755",
+    "notes": "Regular buyer",
+    "createdAt": "2024-09-27T21:49:30.285Z",
+    "updatedAt": "2024-09-27T21:49:30.285Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "customer-25",
+    "name": "Island Car Export",
+    "phone": "+65 8263 0845",
+    "email": "island79@yahoo.com.sg",
+    "createdAt": "2024-08-01T03:00:08.442Z",
+    "updatedAt": "2024-08-01T03:00:08.442Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "customer-26",
+    "name": "Pioneer Auto Hub",
+    "phone": "+65 8713 4585",
+    "email": "pioneer_Marvin@company.sg",
+    "notes": "Inquiry for SUV segment",
+    "createdAt": "2024-05-26T03:50:27.653Z",
+    "updatedAt": "2024-05-26T03:50:27.653Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "customer-27",
+    "name": "Pasir Ris Motors Trading",
+    "phone": "+65 9133 6546",
+    "email": "pasir_Bailey60@company.sg",
+    "notes": "Bulk orders preferred",
+    "createdAt": "2024-09-02T22:57:50.793Z",
+    "updatedAt": "2024-09-02T22:57:50.793Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "customer-28",
+    "name": "Bedok Auto Trading Trading",
+    "phone": "+65 9741 6792",
+    "email": "bedok.Keeling@gmail.com",
+    "notes": "Main contact: sales manager",
+    "createdAt": "2024-04-08T07:19:39.219Z",
+    "updatedAt": "2024-04-08T07:19:39.219Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "customer-29",
+    "name": "Serangoon Auto Hub",
+    "phone": "+65 9594 8979",
+    "email": "serangoon26@company.sg",
+    "notes": "Inquiry for SUV segment",
+    "createdAt": "2024-03-31T08:40:36.609Z",
+    "updatedAt": "2024-03-31T08:40:36.609Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "customer-30",
+    "name": "Yishun Motors Centre",
+    "phone": "+65 8863 1375",
+    "email": "yishun31@gmail.com",
+    "notes": "Inquiry for SUV segment",
+    "createdAt": "2024-10-23T04:40:46.288Z",
+    "updatedAt": "2024-10-23T04:40:46.288Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "customer-31",
+    "name": "Island Car Singapore",
+    "phone": "+65 9331 3229",
+    "email": "island58@gmail.com",
+    "createdAt": "2024-09-20T22:15:27.816Z",
+    "updatedAt": "2024-09-20T22:15:27.816Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "customer-32",
+    "name": "Serangoon Auto Trading",
+    "phone": "+65 8369 7899",
+    "email": "serangoon_Morissette-Mosciski@yahoo.com.sg",
+    "notes": "Bulk orders preferred",
+    "createdAt": "2024-05-04T15:52:01.728Z",
+    "updatedAt": "2024-05-04T15:52:01.728Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "customer-33",
+    "name": "Katong Motors Export",
+    "phone": "+65 8266 4409",
+    "email": "katong_Runolfsdottir@company.sg",
+    "notes": "New partnership",
+    "createdAt": "2024-06-13T12:22:54.756Z",
+    "updatedAt": "2024-06-13T12:22:54.756Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "customer-34",
+    "name": "Pioneer Auto Trading",
+    "phone": "+65 9026 5381",
+    "email": "pioneer_Ankunding84@yahoo.com.sg",
+    "notes": "Focus on Toyota/Honda",
+    "createdAt": "2024-11-28T16:32:45.237Z",
+    "updatedAt": "2024-11-28T16:32:45.237Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "customer-35",
+    "name": "Pasir Ris Motors Hub",
+    "phone": "+65 8572 2365",
+    "email": "pasir4@yahoo.com.sg",
+    "notes": "Main contact: sales manager",
+    "createdAt": "2024-10-05T16:47:53.880Z",
+    "updatedAt": "2024-10-05T16:47:53.880Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "customer-36",
+    "name": "Hougang Car Centre Singapore",
+    "phone": "+65 8918 5418",
+    "email": "hougang_Lueilwitz95@company.sg",
+    "notes": "Bulk orders preferred",
+    "createdAt": "2024-05-12T18:13:48.131Z",
+    "updatedAt": "2024-05-12T18:13:48.131Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "customer-37",
+    "name": "Jurong East Auto Trading",
+    "phone": "+65 8896 1407",
+    "email": "jurong84@company.sg",
+    "notes": "Contact via WhatsApp",
+    "createdAt": "2024-03-02T12:23:53.553Z",
+    "updatedAt": "2024-03-02T12:23:53.553Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "customer-38",
+    "name": "Thomson Motors Centre",
+    "phone": "+65 8073 7552",
+    "notes": "New partnership",
+    "createdAt": "2024-06-25T16:31:26.177Z",
+    "updatedAt": "2024-06-25T16:31:26.177Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "customer-39",
+    "name": "East Coast Auto Singapore",
+    "phone": "+65 8913 9329",
+    "email": "east_Schultz44@company.sg",
+    "notes": "Inquiry for SUV segment",
+    "createdAt": "2024-08-12T05:09:13.800Z",
+    "updatedAt": "2024-08-12T05:09:13.800Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "customer-40",
+    "name": "Simei Car Centre SG",
+    "phone": "+65 8543 1732",
+    "email": "simei_Hand-Zboncak@yahoo.com.sg",
+    "notes": "Contact via WhatsApp",
+    "createdAt": "2024-06-16T18:30:51.605Z",
+    "updatedAt": "2024-06-16T18:30:51.605Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "customer-41",
+    "name": "Clarke Quay Cars Export",
+    "phone": "+65 8982 2231",
+    "email": "clarke.Erdman78@yahoo.com.sg",
+    "notes": "Regular buyer",
+    "createdAt": "2025-01-04T12:09:24.696Z",
+    "updatedAt": "2025-01-04T12:09:24.696Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "customer-42",
+    "name": "Jurong East Auto Export",
+    "phone": "+65 8281 7990",
+    "email": "jurong.Orn72@company.sg",
+    "notes": "Re-export to Thailand",
+    "createdAt": "2024-10-03T05:46:49.323Z",
+    "updatedAt": "2024-10-03T05:46:49.323Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "customer-43",
+    "name": "Thomson Motors SG",
+    "phone": "+65 8774 7666",
+    "email": "thomson.Marquardt@company.sg",
+    "notes": "Export to Bangkok",
+    "createdAt": "2024-06-29T23:17:43.851Z",
+    "updatedAt": "2024-06-29T23:17:43.851Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "customer-44",
+    "name": "Novena Auto Pte Ltd",
+    "phone": "+65 8506 0817",
+    "email": "novena.Kerluke@company.sg",
+    "createdAt": "2025-01-10T08:35:16.494Z",
+    "updatedAt": "2025-01-10T08:35:16.494Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "customer-45",
+    "name": "Hougang Car Centre Trading",
+    "phone": "+65 9345 9924",
+    "email": "hougang.McGlynn84@gmail.com",
+    "notes": "Export to Bangkok",
+    "createdAt": "2024-09-26T05:39:05.162Z",
+    "updatedAt": "2024-09-26T05:39:05.162Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "customer-46",
+    "name": "Serangoon Auto Group",
+    "phone": "+65 8851 6591",
+    "email": "serangoon_Altenwerth@company.sg",
+    "notes": "Focus on Toyota/Honda",
+    "createdAt": "2024-03-15T15:47:58.475Z",
+    "updatedAt": "2024-03-15T15:47:58.475Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "customer-47",
+    "name": "Sengkang Motors Centre",
+    "phone": "+65 9188 8824",
+    "email": "sengkang.Homenick24@yahoo.com.sg",
+    "notes": "Main contact: sales manager",
+    "createdAt": "2024-11-19T13:14:41.137Z",
+    "updatedAt": "2024-11-19T13:14:41.137Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "customer-48",
+    "name": "Sunset Way Cars SG",
+    "phone": "+65 9396 3720",
+    "email": "sunset_Dietrich94@gmail.com",
+    "notes": "New partnership",
+    "createdAt": "2024-12-07T12:17:58.127Z",
+    "updatedAt": "2024-12-07T12:17:58.127Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "customer-49",
+    "name": "East Coast Auto Export",
+    "phone": "+65 9391 9589",
+    "email": "east_Gorczany55@gmail.com",
+    "notes": "COE cars only",
+    "createdAt": "2024-06-08T09:35:55.093Z",
+    "updatedAt": "2024-06-08T09:35:55.093Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "customer-50",
+    "name": "Balestier Car Singapore",
+    "phone": "+65 8575 5046",
+    "email": "balestier.Hegmann@company.sg",
+    "notes": "Export to Bangkok",
+    "createdAt": "2024-06-26T15:57:42.958Z",
+    "updatedAt": "2024-06-26T15:57:42.958Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "customer-51",
+    "name": "Loyang Car Centre Trading",
+    "phone": "+65 9859 6044",
+    "email": "loyang.Russel56@gmail.com",
+    "notes": "New partnership",
+    "createdAt": "2025-02-10T07:22:19.020Z",
+    "updatedAt": "2025-02-10T07:22:19.020Z",
+    "createdBy": "profile-manager"
+  },
+  {
+    "id": "customer-52",
+    "name": "Sengkang Motors SG",
+    "phone": "+65 8448 8994",
+    "email": "sengkang54@gmail.com",
+    "createdAt": "2025-01-14T09:06:56.593Z",
+    "updatedAt": "2025-01-14T09:06:56.593Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "customer-53",
+    "name": "Simei Car Centre Centre",
+    "phone": "+65 9799 3027",
+    "createdAt": "2024-05-02T07:31:47.023Z",
+    "updatedAt": "2024-05-02T07:31:47.023Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "customer-54",
+    "name": "Mandai Auto Trading",
+    "phone": "+65 9650 4728",
+    "email": "mandai25@gmail.com",
+    "notes": "Contact via WhatsApp",
+    "createdAt": "2024-04-19T11:15:14.929Z",
+    "updatedAt": "2024-04-19T11:15:14.929Z",
+    "createdBy": "profile-sales-3"
+  },
+  {
+    "id": "customer-55",
+    "name": "Tampines Motors Hub",
+    "phone": "+65 8681 4609",
+    "email": "tampines.Denesik@company.sg",
+    "notes": "Contact via WhatsApp",
+    "createdAt": "2024-12-11T03:44:22.006Z",
+    "updatedAt": "2024-12-11T03:44:22.006Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "customer-56",
+    "name": "Loyang Car Centre Hub",
+    "phone": "+65 8878 0884",
+    "email": "loyang.Quitzon75@company.sg",
+    "createdAt": "2024-03-01T04:26:26.159Z",
+    "updatedAt": "2024-03-01T04:26:26.159Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "customer-57",
+    "name": "Simei Car Centre Hub",
+    "phone": "+65 9447 7199",
+    "email": "simei.Reilly70@company.sg",
+    "notes": "Contact via WhatsApp",
+    "createdAt": "2024-08-04T12:50:58.866Z",
+    "updatedAt": "2024-08-04T12:50:58.866Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "customer-58",
+    "name": "Hougang Car Centre Export",
+    "phone": "+65 9890 1545",
+    "email": "hougang.OConnell@company.sg",
+    "notes": "Re-export to Thailand",
+    "createdAt": "2024-09-16T21:55:53.540Z",
+    "updatedAt": "2024-09-16T21:55:53.540Z",
+    "createdBy": "profile-sales-2"
+  },
+  {
+    "id": "customer-59",
+    "name": "Sunset Way Cars Group",
+    "phone": "+65 9409 0601",
+    "notes": "Inquiry for SUV segment",
+    "createdAt": "2024-07-12T10:43:32.844Z",
+    "updatedAt": "2024-07-12T10:43:32.844Z",
+    "createdBy": "profile-sales-1"
+  },
+  {
+    "id": "customer-60",
+    "name": "Premium Motors Hub",
+    "phone": "+65 8331 2476",
+    "email": "premium1@yahoo.com.sg",
+    "notes": "Export to Bangkok",
+    "createdAt": "2024-11-24T17:07:17.887Z",
+    "updatedAt": "2024-11-24T17:07:17.887Z",
+    "createdBy": "profile-sales-2"
+  }
 ]

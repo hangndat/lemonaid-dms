@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import { ProCard, PageContainer } from '@ant-design/pro-components'
-import { Descriptions, Button, Table, Image, Spin, Space, Input, Modal } from 'antd'
+import { Descriptions, Button, Table, Image, Spin, Space, Input, Modal, message, Empty } from 'antd'
 import { ArrowLeftOutlined, EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
+import { useTranslation } from 'react-i18next'
 import { vehiclesRepo } from '../repos'
 import { VehicleForm } from '../components/VehicleForm'
 import type { Vehicle, VehiclePhoto, VehiclePriceHistory } from '../types'
@@ -11,6 +12,7 @@ import { useAuth } from '../context/AuthContext'
 export function InventoryDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const { t } = useTranslation(['inventory', 'common'])
   const { user } = useAuth()
   const [vehicle, setVehicle] = useState<Vehicle | null>(null)
   const [photos, setPhotos] = useState<VehiclePhoto[]>([])
@@ -64,7 +66,10 @@ export function InventoryDetailPage() {
         status: (values.status as Vehicle['status']) ?? 'draft',
         createdBy: user?.id,
       })
+      message.success(t('inventory:addedSuccess'))
       navigate(`/inventory/${created.id}`)
+    } catch (e) {
+      message.error(e instanceof Error ? e.message : t('inventory:addError'))
     } finally {
       setSaving(false)
     }
@@ -90,8 +95,11 @@ export function InventoryDetailPage() {
         description: (values.description as string) || undefined,
         status: (values.status as Vehicle['status']) ?? 'draft',
       })
+      message.success(t('inventory:updatedSuccess'))
       setEditing(false)
       load()
+    } catch (e) {
+      message.error(e instanceof Error ? e.message : t('inventory:updateError'))
     } finally {
       setSaving(false)
     }
@@ -100,14 +108,19 @@ export function InventoryDetailPage() {
   const handleDelete = () => {
     if (!vehicle) return
     Modal.confirm({
-      title: 'Xóa xe?',
-      content: `Xóa xe ${vehicle.brand} ${vehicle.model} (${vehicle.year})? Hành động không thể hoàn tác.`,
-      okText: 'Xóa',
+      title: t('inventory:deleteConfirmTitle'),
+      content: t('inventory:deleteConfirmContent', { brand: vehicle.brand, model: vehicle.model, year: vehicle.year }),
+      okText: t('inventory:deleteOk'),
       okType: 'danger',
-      cancelText: 'Hủy',
+      cancelText: t('common:cancel'),
       onOk: async () => {
-        await vehiclesRepo.remove(vehicle.id)
-        navigate('/inventory')
+        try {
+          await vehiclesRepo.remove(vehicle.id)
+          message.success(t('inventory:deletedSuccess'))
+          navigate('/inventory')
+        } catch (e) {
+          message.error(e instanceof Error ? e.message : t('inventory:deleteError'))
+        }
       },
     })
   }
@@ -119,14 +132,22 @@ export function InventoryDetailPage() {
       await vehiclesRepo.addPhoto(vehicle.id, photoUrl.trim(), photos.length)
       setPhotoUrl('')
       setPhotos(await vehiclesRepo.getPhotos(vehicle.id))
+      message.success(t('inventory:photoAdded'))
+    } catch (e) {
+      message.error(e instanceof Error ? e.message : t('inventory:photoAddError'))
     } finally {
       setAddingPhoto(false)
     }
   }
 
   const handleRemovePhoto = async (photoId: string) => {
-    await vehiclesRepo.removePhoto(photoId)
-    if (vehicle) setPhotos(await vehiclesRepo.getPhotos(vehicle.id))
+    try {
+      await vehiclesRepo.removePhoto(photoId)
+      if (vehicle) setPhotos(await vehiclesRepo.getPhotos(vehicle.id))
+      message.success(t('inventory:photoRemoved'))
+    } catch (e) {
+      message.error(e instanceof Error ? e.message : t('inventory:photoRemoveError'))
+    }
   }
 
   if (loading && !vehicle && id !== 'new') return <Spin size="large" style={{ display: 'block', margin: 48 }} />
@@ -134,7 +155,7 @@ export function InventoryDetailPage() {
   if (id === 'new') {
     return (
       <PageContainer
-        title="Thêm xe mới"
+        title={t('inventory:addNew')}
         onBack={() => navigate('/inventory')}
         backIcon={<ArrowLeftOutlined />}
       >
@@ -145,8 +166,10 @@ export function InventoryDetailPage() {
 
   if (!vehicle) {
     return (
-      <PageContainer title="Chi tiết xe" onBack={() => navigate('/inventory')} backIcon={<ArrowLeftOutlined />}>
-        <p>Không tìm thấy xe.</p>
+      <PageContainer title={t('inventory:detail')} onBack={() => navigate('/inventory')} backIcon={<ArrowLeftOutlined />}>
+        <Empty description={t('inventory:notFound')}>
+          <Button type="primary" onClick={() => navigate('/inventory')}>{t('common:backToList')}</Button>
+        </Empty>
       </PageContainer>
     )
   }
@@ -154,7 +177,7 @@ export function InventoryDetailPage() {
   if (editing) {
     return (
       <PageContainer
-        title="Sửa xe"
+        title={t('inventory:editVehicle')}
         onBack={() => setEditing(false)}
         backIcon={<ArrowLeftOutlined />}
       >
@@ -173,28 +196,34 @@ export function InventoryDetailPage() {
       title={`${vehicle.brand} ${vehicle.model} (${vehicle.year})`}
       onBack={() => navigate('/inventory')}
       backIcon={<ArrowLeftOutlined />}
+      breadcrumb={{
+        items: [
+          { title: <Link to="/inventory">{t('inventory:title')}</Link> },
+          { title: `${vehicle.brand} ${vehicle.model} (${vehicle.year})` },
+        ],
+      }}
       extra={[
         <Button key="edit" type="primary" icon={<EditOutlined />} onClick={() => setEditing(true)}>
-          Sửa
+          {t('common:edit')}
         </Button>,
         <Button key="delete" danger icon={<DeleteOutlined />} onClick={handleDelete}>
-          Xóa xe
+          {t('inventory:deleteVehicle')}
         </Button>,
       ]}
     >
       {(photos.length > 0 || vehicle) && (
-        <ProCard title="Ảnh xe" style={{ marginBottom: 16 }}>
+        <ProCard title={t('inventory:photosTitle')} style={{ marginBottom: 16 }}>
           <Space direction="vertical" style={{ width: '100%' }} size="small">
             <Space wrap>
               <Input
-                placeholder="Thêm ảnh (dán URL)"
+                placeholder={t('inventory:addPhotoPlaceholder')}
                 value={photoUrl}
                 onChange={(e) => setPhotoUrl(e.target.value)}
                 style={{ width: 320 }}
                 onPressEnter={handleAddPhoto}
               />
               <Button type="primary" onClick={handleAddPhoto} loading={addingPhoto} icon={<PlusOutlined />}>
-                Thêm ảnh
+                {t('inventory:addPhoto')}
               </Button>
             </Space>
             {photos.length > 0 && (
@@ -219,34 +248,34 @@ export function InventoryDetailPage() {
           </Space>
         </ProCard>
       )}
-      <ProCard title="Thông tin" style={{ marginBottom: 16 }}>
+      <ProCard title={t('inventory:info')} style={{ marginBottom: 16 }}>
         <Descriptions column={2} size="small">
-          <Descriptions.Item label="Trạng thái">{vehicle.status}</Descriptions.Item>
-          <Descriptions.Item label="VIN">{vehicle.vin ?? '—'}</Descriptions.Item>
-          <Descriptions.Item label="Hãng">{vehicle.brand}</Descriptions.Item>
-          <Descriptions.Item label="Dòng">{vehicle.model}</Descriptions.Item>
-          <Descriptions.Item label="Phiên bản">{vehicle.variant ?? '—'}</Descriptions.Item>
-          <Descriptions.Item label="Năm">{vehicle.year}</Descriptions.Item>
-          <Descriptions.Item label="Số km">{vehicle.mileage != null ? vehicle.mileage.toLocaleString() : '—'}</Descriptions.Item>
-          <Descriptions.Item label="Màu">{vehicle.color ?? '—'}</Descriptions.Item>
-          <Descriptions.Item label="Hộp số">{vehicle.transmission ?? '—'}</Descriptions.Item>
-          <Descriptions.Item label="Nhiên liệu">{vehicle.fuelType ?? '—'}</Descriptions.Item>
-          <Descriptions.Item label="Giá (VNĐ)">
-            {vehicle.price != null ? (vehicle.price / 1_000_000).toFixed(0) + ' tr' : '—'}
+          <Descriptions.Item label={t('inventory:status')}>{vehicle.status}</Descriptions.Item>
+          <Descriptions.Item label={t('inventory:vin')}>{vehicle.vin ?? t('common:dash')}</Descriptions.Item>
+          <Descriptions.Item label={t('inventory:brand')}>{vehicle.brand}</Descriptions.Item>
+          <Descriptions.Item label={t('inventory:model')}>{vehicle.model}</Descriptions.Item>
+          <Descriptions.Item label={t('inventory:variant')}>{vehicle.variant ?? t('common:dash')}</Descriptions.Item>
+          <Descriptions.Item label={t('inventory:year')}>{vehicle.year}</Descriptions.Item>
+          <Descriptions.Item label={t('inventory:mileage')}>{vehicle.mileage != null ? vehicle.mileage.toLocaleString() : t('common:dash')}</Descriptions.Item>
+          <Descriptions.Item label={t('inventory:color')}>{vehicle.color ?? t('common:dash')}</Descriptions.Item>
+          <Descriptions.Item label={t('inventory:transmission')}>{vehicle.transmission ?? t('common:dash')}</Descriptions.Item>
+          <Descriptions.Item label={t('inventory:fuelType')}>{vehicle.fuelType ?? t('common:dash')}</Descriptions.Item>
+          <Descriptions.Item label={t('inventory:priceVnd')}>
+            {vehicle.price != null ? (vehicle.price / 1_000_000).toFixed(0) + ' tr' : t('common:dash')}
           </Descriptions.Item>
-          <Descriptions.Item label="Ngày nhập">{vehicle.stockInDate ?? '—'}</Descriptions.Item>
-          <Descriptions.Item label="Mô tả" span={2}>{vehicle.description ?? '—'}</Descriptions.Item>
+          <Descriptions.Item label={t('inventory:stockInDate')}>{vehicle.stockInDate ?? t('common:dash')}</Descriptions.Item>
+          <Descriptions.Item label={t('inventory:description')} span={2}>{vehicle.description ?? t('common:dash')}</Descriptions.Item>
         </Descriptions>
       </ProCard>
-      <ProCard title="Lịch sử giá">
+      <ProCard title={t('inventory:priceHistory')}>
         <Table
           size="small"
           rowKey="id"
           dataSource={priceHistory}
           columns={[
-            { dataIndex: 'recordedAt', title: 'Thời điểm', render: (v: string) => new Date(v).toLocaleString('vi-VN') },
-            { dataIndex: 'price', title: 'Giá (VNĐ)', render: (v: number) => (v / 1_000_000).toFixed(0) + ' tr' },
-            { dataIndex: 'recordedBy', title: 'Người ghi' },
+            { dataIndex: 'recordedAt', title: t('inventory:recordedAt'), render: (v: string) => new Date(v).toLocaleString() },
+            { dataIndex: 'price', title: t('inventory:priceVnd'), render: (v: number) => (v / 1_000_000).toFixed(0) + ' tr' },
+            { dataIndex: 'recordedBy', title: t('inventory:recordedBy') },
           ]}
           pagination={false}
         />

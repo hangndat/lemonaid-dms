@@ -1,0 +1,17 @@
+{
+  "title": "Tổng quan",
+  "subTitle": "Thống kê nhanh kho xe, lead và deal",
+  "totalVehicles": "Tổng xe",
+  "available": "Sẵn sàng",
+  "reserved": "Đã đặt",
+  "sold": "Đã bán",
+  "leadsByStatus": "Lead theo trạng thái",
+  "dealsByStage": "Deal theo giai đoạn",
+  "noLeads": "Chưa có lead",
+  "noDeals": "Chưa có deal",
+  "conversionRate": "Tỷ lệ chốt (lead → closed_won) {{rate}}%",
+  "salesByStaff": "Doanh số theo nhân viên (closed_won)",
+  "staff": "Nhân viên",
+  "dealCount": "Số deal",
+  "totalVnd": "Tổng (VNĐ)"
+}

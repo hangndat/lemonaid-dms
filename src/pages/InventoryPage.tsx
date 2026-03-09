@@ -4,43 +4,45 @@ import type { ActionType, ProColumns } from '@ant-design/pro-components'
 import { Button, Tag } from 'antd'
 import { PlusOutlined, EyeOutlined } from '@ant-design/icons'
 import { useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { vehiclesRepo } from '../repos'
 import type { Vehicle, VehicleStatus } from '../types'
 
-const STATUS_OPTIONS: { value: VehicleStatus; label: string }[] = [
-  { value: 'draft', label: 'Nháp' },
-  { value: 'available', label: 'Sẵn sàng' },
-  { value: 'reserved', label: 'Đã đặt' },
-  { value: 'sold', label: 'Đã bán' },
-]
-
 export function InventoryPage() {
   const navigate = useNavigate()
+  const { t } = useTranslation(['inventory', 'common'])
   const actionRef = useRef<ActionType>()
 
+  const STATUS_OPTIONS: { value: VehicleStatus; label: string }[] = [
+    { value: 'draft', label: t('inventory:statusDraft') },
+    { value: 'available', label: t('inventory:statusAvailable') },
+    { value: 'reserved', label: t('inventory:statusReserved') },
+    { value: 'sold', label: t('inventory:statusSold') },
+  ]
+
   const columns: ProColumns<Vehicle>[] = [
-    { dataIndex: 'keyword', title: 'Tìm kiếm', hideInTable: true, valueType: 'text', fieldProps: { placeholder: 'VIN, hãng, dòng...' } },
-    { dataIndex: 'status', title: 'Trạng thái', width: 100, valueType: 'select', valueEnum: Object.fromEntries(STATUS_OPTIONS.map((o) => [o.value, { text: o.label }])), render: (_, r) => <Tag>{r.status}</Tag> },
-    { dataIndex: 'brand', title: 'Hãng', width: 100 },
-    { dataIndex: 'model', title: 'Dòng', width: 120 },
-    { dataIndex: 'year', title: 'Năm', width: 70 },
-    { dataIndex: 'vin', title: 'VIN', width: 140, ellipsis: true },
+    { dataIndex: 'keyword', title: t('common:search'), hideInTable: true, valueType: 'text', fieldProps: { placeholder: t('inventory:searchPlaceholder') } },
+    { dataIndex: 'status', title: t('inventory:status'), width: 100, valueType: 'select', valueEnum: Object.fromEntries(STATUS_OPTIONS.map((o) => [o.value, { text: o.label }])), render: (_, r) => <Tag>{r.status}</Tag> },
+    { dataIndex: 'brand', title: t('inventory:brand'), width: 100 },
+    { dataIndex: 'model', title: t('inventory:model'), width: 120 },
+    { dataIndex: 'year', title: t('inventory:year'), width: 70 },
+    { dataIndex: 'vin', title: t('inventory:vin'), width: 140, ellipsis: true },
     {
       dataIndex: 'price',
-      title: 'Giá (VNĐ)',
+      title: t('inventory:priceVnd'),
       width: 120,
-      render: (_, r) => (r.price != null ? (r.price / 1_000_000).toFixed(0) + ' tr' : '—'),
+      render: (_, r) => (r.price != null ? (r.price / 1_000_000).toFixed(0) + ' tr' : t('common:dash')),
     },
-    { dataIndex: 'mileage', title: 'Số km', width: 90, render: (_, r) => (r.mileage != null ? r.mileage.toLocaleString() : '—') },
-    { dataIndex: 'stockInDate', title: 'Ngày nhập', width: 110 },
+    { dataIndex: 'mileage', title: t('inventory:mileage'), width: 90, render: (_, r) => (r.mileage != null ? r.mileage.toLocaleString() : t('common:dash')) },
+    { dataIndex: 'stockInDate', title: t('inventory:stockInDate'), width: 110 },
     {
-      title: 'Thao tác',
+      title: t('common:actions'),
       valueType: 'option',
       width: 120,
       fixed: 'right',
       render: (_, r) => [
         <Button type="link" size="small" key="view" icon={<EyeOutlined />} onClick={() => navigate(`/inventory/${r.id}`)}>
-          Xem
+          {t('common:view')}
         </Button>,
       ],
     },
@@ -50,7 +52,7 @@ export function InventoryPage() {
     <ProTable<Vehicle>
       actionRef={actionRef}
       rowKey="id"
-      headerTitle="Kho xe"
+      headerTitle={t('inventory:headerTitle')}
       request={async (params) => {
         const res = await vehiclesRepo.list({
           search: (params.keyword as string) ?? undefined,
@@ -70,9 +72,10 @@ export function InventoryPage() {
       form={{
         initialValues: { status: undefined },
       }}
+      locale={{ emptyText: t('inventory:emptyText') }}
       toolBarRender={() => [
         <Button key="add" type="primary" icon={<PlusOutlined />} onClick={() => navigate('/inventory/new')}>
-          Thêm xe
+          {t('inventory:addVehicle')}
         </Button>,
       ]}
     />

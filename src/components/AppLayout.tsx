@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { ProLayout } from '@ant-design/pro-components'
-import { Button, Dropdown, Space, Typography } from 'antd'
+import { Dropdown } from 'antd'
 import {
   DashboardOutlined,
   CarOutlined,
@@ -9,33 +9,46 @@ import {
   SwapOutlined,
   TeamOutlined,
   LogoutOutlined,
+  GlobalOutlined,
   ReloadOutlined,
 } from '@ant-design/icons'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
 import { LEMONAIDE } from '../theme/lemonaide'
+import { LANG_STORAGE_KEY } from '../i18n'
 
-const { Text } = Typography
-
-const route = {
-  path: '/',
-  routes: [
-    { path: '/', name: 'Tổng quan', icon: <DashboardOutlined /> },
-    { path: '/inventory', name: 'Kho xe', icon: <CarOutlined /> },
-    { path: '/leads', name: 'Lead', icon: <UserAddOutlined /> },
-    { path: '/deals', name: 'Deal / Pipeline', icon: <SwapOutlined /> },
-    { path: '/customers', name: 'Khách hàng', icon: <TeamOutlined /> },
-  ],
-}
+const LANG_OPTIONS = [
+  { key: 'en', label: 'EN' },
+  { key: 'th', label: 'TH' },
+  { key: 'vi', label: 'VI' },
+]
 
 export function AppLayout() {
   const navigate = useNavigate()
   const location = useLocation()
-  const { user, logout, resetDemoData } = useAuth()
+  const { t, i18n } = useTranslation(['nav', 'common'])
+  const { user, logout, refreshUser } = useAuth()
   const [logoError, setLogoError] = useState(false)
+
+  const route = {
+    path: '/',
+    routes: [
+      { path: '/', name: t('nav:overview'), icon: <DashboardOutlined /> },
+      { path: '/inventory', name: t('nav:inventory'), icon: <CarOutlined /> },
+      { path: '/leads', name: t('nav:leads'), icon: <UserAddOutlined /> },
+      { path: '/deals', name: t('nav:deals'), icon: <SwapOutlined /> },
+      { path: '/customers', name: t('nav:customers'), icon: <TeamOutlined /> },
+    ],
+  }
+
+  const changeLang = (lang: string) => {
+    i18n.changeLanguage(lang)
+    localStorage.setItem(LANG_STORAGE_KEY, lang)
+  }
 
   return (
     <ProLayout
-      title="Lemonaide DMS"
+      title={t('common:appName')}
       logo={
         logoError ? (
           <div
@@ -83,7 +96,7 @@ export function AppLayout() {
       menuHeaderRender={(logo) => (
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, minHeight: 48 }}>
           {logo}
-          <span style={{ color: '#fff', fontWeight: 600, fontSize: 16 }}>Lemonaide DMS</span>
+          <span style={{ color: '#fff', fontWeight: 600, fontSize: 16 }}>{t('common:appName')}</span>
         </div>
       )}
       route={route}
@@ -96,16 +109,6 @@ export function AppLayout() {
           {dom}
         </div>
       )}
-      headerContentRender={() => (
-        <Space size="middle" style={{ marginLeft: 16 }}>
-          <Text strong style={{ color: 'rgba(0,0,0,0.85)' }}>
-            {user?.fullName ?? user?.email}
-          </Text>
-          <Text type="secondary" style={{ fontSize: 12 }}>
-            {user?.role}
-          </Text>
-        </Space>
-      )}
       avatarProps={{
         src: undefined,
         size: 'small',
@@ -114,10 +117,26 @@ export function AppLayout() {
           <Dropdown
             menu={{
               items: [
+                ...LANG_OPTIONS.map((o) => ({
+                  key: `lang-${o.key}`,
+                  icon: i18n.language === o.key ? <GlobalOutlined /> : undefined,
+                  label: o.label,
+                  onClick: () => changeLang(o.key),
+                })),
+                { type: 'divider' as const },
+                {
+                  key: 'reloadData',
+                  icon: <ReloadOutlined />,
+                  label: t('nav:reloadData'),
+                  onClick: async () => {
+                    await refreshUser()
+                    window.location.reload()
+                  },
+                },
                 {
                   key: 'logout',
                   icon: <LogoutOutlined />,
-                  label: 'Đăng xuất',
+                  label: t('nav:logout'),
                   onClick: logout,
                 },
               ],
@@ -128,21 +147,6 @@ export function AppLayout() {
           </Dropdown>
         ),
       }}
-      actionsRender={() => [
-        <Button
-          key="reset"
-          type="default"
-          size="small"
-          icon={<ReloadOutlined />}
-          onClick={() => {
-            if (window.confirm('Reset toàn bộ dữ liệu demo về seed? Bạn sẽ cần đăng nhập lại.')) {
-              resetDemoData()
-            }
-          }}
-        >
-          Reset demo
-        </Button>,
-      ]}
       contentStyle={{
         padding: 24,
         margin: 0,

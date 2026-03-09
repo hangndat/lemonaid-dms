@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { ProTable } from '@ant-design/pro-components'
 import type { ActionType, ProColumns } from '@ant-design/pro-components'
-import { Button, Tag, Modal } from 'antd'
+import { Button, Tag, Modal, message } from 'antd'
 import { EyeOutlined, PlusOutlined } from '@ant-design/icons'
+import { useTranslation } from 'react-i18next'
 import { dealsRepo, profilesRepo, leadsRepo, customersRepo, vehiclesRepo } from '../repos'
 import { DealForm } from '../components/DealForm'
 import type { Deal, DealStage } from '../types'
@@ -13,20 +14,21 @@ import type { Customer } from '../types'
 import type { Vehicle } from '../types'
 import { useAuth } from '../context/AuthContext'
 
-const STAGE_OPTIONS: { value: DealStage; label: string }[] = [
-  { value: 'lead', label: 'Lead' },
-  { value: 'test_drive', label: 'Lái thử' },
-  { value: 'negotiation', label: 'Thương lượng' },
-  { value: 'loan_processing', label: 'Duyệt vay' },
-  { value: 'closed_won', label: 'Thắng' },
-  { value: 'closed_lost', label: 'Thua' },
-]
-
 export function DealsPage() {
   const navigate = useNavigate()
   const location = useLocation()
+  const { t } = useTranslation(['deals', 'common'])
   const { user } = useAuth()
   const actionRef = useRef<ActionType>(null)
+
+  const STAGE_OPTIONS: { value: DealStage; label: string }[] = [
+    { value: 'lead', label: t('deals:stageLead') },
+    { value: 'test_drive', label: t('deals:stageTestDrive') },
+    { value: 'negotiation', label: t('deals:stageNegotiation') },
+    { value: 'loan_processing', label: t('deals:stageLoan') },
+    { value: 'closed_won', label: t('deals:stageWon') },
+    { value: 'closed_lost', label: t('deals:stageLost') },
+  ]
   const [modalOpen, setModalOpen] = useState(false)
   const [saving, setSaving] = useState(false)
   const [prefillLead, setPrefillLead] = useState<Lead | null>(null)
@@ -77,9 +79,12 @@ export function DealsPage() {
         lostReason: (values.lostReason as string) || undefined,
         createdBy: user?.id,
       })
+      message.success(t('deals:addedSuccess'))
       setModalOpen(false)
       setPrefillLead(null)
       actionRef.current?.reload()
+    } catch (e) {
+      message.error(e instanceof Error ? e.message : t('deals:addError'))
     } finally {
       setSaving(false)
     }
@@ -96,29 +101,29 @@ export function DealsPage() {
     : null
 
   const columns: ProColumns<Deal>[] = [
-    { dataIndex: 'stage', title: 'Giai đoạn', width: 120, valueType: 'select', valueEnum: Object.fromEntries(STAGE_OPTIONS.map((o) => [o.value, { text: o.label }])), render: (_, r) => <Tag>{r.stage}</Tag> },
+    { dataIndex: 'stage', title: t('deals:stage'), width: 120, valueType: 'select', valueEnum: Object.fromEntries(STAGE_OPTIONS.map((o) => [o.value, { text: o.label }])), render: (_, r) => <Tag>{r.stage}</Tag> },
     { dataIndex: 'id', title: 'ID', width: 100, ellipsis: true, render: (_, r) => r.id.slice(0, 8) },
-    { dataIndex: 'assignedTo', title: 'Người phụ trách', width: 120, ellipsis: true },
+    { dataIndex: 'assignedTo', title: t('deals:assignedTo'), width: 120, ellipsis: true },
     {
       dataIndex: 'expectedPrice',
-      title: 'Giá dự kiến (tr)',
+      title: t('deals:expectedPriceTr'),
       width: 120,
-      render: (_, r) => (r.expectedPrice != null ? (r.expectedPrice / 1_000_000).toFixed(0) : '—'),
+      render: (_, r) => (r.expectedPrice != null ? (r.expectedPrice / 1_000_000).toFixed(0) : t('common:dash')),
     },
     {
       dataIndex: 'finalPrice',
-      title: 'Giá chốt (tr)',
+      title: t('deals:finalPriceTr'),
       width: 110,
-      render: (_, r) => (r.finalPrice != null ? (r.finalPrice / 1_000_000).toFixed(0) : '—'),
+      render: (_, r) => (r.finalPrice != null ? (r.finalPrice / 1_000_000).toFixed(0) : t('common:dash')),
     },
-    { dataIndex: 'expectedCloseDate', title: 'Ngày dự kiến', width: 120 },
+    { dataIndex: 'expectedCloseDate', title: t('deals:expectedCloseDate'), width: 120 },
     {
-      title: 'Thao tác',
+      title: t('common:actions'),
       valueType: 'option',
       width: 80,
       render: (_, r) => [
         <Button type="link" size="small" key="view" icon={<EyeOutlined />} onClick={() => navigate(`/deals/${r.id}`)}>
-          Xem
+          {t('common:view')}
         </Button>,
       ],
     },
@@ -129,7 +134,7 @@ export function DealsPage() {
       <ProTable<Deal>
         actionRef={actionRef}
         rowKey="id"
-        headerTitle="Deal / Pipeline"
+        headerTitle={t('deals:headerTitle')}
         request={async (params) => {
           const res = await dealsRepo.list({
             filters: params.stage ? { stage: params.stage as DealStage } : undefined,
@@ -141,14 +146,15 @@ export function DealsPage() {
         columns={columns}
         search={{ labelWidth: 'auto', defaultCollapsed: false }}
         form={{ initialValues: { stage: undefined } }}
+        locale={{ emptyText: t('deals:emptyText') }}
         toolBarRender={() => [
           <Button key="add" type="primary" icon={<PlusOutlined />} onClick={() => { setPrefillLead(null); setModalOpen(true); loadFormData(); }}>
-            Thêm deal
+            {t('deals:addDeal')}
           </Button>,
         ]}
       />
       <Modal
-        title={prefillLead ? 'Tạo deal từ lead' : 'Thêm deal'}
+        title={prefillLead ? t('deals:addDealFromLead') : t('deals:addDeal')}
         open={modalOpen}
         onCancel={() => { setModalOpen(false); setPrefillLead(null); }}
         footer={null}

@@ -12,7 +12,7 @@ interface AuthState {
 interface AuthContextValue extends AuthState {
   login: (profileId: string) => Promise<void>
   logout: () => void
-  resetDemoData: () => Promise<void>
+  refreshUser: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -49,22 +49,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setState({ user: null, loading: false })
   }, [])
 
-  const resetDemoData = useCallback(async () => {
-    const { clearAllDemoData } = await import('../data/storage')
-    const { loadSeedIntoStorage } = await import('../data/seed/loadSeed')
-    clearAllDemoData()
-    loadSeedIntoStorage()
-    window.location.reload()
-  }, [])
+  const refreshUser = useCallback(async () => {
+    await loadStoredUser()
+  }, [loadStoredUser])
 
   const value = useMemo<AuthContextValue>(
     () => ({
       ...state,
       login,
       logout,
-      resetDemoData,
+      refreshUser,
     }),
-    [state, login, logout, resetDemoData]
+    [state, login, logout, refreshUser]
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

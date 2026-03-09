@@ -9,7 +9,7 @@ npm install
 npm run dev
 ```
 
-Mở http://localhost:5173 → trang **Đăng nhập (Mock)**: chọn một tài khoản (admin/manager/sales) và đăng nhập. Dữ liệu seed nạp lần đầu; CRUD lưu trong localStorage. Nút **Reset demo data** trên header để nạp lại seed.
+Mở http://localhost:5173 → trang **Đăng nhập (Mock)**: chọn một tài khoản (admin/manager/sales) và đăng nhập. Dữ liệu seed nạp lần đầu (khi chưa có trong localStorage); CRUD lưu trong localStorage. Để nạp lại seed: chạy `npm run seed:generate`, xóa key `dms.v1.*` trong localStorage (hoặc xóa site data), rồi tải lại trang.
 
 ## Cấu trúc
 

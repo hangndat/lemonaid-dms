@@ -1,15 +1,9 @@
 import { ProCard } from '@ant-design/pro-components'
 import { Form, Input, InputNumber, Select, Button, Row, Col } from 'antd'
+import { useTranslation } from 'react-i18next'
 import type { Vehicle, VehicleStatus } from '../types'
 
 const { TextArea } = Input
-
-const STATUS_OPTIONS: { value: VehicleStatus; label: string }[] = [
-  { value: 'draft', label: 'Nháp' },
-  { value: 'available', label: 'Sẵn sàng' },
-  { value: 'reserved', label: 'Đã đặt' },
-  { value: 'sold', label: 'Đã bán' },
-]
 
 interface VehicleFormProps {
   initial?: Partial<Vehicle> | null
@@ -20,6 +14,14 @@ interface VehicleFormProps {
 
 export function VehicleForm({ initial, loading, onFinish, onCancel }: VehicleFormProps) {
   const [form] = Form.useForm()
+  const { t } = useTranslation(['inventory', 'common'])
+
+  const STATUS_OPTIONS: { value: VehicleStatus; label: string }[] = [
+    { value: 'draft', label: t('inventory:statusDraft') },
+    { value: 'available', label: t('inventory:statusAvailable') },
+    { value: 'reserved', label: t('inventory:statusReserved') },
+    { value: 'sold', label: t('inventory:statusSold') },
+  ]
 
   return (
     <Form
@@ -50,90 +52,90 @@ export function VehicleForm({ initial, loading, onFinish, onCancel }: VehicleFor
         await onFinish(payload)
       }}
     >
-      <ProCard title="Thông tin xe" style={{ marginBottom: 16 }}>
+      <ProCard title={t('inventory:formTitle')} style={{ marginBottom: 16 }}>
         <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item name="brand" label="Hãng" rules={[{ required: true }]}>
-              <Input placeholder="VD: Honda" />
+          <Col xs={24} md={12}>
+            <Form.Item name="brand" label={t('inventory:brand')} rules={[{ required: true, message: t('inventory:brandRequired') }]}>
+              <Input placeholder={t('inventory:brandPlaceholder')} />
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item name="model" label="Dòng xe" rules={[{ required: true }]}>
-              <Input placeholder="VD: City" />
+          <Col xs={24} md={12}>
+            <Form.Item name="model" label={t('inventory:model')} rules={[{ required: true, message: t('inventory:modelRequired') }]}>
+              <Input placeholder={t('inventory:modelPlaceholder')} />
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item name="variant" label="Phiên bản">
-              <Input placeholder="VD: RS" />
+          <Col xs={24} md={12}>
+            <Form.Item name="variant" label={t('inventory:variant')}>
+              <Input placeholder={t('inventory:variantPlaceholder')} />
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item name="year" label="Năm" rules={[{ required: true }]}>
-              <InputNumber min={1990} max={2030} style={{ width: '100%' }} />
+          <Col xs={24} md={12}>
+            <Form.Item name="year" label={t('inventory:year')} rules={[{ required: true, message: t('inventory:yearRequired') }]}>
+              <InputNumber min={1990} max={2030} style={{ width: '100%' }} placeholder={t('inventory:yearPlaceholder')} />
             </Form.Item>
           </Col>
           <Col span={24}>
-            <Form.Item name="vin" label="VIN">
-              <Input placeholder="Số VIN (tùy chọn)" />
+            <Form.Item name="vin" label={t('inventory:vin')} tooltip={t('inventory:vinTooltip')}>
+              <Input placeholder={t('inventory:vinPlaceholder')} maxLength={17} showCount />
             </Form.Item>
           </Col>
-          <Col span={8}>
-            <Form.Item name="mileage" label="Số km">
-              <InputNumber min={0} style={{ width: '100%' }} />
+          <Col xs={24} sm={12} md={8}>
+            <Form.Item name="mileage" label={t('inventory:mileage')}>
+              <InputNumber min={0} style={{ width: '100%' }} addonAfter="km" placeholder={t('inventory:mileagePlaceholder')} />
             </Form.Item>
           </Col>
-          <Col span={8}>
-            <Form.Item name="color" label="Màu">
-              <Input />
+          <Col xs={24} sm={12} md={8}>
+            <Form.Item name="color" label={t('inventory:color')}>
+              <Input placeholder={t('inventory:colorPlaceholder')} />
             </Form.Item>
           </Col>
-          <Col span={8}>
-            <Form.Item name="transmission" label="Hộp số">
-              <Input placeholder="VD: CVT, Tự động" />
+          <Col xs={24} sm={12} md={8}>
+            <Form.Item name="transmission" label={t('inventory:transmission')}>
+              <Input placeholder={t('inventory:transmissionPlaceholder')} />
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item name="fuelType" label="Nhiên liệu">
-              <Input placeholder="VD: Xăng, Dầu" />
+          <Col xs={24} md={12}>
+            <Form.Item name="fuelType" label={t('inventory:fuelType')}>
+              <Input placeholder={t('inventory:fuelPlaceholder')} />
             </Form.Item>
           </Col>
-          <Col span={12}>
-            <Form.Item name="stockInDate" label="Ngày nhập kho">
+          <Col xs={24} md={12}>
+            <Form.Item name="stockInDate" label={t('inventory:stockInDateLabel')}>
               <Input type="date" />
             </Form.Item>
           </Col>
           <Col span={24}>
-            <Form.Item name="description" label="Mô tả">
-              <TextArea rows={3} />
+            <Form.Item name="description" label={t('inventory:description')}>
+              <TextArea rows={3} placeholder={t('inventory:descriptionPlaceholder')} />
             </Form.Item>
           </Col>
         </Row>
       </ProCard>
-      <ProCard title="Giá & Trạng thái" style={{ marginBottom: 16 }}>
+      <ProCard title={t('inventory:priceAndStatus')} style={{ marginBottom: 16 }}>
         <Row gutter={16}>
-          <Col span={8}>
-            <Form.Item name="price" label="Giá bán (triệu VNĐ)">
-              <InputNumber min={0} style={{ width: '100%' }} />
+          <Col xs={24} sm={12} md={8}>
+            <Form.Item name="price" label={t('inventory:priceLabel')} tooltip={t('inventory:priceTooltip')}>
+              <InputNumber min={0} style={{ width: '100%' }} addonAfter={t('inventory:million')} placeholder="VD: 500" />
             </Form.Item>
           </Col>
-          <Col span={8}>
-            <Form.Item name="cost" label="Giá vốn (triệu VNĐ)">
-              <InputNumber min={0} style={{ width: '100%' }} />
+          <Col xs={24} sm={12} md={8}>
+            <Form.Item name="cost" label={t('inventory:costLabel')} tooltip={t('inventory:costTooltip')}>
+              <InputNumber min={0} style={{ width: '100%' }} addonAfter={t('inventory:million')} placeholder="VD: 450" />
             </Form.Item>
           </Col>
-          <Col span={8}>
-            <Form.Item name="status" label="Trạng thái" rules={[{ required: true }]}>
-              <Select options={STATUS_OPTIONS} />
+          <Col xs={24} sm={12} md={8}>
+            <Form.Item name="status" label={t('inventory:status')} rules={[{ required: true, message: t('inventory:statusRequired') }]}>
+              <Select options={STATUS_OPTIONS} placeholder={t('inventory:status')} />
             </Form.Item>
           </Col>
         </Row>
       </ProCard>
       <Form.Item>
         <Button type="primary" htmlType="submit" loading={loading} style={{ marginRight: 8 }}>
-          Lưu
+          {t('common:save')}
         </Button>
         {onCancel && (
-          <Button onClick={onCancel}>Hủy</Button>
+          <Button onClick={onCancel}>{t('common:cancel')}</Button>
         )}
       </Form.Item>
     </Form>

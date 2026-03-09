@@ -2,8 +2,9 @@ import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ProTable } from '@ant-design/pro-components'
 import type { ActionType, ProColumns } from '@ant-design/pro-components'
-import { Button, Tag, Modal } from 'antd'
+import { Button, Tag, Modal, message } from 'antd'
 import { EyeOutlined, PlusOutlined } from '@ant-design/icons'
+import { useTranslation } from 'react-i18next'
 import { leadsRepo, profilesRepo, customersRepo, vehiclesRepo } from '../repos'
 import { LeadForm } from '../components/LeadForm'
 import type { Lead, LeadStatus, LeadSource } from '../types'
@@ -12,25 +13,9 @@ import type { Customer } from '../types'
 import type { Vehicle } from '../types'
 import { useAuth } from '../context/AuthContext'
 
-const STATUS_OPTIONS: { value: LeadStatus; label: string }[] = [
-  { value: 'new', label: 'Mới' },
-  { value: 'contacted', label: 'Đã liên hệ' },
-  { value: 'test_drive', label: 'Lái thử' },
-  { value: 'negotiation', label: 'Thương lượng' },
-  { value: 'closed', label: 'Đóng' },
-  { value: 'lost', label: 'Mất' },
-]
-
-const SOURCE_OPTIONS: { value: LeadSource; label: string }[] = [
-  { value: 'facebook', label: 'Facebook' },
-  { value: 'website', label: 'Website' },
-  { value: 'marketplace', label: 'Marketplace' },
-  { value: 'walk_in', label: 'Walk-in' },
-  { value: 'hotline', label: 'Hotline' },
-]
-
 export function LeadsPage() {
   const navigate = useNavigate()
+  const { t } = useTranslation(['leads', 'common'])
   const { user } = useAuth()
   const [modalOpen, setModalOpen] = useState(false)
   const [saving, setSaving] = useState(false)
@@ -38,6 +23,23 @@ export function LeadsPage() {
   const [customers, setCustomers] = useState<Customer[]>([])
   const [vehicles, setVehicles] = useState<Vehicle[]>([])
   const actionRef = useRef<ActionType>(null)
+
+  const STATUS_OPTIONS: { value: LeadStatus; label: string }[] = [
+    { value: 'new', label: t('leads:statusNew') },
+    { value: 'contacted', label: t('leads:statusContacted') },
+    { value: 'test_drive', label: t('leads:statusTestDrive') },
+    { value: 'negotiation', label: t('leads:statusNegotiation') },
+    { value: 'closed', label: t('leads:statusClosed') },
+    { value: 'lost', label: t('leads:statusLost') },
+  ]
+
+  const SOURCE_OPTIONS: { value: LeadSource; label: string }[] = [
+    { value: 'facebook', label: t('leads:sourceFacebook') },
+    { value: 'website', label: t('leads:sourceWebsite') },
+    { value: 'marketplace', label: t('leads:sourceMarketplace') },
+    { value: 'walk_in', label: t('leads:sourceWalkIn') },
+    { value: 'hotline', label: t('leads:sourceHotline') },
+  ]
 
   const loadFormData = () => {
     Promise.all([
@@ -66,28 +68,31 @@ export function LeadsPage() {
         assignedTo: (values.assignedTo as string) || undefined,
         createdBy: user?.id,
       })
+      message.success(t('leads:addedSuccess'))
       setModalOpen(false)
       actionRef.current?.reload()
+    } catch (e) {
+      message.error(e instanceof Error ? e.message : t('leads:addError'))
     } finally {
       setSaving(false)
     }
   }
 
   const columns: ProColumns<Lead>[] = [
-    { dataIndex: 'keyword', title: 'Tìm kiếm', hideInTable: true, valueType: 'text', fieldProps: { placeholder: 'Tên, SĐT, email...' } },
-    { dataIndex: 'status', title: 'Trạng thái', width: 110, valueType: 'select', valueEnum: Object.fromEntries(STATUS_OPTIONS.map((o) => [o.value, { text: o.label }])), render: (_, r) => <Tag>{r.status}</Tag> },
-    { dataIndex: 'source', title: 'Nguồn', width: 100, valueType: 'select', valueEnum: Object.fromEntries(SOURCE_OPTIONS.map((o) => [o.value, { text: o.label }])), render: (_, r) => <Tag>{r.source}</Tag> },
-    { dataIndex: 'name', title: 'Tên', width: 140 },
-    { dataIndex: 'phone', title: 'SĐT', width: 110 },
-    { dataIndex: 'assignedTo', title: 'Assign', width: 100, ellipsis: true },
-    { dataIndex: 'createdAt', title: 'Tạo lúc', width: 150, valueType: 'dateTime', render: (_, r) => new Date(r.createdAt!).toLocaleString('vi-VN') },
+    { dataIndex: 'keyword', title: t('common:search'), hideInTable: true, valueType: 'text', fieldProps: { placeholder: t('leads:searchPlaceholder') } },
+    { dataIndex: 'status', title: t('leads:status'), width: 110, valueType: 'select', valueEnum: Object.fromEntries(STATUS_OPTIONS.map((o) => [o.value, { text: o.label }])), render: (_, r) => <Tag>{r.status}</Tag> },
+    { dataIndex: 'source', title: t('leads:source'), width: 100, valueType: 'select', valueEnum: Object.fromEntries(SOURCE_OPTIONS.map((o) => [o.value, { text: o.label }])), render: (_, r) => <Tag>{r.source}</Tag> },
+    { dataIndex: 'name', title: t('leads:name'), width: 140 },
+    { dataIndex: 'phone', title: t('leads:phone'), width: 110 },
+    { dataIndex: 'assignedTo', title: t('leads:assignedTo'), width: 100, ellipsis: true },
+    { dataIndex: 'createdAt', title: t('leads:createdAt'), width: 150, valueType: 'dateTime', render: (_, r) => new Date(r.createdAt!).toLocaleString() },
     {
-      title: 'Thao tác',
+      title: t('common:actions'),
       valueType: 'option',
       width: 80,
       render: (_, r) => [
         <Button type="link" size="small" key="view" icon={<EyeOutlined />} onClick={() => navigate(`/leads/${r.id}`)}>
-          Xem
+          {t('common:view')}
         </Button>,
       ],
     },
@@ -98,7 +103,7 @@ export function LeadsPage() {
       <ProTable<Lead>
         actionRef={actionRef}
         rowKey="id"
-        headerTitle="Lead"
+        headerTitle={t('leads:headerTitle')}
         request={async (params) => {
           const filters: Record<string, string> = {}
           if (params.status) filters.status = params.status as string
@@ -114,13 +119,14 @@ export function LeadsPage() {
         columns={columns}
         search={{ labelWidth: 'auto', defaultCollapsed: false }}
         form={{ initialValues: { status: undefined, source: undefined } }}
+        locale={{ emptyText: t('leads:emptyText') }}
         toolBarRender={() => [
           <Button key="add" type="primary" icon={<PlusOutlined />} onClick={() => { setModalOpen(true); loadFormData(); }}>
-            Thêm lead
+            {t('leads:addLead')}
           </Button>,
         ]}
       />
-      <Modal title="Thêm lead" open={modalOpen} onCancel={() => setModalOpen(false)} footer={null} width={520} destroyOnClose>
+      <Modal title={t('leads:modalTitle')} open={modalOpen} onCancel={() => setModalOpen(false)} footer={null} width={520} destroyOnClose>
         <LeadForm profiles={profiles} customers={customers} vehicles={vehicles} onFinish={handleCreate} loading={saving} onCancel={() => setModalOpen(false)} />
       </Modal>
     </>

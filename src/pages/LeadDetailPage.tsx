@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 import { ProCard, PageContainer } from '@ant-design/pro-components'
-import { Descriptions, Button, Input, List, Space, Spin } from 'antd'
+import { Descriptions, Button, Input, List, Space, Spin, message, Empty } from 'antd'
 import { ArrowLeftOutlined, EditOutlined, SwapOutlined } from '@ant-design/icons'
+import { useTranslation } from 'react-i18next'
 import { leadsRepo, profilesRepo, customersRepo, vehiclesRepo } from '../repos'
 import { LeadForm } from '../components/LeadForm'
 import type { Lead, LeadActivity } from '../types'
@@ -16,6 +17,7 @@ const { TextArea } = Input
 export function LeadDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const { t } = useTranslation(['leads', 'common'])
   const { user } = useAuth()
   const [lead, setLead] = useState<Lead | null>(null)
   const [activities, setActivities] = useState<LeadActivity[]>([])
@@ -57,8 +59,8 @@ export function LeadDetailPage() {
   }, [id])
 
   useEffect(() => {
-    if (editing) loadFormData()
-  }, [editing])
+    if (lead) loadFormData()
+  }, [lead?.id])
 
   const handleUpdate = async (values: Record<string, unknown>) => {
     if (!lead) return
@@ -75,8 +77,11 @@ export function LeadDetailPage() {
         interestedVehicleId: (values.interestedVehicleId as string) || undefined,
         assignedTo: (values.assignedTo as string) || undefined,
       })
+      message.success(t('leads:updatedSuccess'))
       setEditing(false)
       load()
+    } catch (e) {
+      message.error(e instanceof Error ? e.message : t('leads:updateError'))
     } finally {
       setSaving(false)
     }
@@ -85,10 +90,16 @@ export function LeadDetailPage() {
   const handleAddNote = async () => {
     if (!id || !note.trim()) return
     setSubmitting(true)
-    await leadsRepo.addActivity(id, 'note', note.trim(), user?.id)
-    setNote('')
-    await load()
-    setSubmitting(false)
+    try {
+      await leadsRepo.addActivity(id, 'note', note.trim(), user?.id)
+      setNote('')
+      await load()
+      message.success(t('leads:noteAdded'))
+    } catch (e) {
+      message.error(e instanceof Error ? e.message : t('leads:noteError'))
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const handleCreateDeal = () => {
@@ -99,15 +110,17 @@ export function LeadDetailPage() {
   if (loading && !lead) return <Spin size="large" style={{ display: 'block', margin: 48 }} />
   if (!id || !lead) {
     return (
-      <PageContainer title="Chi tiết lead" onBack={() => navigate('/leads')} backIcon={<ArrowLeftOutlined />}>
-        <p>Không tìm thấy lead.</p>
+      <PageContainer title={t('leads:detailTitle')} onBack={() => navigate('/leads')} backIcon={<ArrowLeftOutlined />}>
+        <Empty description={t('leads:notFound')}>
+          <Button type="primary" onClick={() => navigate('/leads')}>{t('common:backToList')}</Button>
+        </Empty>
       </PageContainer>
     )
   }
 
   if (editing) {
     return (
-      <PageContainer title="Sửa lead" onBack={() => setEditing(false)} backIcon={<ArrowLeftOutlined />}>
+      <PageContainer title={t('leads:editLead')} onBack={() => setEditing(false)} backIcon={<ArrowLeftOutlined />}>
         <ProCard>
           <LeadForm
             initial={lead}
@@ -128,38 +141,67 @@ export function LeadDetailPage() {
       title={lead.name || lead.phone || lead.id}
       onBack={() => navigate('/leads')}
       backIcon={<ArrowLeftOutlined />}
+      breadcrumb={{
+        items: [
+          { title: <Link to="/leads">{t('leads:title')}</Link> },
+          { title: lead.name || lead.phone || lead.id },
+        ],
+      }}
       extra={[
         <Button key="edit" type="primary" icon={<EditOutlined />} onClick={() => setEditing(true)}>
-          Sửa
+          {t('common:edit')}
         </Button>,
         <Button key="deal" icon={<SwapOutlined />} onClick={handleCreateDeal}>
-          Tạo deal
+          {t('leads:createDeal')}
         </Button>,
       ]}
     >
-      <ProCard title="Thông tin" style={{ marginBottom: 16 }}>
+      <ProCard title={t('leads:info')} style={{ marginBottom: 16 }}>
         <Descriptions column={2} size="small">
-          <Descriptions.Item label="Nguồn">{lead.source}</Descriptions.Item>
-          <Descriptions.Item label="Trạng thái">{lead.status}</Descriptions.Item>
-          <Descriptions.Item label="Tên">{lead.name ?? '—'}</Descriptions.Item>
-          <Descriptions.Item label="SĐT">{lead.phone ?? '—'}</Descriptions.Item>
-          <Descriptions.Item label="Email">{lead.email ?? '—'}</Descriptions.Item>
-          <Descriptions.Item label="Assign">{lead.assignedTo ?? '—'}</Descriptions.Item>
-          <Descriptions.Item label="Khách hàng">{lead.customerId ?? '—'}</Descriptions.Item>
-          <Descriptions.Item label="Xe quan tâm">{lead.interestedVehicleId ?? '—'}</Descriptions.Item>
-          <Descriptions.Item label="Ghi chú" span={2}>{lead.notes ?? '—'}</Descriptions.Item>
+          <Descriptions.Item label={t('leads:source')}>{lead.source}</Descriptions.Item>
+          <Descriptions.Item label={t('leads:status')}>{lead.status}</Descriptions.Item>
+          <Descriptions.Item label={t('leads:name')}>{lead.name ?? t('common:dash')}</Descriptions.Item>
+          <Descriptions.Item label={t('leads:phone')}>{lead.phone ?? t('common:dash')}</Descriptions.Item>
+          <Descriptions.Item label={t('leads:email')}>{lead.email ?? t('common:dash')}</Descriptions.Item>
+          <Descriptions.Item label={t('leads:assignedToLabel')}>
+            {lead.assignedTo
+              ? (profiles.find((p) => p.id === lead.assignedTo)?.fullName ?? lead.assignedTo)
+              : t('common:dash')}
+          </Descriptions.Item>
+          <Descriptions.Item label={t('leads:customer')}>
+            {lead.customerId ? (
+              <Link to={`/customers/${lead.customerId}`}>
+                {customers.find((c) => c.id === lead.customerId)?.name ?? lead.customerId}
+              </Link>
+            ) : (
+              t('common:dash')
+            )}
+          </Descriptions.Item>
+          <Descriptions.Item label={t('leads:interestedVehicleLabel')}>
+            {lead.interestedVehicleId ? (
+              <Link to={`/inventory/${lead.interestedVehicleId}`}>
+                {(() => {
+                  const v = vehicles.find((x) => x.id === lead.interestedVehicleId)
+                  return v ? `${v.brand} ${v.model} (${v.year})` : lead.interestedVehicleId
+                })()}
+              </Link>
+            ) : (
+              t('common:dash')
+            )}
+          </Descriptions.Item>
+          <Descriptions.Item label={t('leads:notes')} span={2}>{lead.notes ?? t('common:dash')}</Descriptions.Item>
         </Descriptions>
       </ProCard>
-      <ProCard title="Nhật ký / Ghi chú">
+      <ProCard title={t('leads:journalTitle')}>
         <Space direction="vertical" style={{ width: '100%' }} size="small">
           <TextArea
             rows={3}
-            placeholder="Thêm ghi chú..."
+            placeholder={t('leads:addNotePlaceholder')}
             value={note}
             onChange={(e) => setNote(e.target.value)}
           />
           <Button type="primary" onClick={handleAddNote} loading={submitting}>
-            Thêm ghi chú
+            {t('leads:addNote')}
           </Button>
         </Space>
         <List

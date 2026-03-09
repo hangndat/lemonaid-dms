@@ -1,0 +1,17 @@
+{
+  "title": "Overview",
+  "subTitle": "Quick stats for inventory, leads and deals",
+  "totalVehicles": "Total vehicles",
+  "available": "Available",
+  "reserved": "Reserved",
+  "sold": "Sold",
+  "leadsByStatus": "Leads by status",
+  "dealsByStage": "Deals by stage",
+  "noLeads": "No leads yet",
+  "noDeals": "No deals yet",
+  "conversionRate": "Close rate (lead → closed_won) {{rate}}%",
+  "salesByStaff": "Sales by staff (closed_won)",
+  "staff": "Staff",
+  "dealCount": "Deals",
+  "totalVnd": "Total (VND)"
+}
