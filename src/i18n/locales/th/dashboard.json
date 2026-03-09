@@ -5,6 +5,9 @@
   "available": "พร้อมขาย",
   "reserved": "จองแล้ว",
   "sold": "ขายแล้ว",
+  "totalRevenue": "รายได้รวม (ปิดแล้ว)",
+  "viewAll": "ดูทั้งหมด",
+  "viewDeals": "ดูดีล",
   "leadsByStatus": "ลีดตามสถานะ",
   "dealsByStage": "ดีลตามระยะ",
   "noLeads": "ยังไม่มีลีด",
@@ -13,5 +16,9 @@
   "salesByStaff": "ยอดขายตามพนักงาน (closed_won)",
   "staff": "พนักงาน",
   "dealCount": "ดีล",
-  "totalVnd": "รวม (บาท)"
+  "totalVnd": "รวม (บาท)",
+  "recentLeads": "ลีดล่าสุด",
+  "openDeals": "ดีลที่ยังไม่ปิด",
+  "noRecentLeads": "ยังไม่มีลีด",
+  "noOpenDeals": "ยังไม่มีดีลที่เปิดอยู่"
 }

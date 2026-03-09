@@ -10,6 +10,7 @@ import { generateLeads } from './generators/leads.js'
 import { generateLeadActivities } from './generators/leadActivities.js'
 import { generateDeals } from './generators/deals.js'
 import { generateDealActivities } from './generators/dealActivities.js'
+import { loadCrawledImagePool } from './data/loadCrawledPhotos.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = join(__dirname, '../../..')
@@ -31,7 +32,13 @@ function main() {
 
   const customers = generateCustomers(profiles)
   const vehicles = generateVehicles(profileIds)
-  const vehiclePhotos = generateVehiclePhotos(vehicles)
+  const imageUrlPool = loadCrawledImagePool()
+  if (imageUrlPool.length) {
+    console.log(`Using ${imageUrlPool.length} real images from crawl (scripts/crawler/output/crawled-vehicles.json)`)
+  } else {
+    console.log('No crawl output found; vehicle photos will use placeholder (picsum). Run: npm run crawl --prefix scripts/crawler')
+  }
+  const vehiclePhotos = generateVehiclePhotos(vehicles, imageUrlPool)
   const vehiclePriceHistory = generateVehiclePriceHistory(vehicles, adminId!)
   const leads = generateLeads(customers, vehicles, profiles)
   const leadActivities = generateLeadActivities(leads, profileIds)

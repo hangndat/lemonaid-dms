@@ -5,6 +5,9 @@
   "available": "Sẵn sàng",
   "reserved": "Đã đặt",
   "sold": "Đã bán",
+  "totalRevenue": "Tổng doanh thu (đã chốt)",
+  "viewAll": "Xem tất cả",
+  "viewDeals": "Xem deal",
   "leadsByStatus": "Lead theo trạng thái",
   "dealsByStage": "Deal theo giai đoạn",
   "noLeads": "Chưa có lead",
@@ -13,5 +16,9 @@
   "salesByStaff": "Doanh số theo nhân viên (closed_won)",
   "staff": "Nhân viên",
   "dealCount": "Số deal",
-  "totalVnd": "Tổng (VNĐ)"
+  "totalVnd": "Tổng (VNĐ)",
+  "recentLeads": "Lead mới nhất",
+  "openDeals": "Deal đang mở",
+  "noRecentLeads": "Chưa có lead",
+  "noOpenDeals": "Chưa có deal đang mở"
 }

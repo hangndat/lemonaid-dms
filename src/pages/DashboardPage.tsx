@@ -1,15 +1,29 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { ProCard, PageContainer } from '@ant-design/pro-components'
-import { Row, Col, Statistic, Table, Tag, Space } from 'antd'
+import { Row, Col, Statistic, Table, Tag, Space, Progress, Typography } from 'antd'
+import {
+  CarOutlined,
+  CheckCircleOutlined,
+  ClockCircleOutlined,
+  ShoppingOutlined,
+  DollarOutlined,
+  RightOutlined,
+  UserOutlined,
+  FundOutlined,
+} from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { vehiclesRepo, leadsRepo, dealsRepo, profilesRepo } from '../repos'
 import type { VehicleStatus } from '../types'
-import type { Profile } from '../types'
+import type { Profile, Lead, Deal } from '../types'
 import { getLeadStatusTagColor } from '../utils/tagColors'
 import { getDealStageTagColor } from '../utils/tagColors'
 import { useCurrency } from '../context/CurrencyContext'
+import { formatDateTime } from '../utils/format'
 import type { LeadStatus } from '../types'
 import type { DealStage } from '../types'
+
+const { Text } = Typography
 
 const LEAD_STATUS_I18N: Record<LeadStatus, string> = {
   new: 'leads:statusNew',
@@ -40,7 +54,10 @@ export function DashboardPage() {
   const [leadCounts, setLeadCounts] = useState<Record<string, number>>({})
   const [dealCounts, setDealCounts] = useState<Record<string, number>>({})
   const [conversionRate, setConversionRate] = useState<number>(0)
+  const [totalRevenue, setTotalRevenue] = useState<number>(0)
   const [salesByPerson, setSalesByPerson] = useState<{ name: string; deals: number; total: number }[]>([])
+  const [recentLeads, setRecentLeads] = useState<Lead[]>([])
+  const [openDeals, setOpenDeals] = useState<Deal[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -80,6 +97,9 @@ export function DashboardPage() {
       const won = wonDeals.length
       setConversionRate(totalLeads > 0 ? Math.round((won / totalLeads) * 100) : 0)
 
+      const revenue = wonDeals.reduce((sum, d) => sum + (d.finalPrice ?? 0), 0)
+      setTotalRevenue(revenue)
+
       const byPerson: Record<string, { deals: number; total: number }> = {}
       wonDeals.forEach((d) => {
         const id = d.assignedTo
@@ -88,12 +108,28 @@ export function DashboardPage() {
         byPerson[id].total += d.finalPrice ?? 0
       })
       setSalesByPerson(
-        Object.entries(byPerson).map(([id, v]) => ({
-          name: profileMap.get(id)?.fullName ?? id,
-          deals: v.deals,
-          total: v.total,
-        }))
+        Object.entries(byPerson)
+          .map(([id, v]) => ({
+            name: profileMap.get(id)?.fullName ?? id,
+            deals: v.deals,
+            total: v.total,
+          }))
+          .sort((a, b) => b.total - a.total)
       )
+
+      const recent = [...lRes.items].sort(
+        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      )
+      setRecentLeads(recent.slice(0, 5))
+
+      const open = dRes.items.filter(
+        (d) => d.stage !== 'closed_won' && d.stage !== 'closed_lost'
+      )
+      const openSorted = [...open].sort(
+        (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+      )
+      setOpenDeals(openSorted.slice(0, 5))
+
       setLoading(false)
     }
     load()
@@ -102,66 +138,186 @@ export function DashboardPage() {
   const totalVehicles =
     vehicleCounts.draft + vehicleCounts.available + vehicleCounts.reserved + vehicleCounts.sold
 
+  const statCard = (
+    title: string,
+    value: number | string,
+    icon: React.ReactNode,
+    to?: string
+  ) => (
+    <ProCard loading={loading} bordered style={{ borderRadius: 8 }}>
+      <Space direction="vertical" size={4} style={{ width: '100%' }}>
+        <Text type="secondary" style={{ fontSize: 13 }}>
+          {title}
+        </Text>
+        <Statistic
+          value={value}
+          valueStyle={{ fontSize: 22, fontWeight: 600 }}
+          prefix={icon}
+        />
+        {to && (
+          <Link to={to} style={{ fontSize: 12, display: 'flex', alignItems: 'center', gap: 4 }}>
+            {t('dashboard:viewAll')} <RightOutlined />
+          </Link>
+        )}
+      </Space>
+    </ProCard>
+  )
+
   return (
     <div className="dashboard-page">
       <PageContainer title={t('dashboard:title')} subTitle={t('dashboard:subTitle')}>
-        <ProCard className="dashboard-stats-card" style={{ marginBottom: 24, borderRadius: 8 }}>
-          <Row gutter={[16, 16]}>
-            <Col xs={24} sm={12} md={6}>
-              <ProCard loading={loading} bordered style={{ borderRadius: 8 }}>
-                <Statistic title={t('dashboard:totalVehicles')} value={totalVehicles} />
-              </ProCard>
-            </Col>
-            <Col xs={24} sm={12} md={6}>
-              <ProCard loading={loading} bordered style={{ borderRadius: 8 }}>
-                <Statistic title={t('dashboard:available')} value={vehicleCounts.available} />
-              </ProCard>
-            </Col>
-            <Col xs={24} sm={12} md={6}>
-              <ProCard loading={loading} bordered style={{ borderRadius: 8 }}>
-                <Statistic title={t('dashboard:reserved')} value={vehicleCounts.reserved} />
-              </ProCard>
-            </Col>
-            <Col xs={24} sm={12} md={6}>
-              <ProCard loading={loading} bordered style={{ borderRadius: 8 }}>
-                <Statistic title={t('dashboard:sold')} value={vehicleCounts.sold} />
-              </ProCard>
-            </Col>
-          </Row>
-        </ProCard>
-        <Row gutter={[16, 16]}>
-          <Col span={24} md={12}>
-            <ProCard title={t('dashboard:leadsByStatus')} loading={loading} bordered style={{ borderRadius: 8 }}>
-              <Space wrap size={[8, 8]}>
-                {(Object.entries(leadCounts) as [LeadStatus, number][]).map(([k, v]) => (
-                  <Tag key={k} color={getLeadStatusTagColor(k)}>{t(LEAD_STATUS_I18N[k] ?? k)}: {v}</Tag>
-                ))}
-                {Object.keys(leadCounts).length === 0 && !loading && <span style={{ color: '#999' }}>{t('dashboard:noLeads')}</span>}
-              </Space>
-            </ProCard>
+        {/* Kho xe + Tổng doanh thu */}
+        <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+          <Col xs={24} sm={12} md={4}>
+            {statCard(
+              t('dashboard:totalVehicles'),
+              totalVehicles,
+              <CarOutlined style={{ color: '#1890ff' }} />,
+              '/inventory'
+            )}
           </Col>
-          <Col span={24} md={12}>
-            <ProCard title={t('dashboard:dealsByStage')} loading={loading} bordered style={{ borderRadius: 8 }}>
-              <Space wrap size={[8, 8]}>
-                {(Object.entries(dealCounts) as [DealStage, number][]).map(([k, v]) => (
-                  <Tag key={k} color={getDealStageTagColor(k)}>{t(DEAL_STAGE_I18N[k] ?? k)}: {v}</Tag>
-                ))}
-                {Object.keys(dealCounts).length === 0 && !loading && <span style={{ color: '#999' }}>{t('dashboard:noDeals')}</span>}
+          <Col xs={24} sm={12} md={4}>
+            {statCard(
+              t('dashboard:available'),
+              vehicleCounts.available,
+              <CheckCircleOutlined style={{ color: '#52c41a' }} />,
+              '/inventory'
+            )}
+          </Col>
+          <Col xs={24} sm={12} md={4}>
+            {statCard(
+              t('dashboard:reserved'),
+              vehicleCounts.reserved,
+              <ClockCircleOutlined style={{ color: '#faad14' }} />,
+              '/inventory'
+            )}
+          </Col>
+          <Col xs={24} sm={12} md={4}>
+            {statCard(
+              t('dashboard:sold'),
+              vehicleCounts.sold,
+              <ShoppingOutlined style={{ color: '#722ed1' }} />,
+              '/inventory'
+            )}
+          </Col>
+          <Col xs={24} sm={12} md={8}>
+            <ProCard
+              loading={loading}
+              bordered
+              style={{ borderRadius: 8, borderLeft: '4px solid #52c41a' }}
+            >
+              <Space direction="vertical" size={4} style={{ width: '100%' }}>
+                <Text type="secondary" style={{ fontSize: 13 }}>
+                  {t('dashboard:totalRevenue')}
+                </Text>
+                <Statistic
+                  value={totalRevenue}
+                  formatter={() => formatPrice(totalRevenue)}
+                  valueStyle={{ fontSize: 20, fontWeight: 600, color: '#52c41a' }}
+                  prefix={<DollarOutlined />}
+                />
+                <Link to="/deals" style={{ fontSize: 12, display: 'flex', alignItems: 'center', gap: 4 }}>
+                  {t('dashboard:viewDeals')} <RightOutlined />
+                </Link>
               </Space>
             </ProCard>
           </Col>
         </Row>
-        <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
+
+        {/* Lead theo trạng thái + Deal theo giai đoạn */}
+        <Row gutter={[16, 16]}>
           <Col span={24} md={12}>
-            <ProCard title={t('dashboard:conversionRate', { rate: conversionRate })} loading={loading} bordered style={{ borderRadius: 8 }} />
+            <ProCard
+              title={
+                <Space>
+                  <UserOutlined />
+                  {t('dashboard:leadsByStatus')}
+                </Space>
+              }
+              loading={loading}
+              bordered
+              style={{ borderRadius: 8 }}
+              extra={
+                <Link to="/leads">{t('dashboard:viewAll')}</Link>
+              }
+            >
+              <Space wrap size={[8, 8]}>
+                {(Object.entries(leadCounts) as [LeadStatus, number][]).map(([k, v]) => (
+                  <Tag key={k} color={getLeadStatusTagColor(k)}>
+                    {t(LEAD_STATUS_I18N[k] ?? k)}: {v}
+                  </Tag>
+                ))}
+                {Object.keys(leadCounts).length === 0 && !loading && (
+                  <span style={{ color: '#999' }}>{t('dashboard:noLeads')}</span>
+                )}
+              </Space>
+            </ProCard>
           </Col>
           <Col span={24} md={12}>
-            <ProCard title={t('dashboard:salesByStaff')} loading={loading} bordered style={{ borderRadius: 8 }}>
+            <ProCard
+              title={
+                <Space>
+                  <FundOutlined />
+                  {t('dashboard:dealsByStage')}
+                </Space>
+              }
+              loading={loading}
+              bordered
+              style={{ borderRadius: 8 }}
+              extra={
+                <Link to="/deals">{t('dashboard:viewAll')}</Link>
+              }
+            >
+              <Space wrap size={[8, 8]}>
+                {(Object.entries(dealCounts) as [DealStage, number][]).map(([k, v]) => (
+                  <Tag key={k} color={getDealStageTagColor(k)}>
+                    {t(DEAL_STAGE_I18N[k] ?? k)}: {v}
+                  </Tag>
+                ))}
+                {Object.keys(dealCounts).length === 0 && !loading && (
+                  <span style={{ color: '#999' }}>{t('dashboard:noDeals')}</span>
+                )}
+              </Space>
+            </ProCard>
+          </Col>
+        </Row>
+
+        {/* Tỷ lệ chốt + Doanh số theo nhân viên */}
+        <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
+          <Col span={24} md={12}>
+            <ProCard
+              title={t('dashboard:conversionRate', { rate: conversionRate })}
+              loading={loading}
+              bordered
+              style={{ borderRadius: 8 }}
+            >
+              <Progress
+                type="circle"
+                percent={conversionRate}
+                size={120}
+                strokeColor={conversionRate >= 20 ? '#52c41a' : conversionRate >= 10 ? '#faad14' : '#ff4d4f'}
+              />
+            </ProCard>
+          </Col>
+          <Col span={24} md={12}>
+            <ProCard
+              title={t('dashboard:salesByStaff')}
+              loading={loading}
+              bordered
+              style={{ borderRadius: 8 }}
+              extra={
+                <Link to="/deals">{t('dashboard:viewDeals')}</Link>
+              }
+            >
               <Table
                 size="small"
                 dataSource={salesByPerson}
                 columns={[
-                  { dataIndex: 'name', title: t('dashboard:staff'), render: (v: string) => <span style={{ fontWeight: 500 }}>{v}</span> },
+                  {
+                    dataIndex: 'name',
+                    title: t('dashboard:staff'),
+                    render: (v: string) => <span style={{ fontWeight: 500 }}>{v}</span>,
+                  },
                   { dataIndex: 'deals', title: t('dashboard:dealCount') },
                   {
                     dataIndex: 'total',
@@ -171,6 +327,92 @@ export function DashboardPage() {
                 ]}
                 pagination={false}
               />
+            </ProCard>
+          </Col>
+        </Row>
+
+        {/* Lead mới nhất + Deal đang mở */}
+        <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
+          <Col span={24} md={12}>
+            <ProCard
+              title={t('dashboard:recentLeads')}
+              loading={loading}
+              bordered
+              style={{ borderRadius: 8 }}
+              extra={
+                <Link to="/leads">{t('dashboard:viewAll')}</Link>
+              }
+            >
+              {recentLeads.length === 0 && !loading ? (
+                <Text type="secondary">{t('dashboard:noRecentLeads')}</Text>
+              ) : (
+                <Space direction="vertical" style={{ width: '100%' }} size={8}>
+                  {recentLeads.map((l) => (
+                    <div
+                      key={l.id}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '6px 0',
+                        borderBottom: '1px solid #f0f0f0',
+                      }}
+                    >
+                      <div>
+                        <Link to={`/leads/${l.id}`} style={{ fontWeight: 500 }}>
+                          {l.name || l.phone || l.email || l.id.slice(0, 8)}
+                        </Link>
+                        <br />
+                        <Text type="secondary" style={{ fontSize: 12 }}>
+                          {formatDateTime(l.createdAt)}
+                        </Text>
+                      </div>
+                      <Tag color={getLeadStatusTagColor(l.status)}>{t(LEAD_STATUS_I18N[l.status] ?? l.status)}</Tag>
+                    </div>
+                  ))}
+                </Space>
+              )}
+            </ProCard>
+          </Col>
+          <Col span={24} md={12}>
+            <ProCard
+              title={t('dashboard:openDeals')}
+              loading={loading}
+              bordered
+              style={{ borderRadius: 8 }}
+              extra={
+                <Link to="/deals">{t('dashboard:viewAll')}</Link>
+              }
+            >
+              {openDeals.length === 0 && !loading ? (
+                <Text type="secondary">{t('dashboard:noOpenDeals')}</Text>
+              ) : (
+                <Space direction="vertical" style={{ width: '100%' }} size={8}>
+                  {openDeals.map((d) => (
+                    <div
+                      key={d.id}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '6px 0',
+                        borderBottom: '1px solid #f0f0f0',
+                      }}
+                    >
+                      <div>
+                        <Link to={`/deals/${d.id}`} style={{ fontWeight: 500 }}>
+                          Deal #{d.id.slice(0, 8)}
+                        </Link>
+                        <br />
+                        <Text type="secondary" style={{ fontSize: 12 }}>
+                          {formatDateTime(d.updatedAt)}
+                        </Text>
+                      </div>
+                      <Tag color={getDealStageTagColor(d.stage)}>{t(DEAL_STAGE_I18N[d.stage] ?? d.stage)}</Tag>
+                    </div>
+                  ))}
+                </Space>
+              )}
             </ProCard>
           </Col>
         </Row>

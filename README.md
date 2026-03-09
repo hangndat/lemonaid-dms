@@ -16,6 +16,8 @@ Mở http://localhost:5173 → trang **Đăng nhập (Mock)**: chọn một tài
 
 **Nạp lại seed:** chạy `npm run seed:generate`, xóa key `dms.v1.*` trong localStorage (hoặc xóa site data), rồi tải lại trang.
 
+**Ảnh xe:** Nếu có file `scripts/crawler/output/crawled-vehicles.json` (sau khi chạy `npm run crawl`), seed sẽ dùng ảnh thật từ sàn thay vì placeholder.
+
 ## Scripts
 
 | Lệnh | Mô tả |
