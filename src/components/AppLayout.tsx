@@ -10,7 +10,6 @@ import {
   TeamOutlined,
   LogoutOutlined,
   GlobalOutlined,
-  ReloadOutlined,
   DollarOutlined,
   InfoCircleOutlined,
   ApartmentOutlined,
@@ -18,7 +17,6 @@ import {
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
 import { useCurrency, type Currency } from '../context/CurrencyContext'
-import { clearAllDemoData } from '../data/storage'
 import { LEMONAIDE } from '../theme/lemonaide'
 import { LANG_STORAGE_KEY } from '../i18n'
 
@@ -39,7 +37,7 @@ export function AppLayout() {
   const navigate = useNavigate()
   const location = useLocation()
   const { t, i18n } = useTranslation(['nav', 'common'])
-  const { user, logout, refreshUser } = useAuth()
+  const { user, logout } = useAuth()
   const { currency, setCurrency } = useCurrency()
   const [logoError, setLogoError] = useState(false)
 
@@ -175,16 +173,6 @@ export function AppLayout() {
                   onClick: () => setCurrency(o.key),
                 })),
                 { type: 'divider' as const },
-                {
-                  key: 'reloadData',
-                  icon: <ReloadOutlined />,
-                  label: t('nav:reloadData'),
-                  onClick: async () => {
-                    clearAllDemoData()
-                    await refreshUser()
-                    window.location.reload()
-                  },
-                },
                 {
                   key: 'logout',
                   icon: <LogoutOutlined />,

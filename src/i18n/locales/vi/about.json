@@ -8,7 +8,7 @@
   "featureDeals": "Deal / Pipeline — Theo dõi giao dịch theo giai đoạn: lead → lái thử → đàm phán → xử lý vay → thắng/thua.",
   "featureCustomers": "Khách hàng — Lưu trữ thông tin khách hàng, lịch sử giao dịch và tương tác.",
   "techTitle": "Công nghệ",
-  "techDesc": "Ứng dụng web hiện đại (React, Vite, Ant Design), dữ liệu mock với localStorage; sẵn sàng tích hợp Supabase cho backend thật.",
+  "techDesc": "Ứng dụng web hiện đại, giao diện thân thiện, quản lý dữ liệu tập trung và đồng bộ.",
   "contactTitle": "Liên hệ",
   "contactDesc": "Để biết thêm chi tiết về sản phẩm và triển khai, vui lòng liên hệ team Lemonaid."
 }

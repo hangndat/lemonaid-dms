@@ -1,13 +1,12 @@
 import { PageContainer } from '@ant-design/pro-components'
-import { Card, Typography, Row, Col, Alert, Space } from 'antd'
+import { Card, Typography, Row, Col, Space } from 'antd'
 import {
   CarOutlined,
   UserAddOutlined,
   SwapOutlined,
   TeamOutlined,
   BarChartOutlined,
-  InfoCircleOutlined,
-  } from '@ant-design/icons'
+} from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { LEMONAIDE } from '../theme/lemonaide'
 
@@ -111,18 +110,6 @@ export function SystemProcessPage() {
           ))}
         </Row>
 
-        <Alert
-          type="info"
-          showIcon
-          icon={<InfoCircleOutlined />}
-          message={t('notesTitle')}
-          description={t('notesMock')}
-          style={{
-            marginTop: 28,
-            borderRadius: 10,
-            border: '1px solid #91d5ff',
-          }}
-        />
       </PageContainer>
     </div>
   )

@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import type { Profile } from '../types'
-import { storage } from '../data/storage'
+import { storage, clearAllDemoData } from '../data/storage'
 import { AUTH_USER_KEY } from '../data/storage/keys'
 import { profilesRepo } from '../repos'
 
@@ -46,7 +46,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = useCallback(() => {
     storage.remove(AUTH_USER_KEY)
+    clearAllDemoData()
     setState({ user: null, loading: false })
+    window.location.reload()
   }, [])
 
   const refreshUser = useCallback(async () => {

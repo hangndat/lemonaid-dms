@@ -8,7 +8,7 @@
   "featureDeals": "Deal / Pipeline — Track deals by stage: lead → test drive → negotiation → loan processing → won/lost.",
   "featureCustomers": "Customers — Store customer info, deal history and interactions.",
   "techTitle": "Technology",
-  "techDesc": "Modern web app (React, Vite, Ant Design), mock data with localStorage; ready for Supabase backend integration.",
+  "techDesc": "Modern web application with an intuitive interface and centralized, synced data management.",
   "contactTitle": "Contact",
   "contactDesc": "For product and deployment details, please contact the Lemonaid team."
 }
