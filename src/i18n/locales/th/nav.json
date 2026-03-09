@@ -10,5 +10,7 @@
   "currencyVnd": "VND (ล้าน)",
   "currencyUsd": "USD",
   "currencySgd": "SGD",
-  "currencyThb": "THB (บาท)"
+  "currencyThb": "THB (บาท)",
+  "about": "เกี่ยวกับ",
+  "systemProcess": "กระบวนการดำเนินงาน"
 }

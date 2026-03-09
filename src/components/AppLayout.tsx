@@ -12,6 +12,8 @@ import {
   GlobalOutlined,
   ReloadOutlined,
   DollarOutlined,
+  InfoCircleOutlined,
+  ApartmentOutlined,
 } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
@@ -48,6 +50,8 @@ export function AppLayout() {
       { path: '/leads', name: t('nav:leads'), icon: <UserAddOutlined /> },
       { path: '/deals', name: t('nav:deals'), icon: <SwapOutlined /> },
       { path: '/customers', name: t('nav:customers'), icon: <TeamOutlined /> },
+      { path: '/about', name: t('nav:about'), icon: <InfoCircleOutlined /> },
+      { path: '/process', name: t('nav:systemProcess'), icon: <ApartmentOutlined /> },
     ],
   }
 

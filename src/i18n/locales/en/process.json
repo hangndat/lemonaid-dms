@@ -1,0 +1,17 @@
+{
+  "title": "System operation process",
+  "subTitle": "Workflow from Lead to Customer",
+  "overview": "DMS operates along the flow: Inventory → Lead → Deal → Customer. Below are the main steps and rules.",
+  "step1Title": "1. Inventory management",
+  "step1Desc": "Add vehicles with Draft status; when ready to list, set to Available. When a deposit is taken set to Reserved; when the deal is closed set to Sold.",
+  "step2Title": "2. Capture and process leads",
+  "step2Desc": "Leads are created from forms, hotline or manual entry. Update status: New → Contacted → Test drive → Negotiation. Outcome: Closed (won) or Lost.",
+  "step3Title": "3. Track deals (pipeline)",
+  "step3Desc": "When a lead is ready to buy, create a Deal and link a vehicle if applicable. Move stages: Lead → Test drive → Negotiation → Loan processing. Outcome: Won or Lost.",
+  "step4Title": "4. Customer management",
+  "step4Desc": "After a deal is won, customer info is stored under Customers. You can view deal history and continue after-sales care.",
+  "step5Title": "5. Reports and overview",
+  "step5Desc": "The Overview page shows metrics: total vehicles, leads by status, deals by stage, conversion rate, revenue and top sales staff.",
+  "notesTitle": "Notes",
+  "notesMock": "Current version uses mock data (localStorage). Seed data loads on first run; CRUD is saved in the browser. Supabase will be integrated later for multi-device sync."
+}

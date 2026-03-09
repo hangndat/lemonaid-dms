@@ -10,5 +10,7 @@
   "currencyVnd": "VND (triệu)",
   "currencyUsd": "USD",
   "currencySgd": "SGD",
-  "currencyThb": "THB"
+  "currencyThb": "THB",
+  "about": "About",
+  "systemProcess": "System process"
 }

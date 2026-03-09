@@ -19,6 +19,8 @@ import { DealsPage } from './pages/DealsPage'
 import { DealDetailPage } from './pages/DealDetailPage'
 import { CustomersPage } from './pages/CustomersPage'
 import { CustomerDetailPage } from './pages/CustomerDetailPage'
+import { AboutPage } from './pages/AboutPage'
+import { SystemProcessPage } from './pages/SystemProcessPage'
 
 const ANT_LOCALES: Record<string, typeof enUS> = {
   en: enUS,
@@ -61,6 +63,8 @@ function AppRoutes() {
         <Route path="deals/:id" element={<DealDetailPage />} />
         <Route path="customers" element={<CustomersPage />} />
         <Route path="customers/:id" element={<CustomerDetailPage />} />
+        <Route path="about" element={<AboutPage />} />
+        <Route path="process" element={<SystemProcessPage />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>

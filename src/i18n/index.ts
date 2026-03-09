@@ -10,6 +10,8 @@ import enInventory from './locales/en/inventory.json'
 import enLeads from './locales/en/leads.json'
 import enDeals from './locales/en/deals.json'
 import enCustomers from './locales/en/customers.json'
+import enAbout from './locales/en/about.json'
+import enProcess from './locales/en/process.json'
 
 import thCommon from './locales/th/common.json'
 import thNav from './locales/th/nav.json'
@@ -19,6 +21,8 @@ import thInventory from './locales/th/inventory.json'
 import thLeads from './locales/th/leads.json'
 import thDeals from './locales/th/deals.json'
 import thCustomers from './locales/th/customers.json'
+import thAbout from './locales/th/about.json'
+import thProcess from './locales/th/process.json'
 
 import viCommon from './locales/vi/common.json'
 import viNav from './locales/vi/nav.json'
@@ -28,6 +32,8 @@ import viInventory from './locales/vi/inventory.json'
 import viLeads from './locales/vi/leads.json'
 import viDeals from './locales/vi/deals.json'
 import viCustomers from './locales/vi/customers.json'
+import viAbout from './locales/vi/about.json'
+import viProcess from './locales/vi/process.json'
 
 const STORAGE_KEY = 'dms-lang'
 
@@ -45,6 +51,8 @@ i18n
         leads: enLeads as Record<string, string>,
         deals: enDeals as Record<string, string>,
         customers: enCustomers as Record<string, string>,
+        about: enAbout as Record<string, string>,
+        process: enProcess as Record<string, string>,
       },
       th: {
         common: thCommon as Record<string, string>,
@@ -55,6 +63,8 @@ i18n
         leads: thLeads as Record<string, string>,
         deals: thDeals as Record<string, string>,
         customers: thCustomers as Record<string, string>,
+        about: thAbout as Record<string, string>,
+        process: thProcess as Record<string, string>,
       },
       vi: {
         common: viCommon as Record<string, string>,
@@ -65,13 +75,15 @@ i18n
         leads: viLeads as Record<string, string>,
         deals: viDeals as Record<string, string>,
         customers: viCustomers as Record<string, string>,
+        about: viAbout as Record<string, string>,
+        process: viProcess as Record<string, string>,
       },
     },
     fallbackLng: 'en',
     lng: typeof localStorage !== 'undefined' ? (localStorage.getItem(STORAGE_KEY) || 'vi') : 'vi',
     supportedLngs: ['en', 'th', 'vi'],
     defaultNS: 'common',
-    ns: ['common', 'nav', 'auth', 'dashboard', 'inventory', 'leads', 'deals', 'customers'],
+    ns: ['common', 'nav', 'auth', 'dashboard', 'inventory', 'leads', 'deals', 'customers', 'about', 'process'],
     interpolation: { escapeValue: false },
     detection: {
       order: ['localStorage', 'navigator'],

@@ -1,0 +1,17 @@
+{
+  "title": "Quy trình vận hành hệ thống",
+  "subTitle": "Luồng làm việc từ Lead đến Khách hàng",
+  "overview": "DMS vận hành theo luồng: Kho xe → Lead → Deal → Khách hàng. Dưới đây là các bước và quy tắc chính.",
+  "step1Title": "1. Quản lý kho xe",
+  "step1Desc": "Thêm xe vào kho với trạng thái Nháp; khi sẵn sàng đăng bán chuyển sang Sẵn sàng. Khi khách đặt cọc chuyển Đã đặt; khi giao dịch hoàn tất chuyển Đã bán.",
+  "step2Title": "2. Thu thập và xử lý Lead",
+  "step2Desc": "Lead được tạo từ form, hotline hoặc nhập tay. Cập nhật trạng thái: Mới → Đã liên hệ → Lái thử → Đàm phán. Kết thúc: Đóng (thành công) hoặc Mất.",
+  "step3Title": "3. Theo dõi Deal (Pipeline)",
+  "step3Desc": "Khi lead có ý mua, tạo Deal và gắn xe (nếu có). Chuyển giai đoạn: Lead → Lái thử → Đàm phán → Xử lý vay. Kết thúc: Thắng (đã bán) hoặc Thua.",
+  "step4Title": "4. Quản lý khách hàng",
+  "step4Desc": "Sau khi Deal thắng, thông tin khách được lưu ở mục Khách hàng. Có thể xem lịch sử deal và tiếp tục chăm sóc khách hàng cũ.",
+  "step5Title": "5. Báo cáo và tổng quan",
+  "step5Desc": "Trang Tổng quan hiển thị số liệu: tổng xe, lead theo trạng thái, deal theo giai đoạn, tỷ lệ chuyển đổi, doanh thu và top nhân viên bán hàng.",
+  "notesTitle": "Lưu ý",
+  "notesMock": "Phiên bản hiện tại dùng dữ liệu mock (localStorage). Seed dữ liệu được nạp lần đầu; CRUD lưu tại trình duyệt. Supabase sẽ được tích hợp sau để đồng bộ đa thiết bị."
+}

@@ -98,3 +98,20 @@
 .login-page .login-card.ant-pro-card {
   border-radius: 12px;
 }
+
+/* About page: feature cards hover */
+.about-page .about-feature-card.ant-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+.about-page .about-hero .ant-card-body {
+  padding: 20px 24px;
+}
+
+/* System process page: step cards */
+.system-process-page .ant-card {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+.system-process-page .ant-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
