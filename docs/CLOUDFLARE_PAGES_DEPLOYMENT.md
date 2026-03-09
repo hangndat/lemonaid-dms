@@ -101,10 +101,10 @@ Trong project **Settings** → **Builds & deployments** → **Environment variab
 
 Hoặc tạo file **`.nvmrc`** trong root repo với nội dung `20` — nhiều môi trường (kể cả Cloudflare) sẽ đọc để chọn Node.
 
-### Bước 4: Deploy lần đầu
+### Bước 4: Deploy lần đầu và mỗi lần push
 
 - Sau khi **Save**, Cloudflare sẽ chạy build ngay.
-- Xem log trong **Deployments** để đảm bảo `npm run build` chạy thành công và output nằm trong `dist`.
+- **Từ giờ:** Mỗi khi bạn **commit và push lên branch `main`**, Cloudflare tự build (`npm run build`) và deploy thư mục `dist` — không cần làm gì thêm. Xem log trong **Deployments** nếu cần.
 
 ### Bước 5: Truy cập site
 
