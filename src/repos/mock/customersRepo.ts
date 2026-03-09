@@ -26,7 +26,7 @@ function applySearch<T>(items: T[], search: string | undefined, fields: (keyof T
 
 export const customersRepo: CustomersRepo = {
   async list(query) {
-    let items = applySearch(getCustomers(), query?.search, ['name', 'phone', 'email'] as (keyof Customer)[])
+    let items = applySearch(getCustomers(), query?.search, ['name', 'phone', 'email', 'address', 'city', 'country', 'taxId', 'companyRegNo'] as (keyof Customer)[])
     const total = items.length
     const page = query?.page ?? 1
     const pageSize = query?.pageSize ?? 20

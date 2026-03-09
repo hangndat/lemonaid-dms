@@ -67,6 +67,15 @@ export interface Customer {
   name: string
   phone?: string
   email?: string
+  address?: string
+  addressLine2?: string
+  city?: string
+  state?: string
+  postCode?: string
+  country?: string
+  taxId?: string
+  companyRegNo?: string
+  website?: string
   notes?: string
   createdAt: string
   updatedAt: string

@@ -21,7 +21,24 @@ export function CustomersPage() {
   const [modalOpen, setModalOpen] = useState(false)
   const [saving, setSaving] = useState(false)
 
-  const handleCreate = async (values: Pick<Customer, 'name' | 'phone' | 'email' | 'notes'>) => {
+  const handleCreate = async (
+    values: Pick<
+      Customer,
+      | 'name'
+      | 'phone'
+      | 'email'
+      | 'address'
+      | 'addressLine2'
+      | 'city'
+      | 'state'
+      | 'postCode'
+      | 'country'
+      | 'taxId'
+      | 'companyRegNo'
+      | 'website'
+      | 'notes'
+    >
+  ) => {
     setSaving(true)
     try {
       await customersRepo.create({

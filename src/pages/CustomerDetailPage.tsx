@@ -51,7 +51,24 @@ export function CustomerDetailPage() {
     load()
   }, [id])
 
-  const handleUpdate = async (values: Pick<Customer, 'name' | 'phone' | 'email' | 'notes'>) => {
+  const handleUpdate = async (
+    values: Pick<
+      Customer,
+      | 'name'
+      | 'phone'
+      | 'email'
+      | 'address'
+      | 'addressLine2'
+      | 'city'
+      | 'state'
+      | 'postCode'
+      | 'country'
+      | 'taxId'
+      | 'companyRegNo'
+      | 'website'
+      | 'notes'
+    >
+  ) => {
     if (!customer) return
     setSaving(true)
     try {
@@ -100,10 +117,19 @@ export function CustomerDetailPage() {
       label: t('customers:info'),
       children: (
         <ProCard bordered style={{ borderRadius: 8 }}>
-          <Descriptions column={2} size="small">
+          <Descriptions column={{ xs: 1, sm: 2 }} size="small">
             <Descriptions.Item label={t('customers:name')}>{customer.name}</Descriptions.Item>
             <Descriptions.Item label={t('customers:phone')}>{customer.phone ? <a href={`tel:${customer.phone}`}>{customer.phone}</a> : t('common:dash')}</Descriptions.Item>
             <Descriptions.Item label={t('customers:email')}>{customer.email ? <a href={`mailto:${customer.email}`}>{customer.email}</a> : t('common:dash')}</Descriptions.Item>
+            <Descriptions.Item label={t('customers:country')}>{customer.country ?? t('common:dash')}</Descriptions.Item>
+            <Descriptions.Item label={t('customers:address')} span={2}>{customer.address ?? t('common:dash')}</Descriptions.Item>
+            {customer.addressLine2 ? <Descriptions.Item label={t('customers:addressLine2')} span={2}>{customer.addressLine2}</Descriptions.Item> : null}
+            <Descriptions.Item label={t('customers:city')}>{customer.city ?? t('common:dash')}</Descriptions.Item>
+            <Descriptions.Item label={t('customers:state')}>{customer.state ?? t('common:dash')}</Descriptions.Item>
+            <Descriptions.Item label={t('customers:postCode')}>{customer.postCode ?? t('common:dash')}</Descriptions.Item>
+            <Descriptions.Item label={t('customers:taxId')}>{customer.taxId ?? t('common:dash')}</Descriptions.Item>
+            <Descriptions.Item label={t('customers:companyRegNo')}>{customer.companyRegNo ?? t('common:dash')}</Descriptions.Item>
+            <Descriptions.Item label={t('customers:website')}>{customer.website ? <a href={customer.website} target="_blank" rel="noopener noreferrer">{customer.website}</a> : t('common:dash')}</Descriptions.Item>
             <Descriptions.Item label={t('customers:notes')} span={2}>{customer.notes ?? t('common:dash')}</Descriptions.Item>
           </Descriptions>
         </ProCard>

@@ -64,6 +64,24 @@ export interface Customer {
   name: string
   phone?: string
   email?: string
+  /** Địa chỉ (số nhà, đường) */
+  address?: string
+  /** Địa chỉ dòng 2 (quận, phường) */
+  addressLine2?: string
+  /** Thành phố / tỉnh */
+  city?: string
+  /** Bang / vùng (state, region) */
+  state?: string
+  /** Mã bưu điện (postal code) */
+  postCode?: string
+  /** Quốc gia */
+  country?: string
+  /** Mã số thuế */
+  taxId?: string
+  /** Mã số đăng ký doanh nghiệp (company registration) */
+  companyRegNo?: string
+  /** Website */
+  website?: string
   notes?: string
   createdAt: string
   updatedAt: string

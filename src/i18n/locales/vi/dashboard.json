@@ -20,5 +20,10 @@
   "recentLeads": "Lead mới nhất",
   "openDeals": "Deal đang mở",
   "noRecentLeads": "Chưa có lead",
-  "noOpenDeals": "Chưa có deal đang mở"
+  "noOpenDeals": "Chưa có deal đang mở",
+  "chartInventory": "Kho xe theo trạng thái",
+  "chartLeadsByStatus": "Lead theo trạng thái",
+  "chartDealsByStage": "Deal theo giai đoạn",
+  "chartRevenueTrend": "Xu hướng doanh thu (deal đã chốt)",
+  "chartNoData": "Chưa có dữ liệu"
 }

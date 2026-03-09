@@ -20,5 +20,10 @@
   "recentLeads": "Recent leads",
   "openDeals": "Open deals",
   "noRecentLeads": "No leads yet",
-  "noOpenDeals": "No open deals"
+  "noOpenDeals": "No open deals",
+  "chartInventory": "Inventory by status",
+  "chartLeadsByStatus": "Leads by status",
+  "chartDealsByStage": "Deals by stage",
+  "chartRevenueTrend": "Revenue trend (closed deals)",
+  "chartNoData": "No data"
 }

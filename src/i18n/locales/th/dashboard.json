@@ -20,5 +20,10 @@
   "recentLeads": "ลีดล่าสุด",
   "openDeals": "ดีลที่ยังไม่ปิด",
   "noRecentLeads": "ยังไม่มีลีด",
-  "noOpenDeals": "ยังไม่มีดีลที่เปิดอยู่"
+  "noOpenDeals": "ยังไม่มีดีลที่เปิดอยู่",
+  "chartInventory": "สต็อกรถตามสถานะ",
+  "chartLeadsByStatus": "ลีดตามสถานะ",
+  "chartDealsByStage": "ดีลตามระยะ",
+  "chartRevenueTrend": "แนวโน้มรายได้ (ดีลปิดแล้ว)",
+  "chartNoData": "ไม่มีข้อมูล"
 }

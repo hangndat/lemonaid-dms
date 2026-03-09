@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { ProCard, PageContainer } from '@ant-design/pro-components'
 import { Row, Col, Statistic, Table, Tag, Space, Progress, Typography } from 'antd'
@@ -12,6 +12,20 @@ import {
   UserOutlined,
   FundOutlined,
 } from '@ant-design/icons'
+import {
+  PieChart,
+  Pie,
+  Cell,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+} from 'recharts'
 import { useTranslation } from 'react-i18next'
 import { vehiclesRepo, leadsRepo, dealsRepo, profilesRepo } from '../repos'
 import type { VehicleStatus } from '../types'
@@ -58,6 +72,7 @@ export function DashboardPage() {
   const [salesByPerson, setSalesByPerson] = useState<{ name: string; deals: number; total: number }[]>([])
   const [recentLeads, setRecentLeads] = useState<Lead[]>([])
   const [openDeals, setOpenDeals] = useState<Deal[]>([])
+  const [revenueByMonth, setRevenueByMonth] = useState<{ month: string; revenue: number; count: number }[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -130,6 +145,20 @@ export function DashboardPage() {
       )
       setOpenDeals(openSorted.slice(0, 5))
 
+      const byMonth: Record<string, { revenue: number; count: number }> = {}
+      wonDeals.forEach((d) => {
+        const date = new Date(d.updatedAt)
+        const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
+        if (!byMonth[key]) byMonth[key] = { revenue: 0, count: 0 }
+        byMonth[key].revenue += d.finalPrice ?? 0
+        byMonth[key].count += 1
+      })
+      const sortedMonths = Object.entries(byMonth)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .slice(-6)
+        .map(([month, v]) => ({ month, revenue: v.revenue, count: v.count }))
+      setRevenueByMonth(sortedMonths)
+
       setLoading(false)
     }
     load()
@@ -137,6 +166,35 @@ export function DashboardPage() {
 
   const totalVehicles =
     vehicleCounts.draft + vehicleCounts.available + vehicleCounts.reserved + vehicleCounts.sold
+
+  const inventoryChartData = useMemo(
+    () => [
+      { name: t('dashboard:available'), value: vehicleCounts.available, color: '#52c41a' },
+      { name: t('dashboard:reserved'), value: vehicleCounts.reserved, color: '#faad14' },
+      { name: t('dashboard:sold'), value: vehicleCounts.sold, color: '#722ed1' },
+    ].filter((d) => d.value > 0),
+    [vehicleCounts.available, vehicleCounts.reserved, vehicleCounts.sold, t]
+  )
+
+  const leadsChartData = useMemo(
+    () =>
+      (Object.entries(leadCounts) as [LeadStatus, number][]).map(([status, count]) => ({
+        name: t(LEAD_STATUS_I18N[status] ?? status),
+        count,
+        fill: getLeadStatusTagColor(status),
+      })),
+    [leadCounts, t]
+  )
+
+  const dealsChartData = useMemo(
+    () =>
+      (Object.entries(dealCounts) as [DealStage, number][]).map(([stage, count]) => ({
+        name: t(DEAL_STAGE_I18N[stage] ?? stage),
+        count,
+        fill: getDealStageTagColor(stage),
+      })),
+    [dealCounts, t]
+  )
 
   const statCard = (
     title: string,
@@ -220,6 +278,140 @@ export function DashboardPage() {
                   {t('dashboard:viewDeals')} <RightOutlined />
                 </Link>
               </Space>
+            </ProCard>
+          </Col>
+        </Row>
+
+        {/* Charts */}
+        <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
+          <Col xs={24} lg={12}>
+            <ProCard
+              title={t('dashboard:chartRevenueTrend')}
+              loading={loading}
+              bordered
+              style={{ borderRadius: 8 }}
+            >
+              {revenueByMonth.length > 0 ? (
+                <ResponsiveContainer width="100%" height={260}>
+                  <AreaChart data={revenueByMonth} margin={{ top: 8, right: 8, left: 8, bottom: 8 }}>
+                    <defs>
+                      <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#52c41a" stopOpacity={0.3} />
+                        <stop offset="95%" stopColor="#52c41a" stopOpacity={0} />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                    <XAxis dataKey="month" tick={{ fontSize: 12 }} />
+                    <YAxis tick={{ fontSize: 12 }} tickFormatter={(v) => `${(v / 1e6).toFixed(0)}M`} />
+                    <Tooltip
+                      formatter={(value) => formatPrice(Number(value ?? 0))}
+                      labelFormatter={(label) => t('dashboard:chartRevenueTrend') + ' – ' + label}
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="revenue"
+                      stroke="#52c41a"
+                      strokeWidth={2}
+                      fill="url(#revenueGradient)"
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              ) : (
+                <div style={{ height: 260, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#999' }}>
+                  {t('dashboard:chartNoData')}
+                </div>
+              )}
+            </ProCard>
+          </Col>
+          <Col xs={24} lg={12}>
+            <ProCard
+              title={t('dashboard:chartInventory')}
+              loading={loading}
+              bordered
+              style={{ borderRadius: 8 }}
+            >
+              {inventoryChartData.length > 0 ? (
+                <ResponsiveContainer width="100%" height={260}>
+                  <PieChart>
+                    <Pie
+                      data={inventoryChartData}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={60}
+                      outerRadius={90}
+                      paddingAngle={2}
+                      dataKey="value"
+                      nameKey="name"
+                      label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
+                    >
+                      {inventoryChartData.map((entry, i) => (
+                        <Cell key={i} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Tooltip formatter={(value) => [value ?? 0, '']} />
+                  </PieChart>
+                </ResponsiveContainer>
+              ) : (
+                <div style={{ height: 260, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#999' }}>
+                  {t('dashboard:chartNoData')}
+                </div>
+              )}
+            </ProCard>
+          </Col>
+          <Col xs={24} lg={12}>
+            <ProCard
+              title={t('dashboard:chartLeadsByStatus')}
+              loading={loading}
+              bordered
+              style={{ borderRadius: 8 }}
+            >
+              {leadsChartData.length > 0 ? (
+                <ResponsiveContainer width="100%" height={260}>
+                  <BarChart data={leadsChartData} layout="vertical" margin={{ top: 8, right: 24, left: 8, bottom: 8 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                    <XAxis type="number" tick={{ fontSize: 12 }} />
+                    <YAxis type="category" dataKey="name" width={100} tick={{ fontSize: 11 }} />
+                    <Tooltip />
+                    <Bar dataKey="count" radius={[0, 4, 4, 0]}>
+                      {leadsChartData.map((entry, i) => (
+                        <Cell key={i} fill={entry.fill} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              ) : (
+                <div style={{ height: 260, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#999' }}>
+                  {t('dashboard:noLeads')}
+                </div>
+              )}
+            </ProCard>
+          </Col>
+          <Col xs={24} lg={12}>
+            <ProCard
+              title={t('dashboard:chartDealsByStage')}
+              loading={loading}
+              bordered
+              style={{ borderRadius: 8 }}
+            >
+              {dealsChartData.length > 0 ? (
+                <ResponsiveContainer width="100%" height={260}>
+                  <BarChart data={dealsChartData} layout="vertical" margin={{ top: 8, right: 24, left: 8, bottom: 8 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                    <XAxis type="number" tick={{ fontSize: 12 }} />
+                    <YAxis type="category" dataKey="name" width={100} tick={{ fontSize: 11 }} />
+                    <Tooltip />
+                    <Bar dataKey="count" radius={[0, 4, 4, 0]}>
+                      {dealsChartData.map((entry, i) => (
+                        <Cell key={i} fill={entry.fill} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              ) : (
+                <div style={{ height: 260, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#999' }}>
+                  {t('dashboard:noDeals')}
+                </div>
+              )}
             </ProCard>
           </Col>
         </Row>

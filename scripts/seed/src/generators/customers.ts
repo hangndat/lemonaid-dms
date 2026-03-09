@@ -7,7 +7,8 @@ import {
   DEALER_NAME_SUFFIXES_MY,
   CONTACT_NOTES,
 } from '../data/dealer-names.js'
-import { id, pick, dateBetween, toISO, random } from '../utils.js'
+import { SG_AREAS, SG_POSTCODES, MY_CITIES, MY_STATES, MY_POSTCODES } from '../data/addresses.js'
+import { id, pick, dateBetween, toISO, random, int } from '../utils.js'
 import { faker } from '@faker-js/faker'
 
 /** Chỉ dùng domain email thật (SG/MY/global, không dùng company.sg, v.v.) */
@@ -60,6 +61,24 @@ function myPhone(): string {
 
 const INDIVIDUAL_NOTES = ['Individual buyer', 'Personal use', 'Family car', '', '']
 
+/** Singapore UEN-style (9 digits) */
+function sgTaxId(): string {
+  return faker.string.numeric(9)
+}
+
+/** Malaysia company / tax ID style */
+function myTaxId(): string {
+  return faker.string.numeric(8) + '-' + faker.string.alpha(1).toUpperCase()
+}
+
+/** Số nhà + tên đường (generic) */
+function streetAddress(): string {
+  const num = int(1, 999)
+  const street = pick(['Jalan', 'Lorong', 'Street', 'Avenue', 'Road', 'Drive', 'Lane', 'Way'])
+  const name = faker.string.alpha({ length: int(5, 10), casing: 'mixed' })
+  return `${num} ${street} ${name}`
+}
+
 export function generateCustomers(profiles: Profile[]): Customer[] {
   const salesIds = profiles.filter((p) => p.role === 'sales' || p.role === 'manager').map((p) => p.id)
   const start = CONFIG.startDate
@@ -104,6 +123,16 @@ export function generateCustomers(profiles: Profile[]): Customer[] {
     const phone = isMalaysia ? myPhone() : sgPhone()
     const notes = isIndividual ? pick(INDIVIDUAL_NOTES) : pick(CONTACT_NOTES)
 
+    const country = isMalaysia ? 'Malaysia' : 'Singapore'
+    const address = streetAddress()
+    const addressLine2 = random() > 0.4 ? (isMalaysia ? `Section ${int(1, 30)}` : `Unit ${int(1, 50)}-${int(1, 20)}`) : undefined
+    const city = isMalaysia ? pick(MY_CITIES) : pick(SG_AREAS)
+    const state = isMalaysia ? pick(MY_STATES) : undefined
+    const postCode = isMalaysia ? pick(MY_POSTCODES) : pick(SG_POSTCODES)
+    const taxId = !isIndividual && random() > 0.25 ? (isMalaysia ? myTaxId() : sgTaxId()) : undefined
+    const companyRegNo = !isIndividual && random() > 0.35 ? (isMalaysia ? `${int(1000000, 9999999)}-${faker.string.alpha(1).toUpperCase()}` : `T${faker.string.numeric(8)}F`) : undefined
+    const website = !isIndividual && random() > 0.6 ? `https://www.${faker.internet.domainWord()}.com` : undefined
+
     list.push({
       id: id('customer', i + 1),
       name,
@@ -114,6 +143,15 @@ export function generateCustomers(profiles: Profile[]): Customer[] {
             provider: pick(REAL_EMAIL_DOMAINS),
           })
         : undefined,
+      address,
+      addressLine2,
+      city,
+      state,
+      postCode,
+      country,
+      taxId,
+      companyRegNo,
+      website,
       notes: notes || undefined,
       createdAt: toISO(createdAt),
       updatedAt: toISO(createdAt),
