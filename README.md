@@ -18,6 +18,18 @@ Mở http://localhost:5173 → trang **Đăng nhập (Mock)**: chọn một tài
 
 **Ảnh xe:** Nếu có file `scripts/crawler/output/crawled-vehicles.json` (sau khi chạy `npm run crawl`), seed sẽ dùng ảnh thật từ sàn thay vì placeholder.
 
+## Routes (sau khi đăng nhập)
+
+| Path | Trang |
+|------|--------|
+| `/` | Dashboard (tổng quan) |
+| `/inventory`, `/inventory/:id` | Kho xe, chi tiết xe |
+| `/leads`, `/leads/:id` | Leads, chi tiết lead |
+| `/deals`, `/deals/:id` | Deals, chi tiết deal |
+| `/customers`, `/customers/:id` | Khách hàng, chi tiết khách |
+| `/about` | Giới thiệu |
+| `/process` | Quy trình hệ thống (sales flow) |
+
 ## Scripts
 
 | Lệnh | Mô tả |
@@ -37,11 +49,12 @@ Mở http://localhost:5173 → trang **Đăng nhập (Mock)**: chọn một tài
 - `src/data/storage` — helper localStorage
 - `src/repos` — interface repo + mock implementation (vehicles, customers, leads, deals, profiles)
 - `src/context` — AuthContext (mock login)
-- `src/pages` — Dashboard, Inventory, Leads, Deals, Customers, Login, chi tiết Deal/Customer
+- `src/pages` — Dashboard, Inventory (+ chi tiết), Leads (+ chi tiết), Deals (+ chi tiết), Customers (+ chi tiết), Login, About, System Process
 - `src/components` — AppLayout (sidebar + header), form Deal/Customer
 - `src/hooks` — hooks dùng chung (vd. `useIsMobile`)
 - `src/utils` — format, tagColors, …
 - `src/styles` — responsive.css
+- `src/theme` — theme (lemonaide: màu, token)
 - `src/i18n` — đa ngôn ngữ (vi / en / th)
 
 **Scripts:**
