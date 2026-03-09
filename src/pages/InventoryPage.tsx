@@ -14,8 +14,8 @@ import { getVehicleStatusTagColor } from '../utils/tagColors'
 
 export function InventoryPage() {
   const navigate = useNavigate()
-  const { t } = useTranslation(['inventory', 'common'])
-  const { formatPrice } = useCurrency()
+  const { t } = useTranslation(['inventory', 'common', 'nav'])
+  const { formatPrice, currency } = useCurrency()
   const actionRef = useRef<ActionType>()
   const isMobile = useIsMobile()
 
@@ -36,7 +36,7 @@ export function InventoryPage() {
     { dataIndex: 'vin', title: t('inventory:vin'), width: 140, ellipsis: true, render: (_, r) => r.vin ?? '—' },
     {
       dataIndex: 'price',
-      title: t('inventory:priceVnd'),
+      title: t('inventory:priceWithUnit', { currency: t(`nav:currency${currency.charAt(0)}${currency.slice(1).toLowerCase()}`) }),
       width: 120,
       render: (_, r) => formatPrice(r.price),
     },

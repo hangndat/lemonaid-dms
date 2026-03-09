@@ -30,6 +30,7 @@
   "finalPrice": "Giá chốt",
   "vehicle": "Xe",
   "finalPriceVnd": "Giá chốt (VNĐ)",
+  "finalPriceWithUnit": "Giá chốt ({{currency}})",
   "updatedAt": "Cập nhật",
   "addedSuccess": "Đã thêm khách hàng.",
   "updatedSuccess": "Đã cập nhật khách hàng.",

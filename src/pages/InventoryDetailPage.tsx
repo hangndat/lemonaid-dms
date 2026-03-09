@@ -15,9 +15,9 @@ import { getVehicleStatusTagColor } from '../utils/tagColors'
 export function InventoryDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { t } = useTranslation(['inventory', 'common'])
+  const { t } = useTranslation(['inventory', 'common', 'nav'])
   const { user } = useAuth()
-  const { formatPrice } = useCurrency()
+  const { formatPrice, currency } = useCurrency()
   const [vehicle, setVehicle] = useState<Vehicle | null>(null)
   const [photos, setPhotos] = useState<VehiclePhoto[]>([])
   const [priceHistory, setPriceHistory] = useState<VehiclePriceHistory[]>([])
@@ -269,7 +269,7 @@ export function InventoryDetailPage() {
           <Descriptions.Item label={t('inventory:color')}>{vehicle.color ?? t('common:dash')}</Descriptions.Item>
           <Descriptions.Item label={t('inventory:transmission')}>{vehicle.transmission ?? t('common:dash')}</Descriptions.Item>
           <Descriptions.Item label={t('inventory:fuelType')}>{vehicle.fuelType ?? t('common:dash')}</Descriptions.Item>
-          <Descriptions.Item label={t('inventory:priceVnd')}>
+          <Descriptions.Item label={t('inventory:priceWithUnit', { currency: t(`nav:currency${currency.charAt(0)}${currency.slice(1).toLowerCase()}`) })}>
             {formatPrice(vehicle.price)}
           </Descriptions.Item>
           <Descriptions.Item label={t('inventory:stockInDate')}>{vehicle.stockInDate ? formatDate(vehicle.stockInDate) : t('common:dash')}</Descriptions.Item>
@@ -283,7 +283,7 @@ export function InventoryDetailPage() {
           dataSource={priceHistory}
           columns={[
             { dataIndex: 'recordedAt', title: t('inventory:recordedAt'), render: (v: string) => formatDateTime(v) },
-            { dataIndex: 'price', title: t('inventory:priceVnd'), render: (v: number) => formatPrice(v) },
+            { dataIndex: 'price', title: t('inventory:priceWithUnit', { currency: t(`nav:currency${currency.charAt(0)}${currency.slice(1).toLowerCase()}`) }), render: (v: number) => formatPrice(v) },
             { dataIndex: 'recordedBy', title: t('inventory:recordedBy') },
           ]}
           pagination={false}

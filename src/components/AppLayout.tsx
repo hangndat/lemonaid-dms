@@ -113,7 +113,7 @@ export function AppLayout() {
           colorTextMenuTitle: '#fff',
         },
       }}
-      menuHeaderRender={(logo) => (
+      menuHeaderRender={(logo, _title, props) => (
         <div
           style={{
             display: 'flex',
@@ -126,19 +126,21 @@ export function AppLayout() {
           }}
         >
           {logo}
-          <span
-            style={{
-              color: '#fff',
-              fontWeight: 600,
-              fontSize: 16,
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              minWidth: 0,
-            }}
-          >
-            {t('common:appName')}
-          </span>
+          {!props?.collapsed && (
+            <span
+              style={{
+                color: '#fff',
+                fontWeight: 600,
+                fontSize: 16,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                minWidth: 0,
+              }}
+            >
+              {t('common:appName')}
+            </span>
+          )}
         </div>
       )}
       route={route}

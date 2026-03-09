@@ -55,6 +55,56 @@ export const DEALER_NAME_SUFFIXES = [
   'Group',
 ] as const
 
+/** Malaysia: tên công ty / showroom (B2B). */
+export const DEALER_NAME_PREFIXES_MY = [
+  'KL Auto',
+  'Petaling Jaya Motors',
+  'Shah Alam Car',
+  'Johor Bahru Auto',
+  'Penang Motors',
+  'Subang Jaya Car',
+  'Kota Kinabalu Auto',
+  'Kuching Motors',
+  'Ipoh Car Centre',
+  'Malacca Auto',
+  'Seremban Motors',
+  'Kuantan Car',
+  'Kota Bharu Auto',
+  'Alor Setar Motors',
+  'Kangar Car',
+  'Kota Melaka Auto',
+  'Johor Motors',
+  'Selangor Auto',
+  'Kedah Car',
+  'Perak Motors',
+  'Pahang Auto',
+  'Terengganu Car',
+  'Kelantan Motors',
+  'Sabah Auto',
+  'Sarawak Car',
+  'Bangsar Motors',
+  'Damansara Auto',
+  'Ampang Car',
+  'Cheras Motors',
+  'Kepong Auto',
+  'Puchong Car',
+  'Cyberjaya Motors',
+  'Putrajaya Auto',
+] as const
+
+export const DEALER_NAME_SUFFIXES_MY = [
+  'Malaysia',
+  'MY',
+  'Bhd',
+  'Sdn Bhd',
+  'Trading',
+  'KL',
+  'Selangor',
+  'Johor',
+  'Penang',
+  'Group',
+] as const
+
 export const CONTACT_NOTES = [
   'Main contact: sales manager',
   'Focus on Toyota/Honda',

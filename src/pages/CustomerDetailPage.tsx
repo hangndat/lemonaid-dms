@@ -14,8 +14,8 @@ import { useCurrency } from '../context/CurrencyContext'
 export function CustomerDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { t } = useTranslation(['customers', 'common'])
-  const { formatPrice } = useCurrency()
+  const { t } = useTranslation(['customers', 'common', 'nav'])
+  const { formatPrice, currency } = useCurrency()
   const [customer, setCustomer] = useState<Customer | null>(null)
   const [leads, setLeads] = useState<Lead[]>([])
   const [deals, setDeals] = useState<Deal[]>([])
@@ -174,7 +174,7 @@ export function CustomerDetailPage() {
             dataSource={purchaseHistory}
             columns={[
               { dataIndex: 'vehicleId', title: t('customers:vehicle') },
-              { dataIndex: 'finalPrice', title: t('customers:finalPriceVnd'), render: (v: number) => formatPrice(v) },
+              { dataIndex: 'finalPrice', title: t('customers:finalPriceWithUnit', { currency: t(`nav:currency${currency.charAt(0)}${currency.slice(1).toLowerCase()}`) }), render: (v: number) => formatPrice(v) },
               { dataIndex: 'updatedAt', title: t('customers:updatedAt'), render: (v: string) => formatDateTime(v) },
             ]}
             pagination={false}

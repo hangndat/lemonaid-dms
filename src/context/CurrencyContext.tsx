@@ -1,32 +1,44 @@
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react'
 
-/** Supported display currencies. Data is always stored in VND. */
+/** Supported display currencies. Data is always stored in THB (Baht). */
 export type Currency = 'VND' | 'USD' | 'SGD' | 'THB'
 
-/** VND per 1 unit of foreign currency (approximate). */
-export const CURRENCY_RATES: Record<Exclude<Currency, 'VND'>, number> = {
-  USD: 25_000,
-  SGD: 18_500,
-  THB: 700,
+/** Số THB tương đương 1 đơn vị ngoại tệ (ước lượng). Dùng để quy đổi giá lưu (THB) sang hiển thị. */
+export const THB_PER_UNIT: Record<Exclude<Currency, 'THB'>, number> = {
+  USD: 36,
+  SGD: 26,
+  VND: 1 / 700,
 }
 
 const CURRENCY_STORAGE_KEY = 'dms-currency'
 
 function loadStoredCurrency(): Currency {
-  if (typeof localStorage === 'undefined') return 'USD'
+  if (typeof localStorage === 'undefined') return 'THB'
   const s = localStorage.getItem(CURRENCY_STORAGE_KEY)
   if (s === 'USD' || s === 'SGD' || s === 'THB' || s === 'VND') return s
-  return 'USD'
+  return 'THB'
 }
 
 interface CurrencyContextValue {
   currency: Currency
   setCurrency: (c: Currency) => void
-  /** Format value (VND) for display in current currency. */
-  formatPrice: (valueVnd: number | null | undefined) => string
+  /** Format value (THB) for display in current currency. */
+  formatPrice: (valueThb: number | null | undefined) => string
 }
 
 const CurrencyContext = createContext<CurrencyContextValue | null>(null)
+
+function formatAmount(amount: number, currency: Currency): string {
+  if (currency === 'VND') {
+    if (amount >= 1_000_000) return (amount / 1_000_000).toFixed(0) + ' tr'
+    if (amount >= 1_000) return (amount / 1_000).toFixed(1) + 'k'
+    return amount.toFixed(0)
+  }
+  if (amount >= 1_000_000) return (amount / 1_000_000).toFixed(2) + ' M ' + currency
+  if (amount >= 1_000) return (amount / 1_000).toFixed(1) + 'k ' + currency
+  if (amount >= 1) return amount.toFixed(0) + ' ' + currency
+  return amount.toFixed(2) + ' ' + currency
+}
 
 export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   const [currency, setCurrencyState] = useState<Currency>(loadStoredCurrency)
@@ -37,17 +49,12 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const formatPrice = useCallback(
-    (valueVnd: number | null | undefined): string => {
-      if (valueVnd == null) return '—'
-      if (currency === 'VND') {
-        return (valueVnd / 1_000_000).toFixed(0) + ' tr'
-      }
-      const rate = CURRENCY_RATES[currency]
-      const amount = valueVnd / rate
-      if (amount >= 1_000_000) return (amount / 1_000_000).toFixed(1) + 'M ' + currency
-      if (amount >= 1_000) return (amount / 1_000).toFixed(1) + 'k ' + currency
-      if (amount >= 1) return amount.toFixed(0) + ' ' + currency
-      return amount.toFixed(2) + ' ' + currency
+    (valueThb: number | null | undefined): string => {
+      if (valueThb == null) return '—'
+      if (currency === 'THB') return formatAmount(valueThb, 'THB')
+      const rate = THB_PER_UNIT[currency]
+      const amount = currency === 'VND' ? valueThb / rate : valueThb / rate
+      return formatAmount(amount, currency)
     },
     [currency]
   )

@@ -15,6 +15,7 @@
   "year": "Năm",
   "vin": "VIN",
   "priceVnd": "Giá (VNĐ)",
+  "priceWithUnit": "Giá ({{currency}})",
   "mileage": "Số km",
   "stockInDate": "Ngày nhập",
   "addNew": "Thêm xe mới",

@@ -30,6 +30,7 @@
   "finalPrice": "ราคาชุด",
   "vehicle": "รถ",
   "finalPriceVnd": "ราคาชุด (บาท)",
+  "finalPriceWithUnit": "ราคาชุด ({{currency}})",
   "updatedAt": "อัปเดต",
   "addedSuccess": "เพิ่มลูกค้าแล้ว",
   "updatedSuccess": "อัปเดตลูกค้าแล้ว",

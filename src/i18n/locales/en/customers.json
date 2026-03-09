@@ -30,6 +30,7 @@
   "finalPrice": "Final price",
   "vehicle": "Vehicle",
   "finalPriceVnd": "Final price (VND)",
+  "finalPriceWithUnit": "Final price ({{currency}})",
   "updatedAt": "Updated",
   "addedSuccess": "Customer added.",
   "updatedSuccess": "Customer updated.",

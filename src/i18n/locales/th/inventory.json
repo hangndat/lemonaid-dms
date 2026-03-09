@@ -15,6 +15,7 @@
   "year": "ปี",
   "vin": "VIN",
   "priceVnd": "ราคา (บาท)",
+  "priceWithUnit": "ราคา ({{currency}})",
   "mileage": "เลขไมล์",
   "stockInDate": "วันรับเข้า",
   "addNew": "เพิ่มรถใหม่",

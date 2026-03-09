@@ -1,13 +1,18 @@
 /**
  * Seed config: volumes and date range for ~1 year (Singapore dealers → Thailand).
+ * Khung thời gian: 1 năm trước → thời điểm chạy script (current time).
  */
+const _endDate = new Date()
+const _startDate = new Date(_endDate)
+_startDate.setFullYear(_startDate.getFullYear() - 1)
+
 export const CONFIG = {
   /** Fixed seed for reproducible data */
   randomSeed: 'lemonaid-dms-sg-th-2024',
 
-  /** Timeline: ~1 year */
-  startDate: new Date('2024-03-01T00:00:00.000Z'),
-  endDate: new Date('2025-03-09T23:59:59.999Z'),
+  /** Timeline: 1 năm trước kể từ current time */
+  startDate: _startDate,
+  endDate: _endDate,
 
   /** Entity counts (~10x for larger demo) */
   profiles: 5,
@@ -15,6 +20,11 @@ export const CONFIG = {
   vehicles: 1000,
   leads: 1500,
   deals: 900,
+
+  /** Customer mix: tỉ lệ khách cá nhân (còn lại là dealer/công ty) */
+  customerIndividualRatio: 0.35,
+  /** Customer mix: tỉ lệ khách từ Malaysia (còn lại Singapore) */
+  customerMalaysiaRatio: 0.35,
 
   /** Lead source distribution (weights sum to 100) */
   leadSourceWeights: {

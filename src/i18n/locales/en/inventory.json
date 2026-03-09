@@ -15,6 +15,7 @@
   "year": "Year",
   "vin": "VIN",
   "priceVnd": "Price (VND)",
+  "priceWithUnit": "Price ({{currency}})",
   "mileage": "Mileage",
   "stockInDate": "Stock date",
   "addNew": "Add new vehicle",
